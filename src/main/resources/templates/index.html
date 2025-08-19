@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PF4J 动态插件管理系统</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 40px);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .header-content {
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .user-info {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .user-name {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .logout-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .nav {
+            width: 250px;
+            background: #f8f9fa;
+            border-right: 1px solid #dee2e6;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 0;
+        }
+        
+        .nav-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: none;
+            font-size: 16px;
+            text-align: left;
+            border-left: 4px solid transparent;
+            margin-bottom: 5px;
+        }
+        
+        .nav-item:hover {
+            background: #e9ecef;
+            border-left-color: #007bff;
+        }
+        
+        .nav-item.active {
+            background: #007bff;
+            color: white;
+            border-left-color: #0056b3;
+        }
+        
+        .content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .plugin-item {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .plugin-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .plugin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .plugin-name {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .plugin-version {
+            background: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+        }
+        
+        .plugin-description {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .plugin-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
+        
+        .input-group {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .input-group input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+            font-size: 14px;
+        }
+        
+        .input-group button {
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .result {
+            background: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            margin-top: 15px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-running {
+            background: #28a745;
+        }
+        
+        .status-stopped {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="user-info">
+                <span class="user-name" sec:authentication="name">用户</span>
+                <a href="/logout" class="logout-btn">登出</a>
+            </div>
+            <div class="header-content">
+                <h1>🔌 PF4J 动态插件管理系统</h1>
+                <p>基于Spring Boot + PF4J的插件化架构管理平台</p>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="nav">
+                <button class="nav-item active" onclick="showTab('plugins')">📦 插件管理</button>
+                <button class="nav-item" onclick="showTab('execute')">⚡ 插件执行</button>
+                <button class="nav-item" onclick="showTab('system')">🖥️ 系统状态</button>
+            </div>
+            
+            <div class="content">
+            <!-- 插件管理标签页 -->
+            <div id="plugins" class="tab-content active">
+                <div class="card">
+                    <h3>📦 已加载插件列表</h3>
+                    <button class="btn btn-primary" onclick="loadPlugins()">🔄 刷新插件列表</button>
+                    <button class="btn btn-warning" onclick="reloadAllPlugins()">🔄 重新加载所有插件</button>
+                </div>
+                <div id="plugin-list" class="loading">正在加载插件列表...</div>
+            </div>
+            
+            <!-- 插件执行标签页 -->
+            <div id="execute" class="tab-content">
+                <div class="card">
+                    <h3>⚡ 插件执行测试</h3>
+                    <div class="input-group">
+                        <input type="text" id="plugin-name" placeholder="输入插件名称 (如: HelloWorldPlugin)">
+                        <button class="btn btn-primary" onclick="executePlugin()">执行插件</button>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" id="plugin-input" placeholder="输入参数 (可选)">
+                    </div>
+                </div>
+                <div id="execute-result"></div>
+            </div>
+            
+            <!-- 系统状态标签页 -->
+            <div id="system" class="tab-content">
+                <div class="card">
+                    <h3>🖥️ 系统状态监控</h3>
+                    <button class="btn btn-primary" onclick="loadSystemStatus()">🔄 刷新状态</button>
+                </div>
+                <div id="system-status" class="loading">正在加载系统状态...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 显示指定标签页
+        function showTab(tabName) {
+            // 隐藏所有标签页
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // 移除所有导航项的active类
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.classList.remove('active');
+            });
+            
+            // 显示指定标签页
+            document.getElementById(tabName).classList.add('active');
+            
+            // 激活对应导航项
+            event.target.classList.add('active');
+            
+            // 根据标签页加载对应数据
+            if (tabName === 'plugins') {
+                loadPlugins();
+            } else if (tabName === 'system') {
+                loadSystemStatus();
+            }
+        }
+        
+        // 加载插件列表
+        async function loadPlugins() {
+            const container = document.getElementById('plugin-list');
+            container.innerHTML = '<div class="loading">正在加载插件列表...</div>';
+            
+            try {
+                const response = await fetch('/api/plugins');
+                const result = await response.json();
+                
+                if (result.success && result.data) {
+                    if (result.data.length === 0) {
+                        container.innerHTML = '<div class="card">暂无已加载的插件</div>';
+                        return;
+                    }
+                    
+                    let html = '';
+                    result.data.forEach(plugin => {
+                        html += `
+                            <div class="plugin-item">
+                                <div class="plugin-header">
+                                    <span class="plugin-name">${plugin.name}</span>
+                                    <span class="plugin-version">v${plugin.version}</span>
+                                </div>
+                                <div class="plugin-description">${plugin.description}</div>
+                                <div class="plugin-actions">
+                                    <button class="btn btn-primary" onclick="executePluginByName('${plugin.name}')">执行插件</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = `<div class="card error">加载失败: ${result.message || '未知错误'}</div>`;
+                }
+            } catch (error) {
+                container.innerHTML = `<div class="card error">网络错误: ${error.message}</div>`;
+            }
+        }
+        
+        // 执行插件
+        async function executePlugin() {
+            const pluginName = document.getElementById('plugin-name').value.trim();
+            const pluginInput = document.getElementById('plugin-input').value.trim();
+            
+            if (!pluginName) {
+                alert('请输入插件名称');
+                return;
+            }
+            
+            const resultContainer = document.getElementById('execute-result');
+            resultContainer.innerHTML = '<div class="loading">正在执行插件...</div>';
+            
+            try {
+                const requestBody = pluginInput ? { input: pluginInput } : {};
+                const response = await fetch(`/api/plugins/execute/${pluginName}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+                
+                const result = await response.json();
+                
+                let html = `<div class="result ${result.success ? '' : 'error'}">`;
+                html += `<h4>执行结果</h4>`;
+                html += `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+                html += `</div>`;
+                
+                resultContainer.innerHTML = html;
+            } catch (error) {
+                resultContainer.innerHTML = `<div class="result error"><h4>执行失败</h4><p>${error.message}</p></div>`;
+            }
+        }
+        
+        // 通过插件名称执行插件
+        function executePluginByName(pluginName) {
+            document.getElementById('plugin-name').value = pluginName;
+            showTab('execute');
+            document.querySelector('.nav-item:nth-child(2)').classList.add('active');
+            document.querySelector('.nav-item:nth-child(1)').classList.remove('active');
+        }
+        
+        // 重新加载所有插件
+        async function reloadAllPlugins() {
+            try {
+                const response = await fetch('/api/plugins/reload', {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('插件重新加载成功');
+                    loadPlugins();
+                } else {
+                    alert('插件重新加载失败: ' + result.message);
+                }
+            } catch (error) {
+                alert('网络错误: ' + error.message);
+            }
+        }
+        
+        // 加载系统状态
+        async function loadSystemStatus() {
+            const container = document.getElementById('system-status');
+            container.innerHTML = '<div class="loading">正在加载系统状态...</div>';
+            
+            try {
+                const response = await fetch('/api/system/status');
+                const result = await response.json();
+                
+                if (result.success) {
+                    let html = `
+                        <div class="card">
+                            <h4>🖥️ 系统信息</h4>
+                            <p><strong>状态:</strong> <span class="status-indicator status-running"></span>${result.status}</p>
+                            <p><strong>版本:</strong> ${result.version}</p>
+                            <p><strong>框架:</strong> ${result.framework}</p>
+                            <p><strong>时间:</strong> ${new Date(result.timestamp).toLocaleString()}</p>
+                        </div>
+                        
+                        <div class="card">
+                            <h4>💾 JVM 信息</h4>
+                            <p><strong>总内存:</strong> ${(result.jvm.totalMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>已用内存:</strong> ${(result.jvm.usedMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>空闲内存:</strong> ${(result.jvm.freeMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>最大内存:</strong> ${(result.jvm.maxMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>处理器数量:</strong> ${result.jvm.processors}</p>
+                        </div>
+                    `;
+                    container.innerHTML = html;
+                } else {
+                    container.innerHTML = `<div class="card error">加载失败: ${result.message || '未知错误'}</div>`;
+                }
+            } catch (error) {
+                container.innerHTML = `<div class="card error">网络错误: ${error.message}</div>`;
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPlugins();
+        });
+    </script>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
