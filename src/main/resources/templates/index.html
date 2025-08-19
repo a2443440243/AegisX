@@ -452,9 +452,9 @@
                 <button class="nav-item active" onclick="showTab('plugins')">📦 插件管理</button>
                 <button class="nav-item" onclick="showTab('execute')">⚡ 插件执行</button>
                 <button class="nav-item" onclick="showTab('status')">🖥️ 系统状态</button>
-                <button class="nav-item" onclick="openApiDocs()">📚 API文档</button>
-                <button class="nav-item" onclick="openHealthCheck()">💚 健康检查</button>
-                <button class="nav-item" onclick="openDatabaseManagement()">🗄️ 数据库管理</button>
+                <button class="nav-item" onclick="showTab('api-docs')">📚 API文档</button>
+                <button class="nav-item" onclick="showTab('health-check')">💚 健康检查</button>
+                <button class="nav-item" onclick="showTab('database-management')">🗄️ 数据库管理</button>
             </div>
             
             <div class="content">
@@ -462,10 +462,6 @@
                     <h3 id="content-title">插件管理</h3>
                 </div>
                 <div class="content-body">
-                    <iframe id="api-docs-frame" class="content-iframe" src=""></iframe>
-                    <iframe id="health-check-frame" class="content-iframe" src=""></iframe>
-                    <iframe id="database-management-frame" class="content-iframe" src=""></iframe>
-                    
                     <!-- 插件管理标签页 -->
                     <div id="plugins" class="tab-content active">
                 <div class="card">
@@ -498,6 +494,53 @@
                     <button class="btn btn-primary" onclick="loadSystemStatus()">🔄 刷新状态</button>
                 </div>
                 <div id="status-status" class="loading">正在加载系统状态...</div>
+            </div>
+            
+            <!-- API文档标签页 -->
+            <div id="api-docs" class="tab-content">
+                <div class="card">
+                    <h3>📚 API文档</h3>
+                    <p>系统提供的RESTful API接口文档</p>
+                    <button class="btn btn-primary" onclick="window.open('http://localhost:8081/api', '_blank')">🔗 在新窗口打开API文档</button>
+                </div>
+                <div class="card">
+                    <h4>🔗 主要API端点</h4>
+                    <ul>
+                        <li><strong>GET /api/plugins</strong> - 获取插件列表</li>
+                        <li><strong>POST /api/plugins/reload</strong> - 重新加载所有插件</li>
+                        <li><strong>POST /api/plugins/execute</strong> - 执行插件</li>
+                        <li><strong>GET /api/system/status</strong> - 获取系统状态</li>
+                        <li><strong>GET /actuator/health</strong> - 健康检查</li>
+                        <li><strong>GET /database/config</strong> - 数据库配置管理</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 健康检查标签页 -->
+            <div id="health-check" class="tab-content">
+                <div class="card">
+                    <h3>💚 健康检查</h3>
+                    <button class="btn btn-primary" onclick="loadHealthCheck()">🔄 刷新健康状态</button>
+                </div>
+                <div id="health-check-status" class="loading">正在加载健康检查状态...</div>
+            </div>
+            
+            <!-- 数据库管理标签页 -->
+            <div id="database-management" class="tab-content">
+                <div class="card">
+                    <h3>🗄️ 数据库管理</h3>
+                    <p>数据库连接配置和管理功能</p>
+                    <button class="btn btn-primary" onclick="window.open('/database/config', '_blank')">🔗 在新窗口打开数据库管理</button>
+                </div>
+                <div class="card">
+                    <h4>📊 数据库功能</h4>
+                    <ul>
+                        <li><strong>连接配置</strong> - 配置数据库连接参数</li>
+                        <li><strong>连接测试</strong> - 测试数据库连接状态</li>
+                        <li><strong>配置管理</strong> - 保存和加载配置信息</li>
+                        <li><strong>动态数据源</strong> - 支持运行时切换数据源</li>
+                    </ul>
+                </div>
                     </div>
                 </div>
             </div>
@@ -521,10 +564,20 @@
                 document.getElementById('content-title').textContent = '插件执行';
                 updateActiveNav('execute');
             } else if (tabName === 'status') {
-                 document.getElementById('content-title').textContent = '系统状态';
-                 updateActiveNav('status');
-                 loadSystemStatus();
-             }
+                document.getElementById('content-title').textContent = '系统状态';
+                updateActiveNav('status');
+                loadSystemStatus();
+            } else if (tabName === 'api-docs') {
+                document.getElementById('content-title').textContent = 'API文档';
+                updateActiveNav('api-docs');
+            } else if (tabName === 'health-check') {
+                document.getElementById('content-title').textContent = '健康检查';
+                updateActiveNav('health-check');
+                loadHealthCheck();
+            } else if (tabName === 'database-management') {
+                document.getElementById('content-title').textContent = '数据库管理';
+                updateActiveNav('database-management');
+            }
         }
         
         // 加载插件列表
@@ -666,39 +719,38 @@
             }
         }
         
-        // 显示API文档
-        function openApiDocs() {
-            hideAllContent();
-            document.getElementById('api-docs-frame').src = 'http://localhost:8081/api';
-            document.getElementById('api-docs-frame').classList.add('active');
-            document.getElementById('content-title').textContent = 'API文档';
-            updateActiveNav('api-docs');
-        }
-        
-        // 显示健康检查
-        function openHealthCheck() {
-            hideAllContent();
-            document.getElementById('health-check-frame').src = 'http://localhost:8081/actuator/health';
-            document.getElementById('health-check-frame').classList.add('active');
-            document.getElementById('content-title').textContent = '健康检查';
-            updateActiveNav('health-check');
-        }
-        
-        // 显示数据库管理
-        function openDatabaseManagement() {
-            hideAllContent();
-            document.getElementById('database-management-frame').src = '/database/config';
-            document.getElementById('database-management-frame').classList.add('active');
-            document.getElementById('content-title').textContent = '数据库管理';
-            updateActiveNav('database-management');
+        // 加载健康检查状态
+        async function loadHealthCheck() {
+            const container = document.getElementById('health-check-status');
+            container.innerHTML = '<div class="loading">正在加载健康检查状态...</div>';
+            
+            try {
+                const response = await fetch('/actuator/health');
+                const result = await response.json();
+                
+                let html = `
+                    <div class="card">
+                        <h4>💚 应用健康状态</h4>
+                        <p><strong>状态:</strong> <span class="status-indicator ${result.status === 'UP' ? 'status-running' : 'status-stopped'}"></span>${result.status}</p>
+                    </div>
+                `;
+                
+                if (result.components) {
+                    html += '<div class="card"><h4>🔧 组件状态</h4>';
+                    for (const [key, value] of Object.entries(result.components)) {
+                        html += `<p><strong>${key}:</strong> <span class="status-indicator ${value.status === 'UP' ? 'status-running' : 'status-stopped'}"></span>${value.status}</p>`;
+                    }
+                    html += '</div>';
+                }
+                
+                container.innerHTML = html;
+            } catch (error) {
+                container.innerHTML = `<div class="card error">加载失败: ${error.message}</div>`;
+            }
         }
         
         // 隐藏所有内容
         function hideAllContent() {
-            // 隐藏所有iframe
-            document.querySelectorAll('.content-iframe').forEach(iframe => {
-                iframe.classList.remove('active');
-            });
             // 隐藏所有tab内容
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
