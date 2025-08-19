@@ -1,10 +1,11 @@
-# PF4J 动态加载脚手架
+# PF4J 动态插件管理框架
 
-基于 PF4J 和 Spring Boot 的动态插件加载系统，采用 MVC 架构设计。
+基于 Spring Boot + PF4J + Spring Security 的企业级动态插件管理框架，支持插件热加载、安全认证、Web管理界面等功能。
 
 ## 项目特性
 
 - 🔌 **动态插件加载**: 支持运行时加载、卸载和重新加载插件
+- 🔐 **安全认证**: 集成 Spring Security，支持用户认证和权限控制
 - 🏗️ **MVC 架构**: 清晰的分层架构，易于维护和扩展
 - 🌐 **RESTful API**: 完整的插件管理 REST 接口
 - 📊 **Web 管理界面**: 直观的插件管理 Web 界面
@@ -13,8 +14,10 @@
 
 ## 技术栈
 
-- **Spring Boot 2.7.18**: 应用框架
-- **PF4J 3.10.0**: 插件框架
+- **Spring Boot 2.7.14**: 应用框架
+- **PF4J 3.9.0**: 插件框架
+- **Spring Security 5.7.2**: 安全框架
+- **Thymeleaf**: 模板引擎
 - **Maven**: 项目管理
 - **Jackson**: JSON 处理
 - **SLF4J + Logback**: 日志管理
@@ -301,4 +304,4 @@ MIT License
 如有问题，请通过以下方式联系：
 
 - 邮箱: example@example.com
-- GitHub: https://github.com/example/pf4j-scaffold
+- Gitee: https://gitee.com/cuixin_1/pf4j-dynamic-plugin-framework
