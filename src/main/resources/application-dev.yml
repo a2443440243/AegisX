@@ -1,4 +1,4 @@
-# Spring Boot 应用配置
+# 开发环境配置 - 使用H2内存数据库
 spring:
   application:
     name: pf4j-scaffold
@@ -11,12 +11,12 @@ spring:
       write-dates-as-timestamps: false
       indent-output: true
   
-  # MySQL数据源配置 - 远程数据库
+  # H2内存数据库配置（开发环境）
   datasource:
-    url: jdbc:mysql://192.168.100.221:3306/java_admin?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    username: java_admin
-    password: 2BLTERiG425JNYMt
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
     type: com.zaxxer.hikari.HikariDataSource
     hikari:
       pool-name: HikariCP
@@ -28,12 +28,20 @@ spring:
       connection-timeout: 30000
       connection-test-query: SELECT 1
   
+  # H2控制台配置
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true
+  
   # JPA配置
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: h2
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
         implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
@@ -46,19 +54,39 @@ spring:
           batch_size: 20
         order_inserts: true
         order_updates: true
+  
+  # Spring Security配置
+  security:
+    user:
+      name: admin
+      password: admin
+      roles: ADMIN
 
 # Web服务器配置
 server:
   port: 8081
   servlet:
     context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+# PF4J插件配置
+plugin:
+  directory: plugins
+  development-mode: true
+  system-version: 1.0.0
+  runtime-mode: development
 
 # 日志配置
 logging:
   level:
     com.example.pf4j: DEBUG
-    org.pf4j: INFO
-    root: INFO
+    org.pf4j: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
@@ -67,18 +95,12 @@ logging:
     max-size: 10MB
     max-history: 30
 
-# 插件相关配置
-pf4j:
-  plugin-path: plugins
-  development-mode: true
-  scan-interval: 30
-
 # 管理端点配置
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,env
+        include: health,info,metrics,env,beans,configprops
   endpoint:
     health:
       show-details: always
@@ -90,10 +112,9 @@ management:
 info:
   app:
     name: PF4J Dynamic Loading Scaffold
-    description: 基于PF4J和Spring Boot的动态插件加载系统
+    description: 基于PF4J的动态插件加载框架
     version: 1.0.0
-    author: Developer
-  java:
-    version: ${java.version}
-  spring:
-    version: ${spring-boot.version}
+    encoding: UTF-8
+    java:
+      version: ${java.version}
+      vendor: ${java.vendor}

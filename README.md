@@ -17,10 +17,159 @@
 - **Spring Boot 2.7.14**: 应用框架
 - **PF4J 3.9.0**: 插件框架
 - **Spring Security 5.7.2**: 安全框架
+- **Spring Data JPA 2.7.14**: 数据访问层
+- **MySQL 8.0+**: 数据库
 - **Thymeleaf**: 模板引擎
 - **Maven**: 项目管理
 - **Jackson**: JSON 处理
 - **SLF4J + Logback**: 日志管理
+
+## 数据库集成
+
+框架已集成 MySQL 数据库支持，提供统一的数据库操作服务，插件可以通过扩展点进行数据库操作。
+
+### 数据库配置
+
+在 `application.yml` 中配置数据源：
+
+```yaml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/pf4j_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: your_password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+```
+
+### 数据库实体
+
+框架提供了 `JavaAdmin` 实体类，包含用户管理的基本字段：
+
+```java
+@Entity
+@Table(name = "java_admin")
+public class JavaAdmin {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    @Column(unique = true, nullable = false)
+    private String username;
+    
+    @Column(nullable = false)
+    private String password;
+    
+    @Column(unique = true)
+    private String email;
+    
+    private String phone;
+    private Integer status;
+    private String role;
+    
+    @CreationTimestamp
+    private LocalDateTime createTime;
+    
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
+    
+    // getter/setter 方法...
+}
+```
+
+### 数据库服务
+
+框架提供了 `DatabaseService` 统一数据库操作服务：
+
+```java
+@Service
+public class DatabaseService {
+    // 基础 CRUD 操作
+    public JavaAdmin save(JavaAdmin entity);
+    public Optional<JavaAdmin> findById(Long id);
+    public List<JavaAdmin> findAll();
+    public void deleteById(Long id);
+    
+    // 业务查询方法
+    public Optional<JavaAdmin> findByUsername(String username);
+    public Optional<JavaAdmin> findByEmail(String email);
+    public List<JavaAdmin> findByStatus(Integer status);
+    
+    // 分页查询
+    public Page<JavaAdmin> findAll(Pageable pageable);
+    
+    // 统计方法
+    public long count();
+    public long countByStatus(Integer status);
+}
+```
+
+### 插件数据库扩展
+
+插件可以通过实现 `DatabaseExtension` 接口来使用数据库功能：
+
+```java
+@Extension
+public class MyDatabasePlugin implements DatabaseExtension {
+    
+    private static final Logger logger = LoggerFactory.getLogger(MyDatabasePlugin.class);
+    
+    @Override
+    public String getExtensionName() {
+        return "My Database Plugin";
+    }
+    
+    @Override
+    public void performDatabaseOperation() {
+        logger.info("执行数据库操作");
+        // 在这里可以通过 DatabaseUtil 进行数据库操作
+        // 例如：DatabaseUtil.findAll();
+    }
+}
+```
+
+### 数据库工具类
+
+框架提供了 `DatabaseUtil` 工具类，插件可以直接使用：
+
+```java
+// 查询所有用户
+List<JavaAdmin> users = DatabaseUtil.findAll();
+
+// 根据用户名查询
+Optional<JavaAdmin> user = DatabaseUtil.findByUsername("admin");
+
+// 保存用户
+JavaAdmin newUser = new JavaAdmin();
+newUser.setUsername("test");
+newUser.setPassword("password");
+DatabaseUtil.save(newUser);
+
+// 分页查询
+Page<JavaAdmin> userPage = DatabaseUtil.findAll(0, 10, "id", "ASC");
+
+// 统计用户数量
+long totalUsers = DatabaseUtil.count();
+```
+
+### 示例插件
+
+框架提供了完整的数据库操作示例插件 `database-demo-plugin`，展示了如何：
+
+- 实现数据库扩展接口
+- 执行基本的 CRUD 操作
+- 进行业务查询和统计
+- 处理异常和日志记录
+
+插件位置：`plugins/database-demo-plugin-1.0.0-jar-with-dependencies.jar`
 
 ## 项目结构
 

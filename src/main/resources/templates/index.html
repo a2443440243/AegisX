@@ -31,10 +31,30 @@
         }
         
         .header {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 30px;
+            padding: 25px 35px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
             position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
         }
         
         .header-content {
@@ -58,6 +78,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            z-index: 1;
         }
         
         .user-name {
@@ -66,21 +87,26 @@
         }
         
         .logout-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255,255,255,0.15);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 8px 16px;
-            border-radius: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+            font-weight: 500;
         }
         
         .logout-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255,255,255,0.25);
             color: white;
             text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.5);
         }
         
         .main-content {
@@ -90,42 +116,85 @@
         }
         
         .nav {
-            width: 250px;
-            background: #f8f9fa;
+            width: 200px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
             border-right: 1px solid #dee2e6;
             display: flex;
             flex-direction: column;
             padding: 20px 0;
+            flex-shrink: 0;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
         }
         
         .nav-item {
             padding: 15px 25px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             border: none;
             background: none;
             font-size: 16px;
             text-align: left;
             border-left: 4px solid transparent;
-            margin-bottom: 5px;
+            margin: 2px 10px;
+            border-radius: 8px;
+            font-weight: 500;
         }
         
         .nav-item:hover {
-            background: #e9ecef;
-            border-left-color: #007bff;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-left-color: #2196f3;
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
         }
         
         .nav-item.active {
-            background: #007bff;
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
             color: white;
-            border-left-color: #0056b3;
+            border-left-color: #0d47a1;
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
         }
         
         .content {
             flex: 1;
-            padding: 30px;
-            overflow-y: auto;
+            padding: 0;
+            overflow: hidden;
             background: white;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .content-header {
+            padding: 20px 30px;
+            border-bottom: 1px solid #dee2e6;
+            background: white;
+        }
+        
+        .content-body {
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        .content-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: none;
+        }
+        
+        .content-iframe.active {
+            display: block;
+        }
+        
+        .tab-content {
+            display: none;
+            height: 100%;
+            overflow-y: auto;
+            padding: 30px;
+        }
+        
+        .tab-content.active {
+            display: block;
         }
         
         .tab-content {
@@ -137,24 +206,34 @@
         }
         
         .card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 12px;
+            padding: 25px;
             margin-bottom: 20px;
-            border-left: 4px solid #007bff;
+            border-left: 4px solid #2196f3;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
         }
         
         .plugin-item {
-            background: white;
-            border-radius: 8px;
-            padding: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+            border-radius: 12px;
+            padding: 25px;
             margin-bottom: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
         }
         
         .plugin-item:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #2196f3;
         }
         
         .plugin-header {
@@ -189,89 +268,169 @@
         }
         
         .btn {
-            padding: 8px 16px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
-            transition: all 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
         }
         
         .btn-primary {
-            background: #007bff;
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
             color: white;
         }
         
         .btn-success {
-            background: #28a745;
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
             color: white;
         }
         
         .btn-warning {
-            background: #ffc107;
-            color: #212529;
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+            color: white;
         }
         
         .btn-danger {
-            background: #dc3545;
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
             color: white;
         }
         
         .btn:hover {
-            opacity: 0.8;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         .input-group {
             display: flex;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 8px;
+            overflow: hidden;
         }
         
         .input-group input {
             flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px 0 0 5px;
+            padding: 12px 16px;
+            border: 1px solid #e0e0e0;
+            border-right: none;
+            border-radius: 0;
             font-size: 14px;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: #2196f3;
+            background: white;
+            box-shadow: inset 0 0 0 1px #2196f3;
         }
         
         .input-group button {
-            border-radius: 0 5px 5px 0;
+            border-radius: 0;
+            border-left: none;
         }
         
         .result {
-            background: #f8f9fa;
-            border-radius: 5px;
-            padding: 15px;
-            margin-top: 15px;
-            border-left: 4px solid #28a745;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #4caf50;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .result:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.15);
         }
         
         .error {
-            border-left-color: #dc3545;
-            background: #f8d7da;
+            border-left-color: #f44336;
+            background: linear-gradient(135deg, #ffebee 0%, #fce4ec 100%);
+            box-shadow: 0 4px 15px rgba(244, 67, 54, 0.1);
+        }
+        
+        .error:hover {
+            box-shadow: 0 6px 20px rgba(244, 67, 54, 0.15);
         }
         
         .loading {
             text-align: center;
-            padding: 20px;
+            padding: 30px;
             color: #666;
+            font-size: 16px;
+        }
+        
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e0e0e0;
+            border-top: 2px solid #2196f3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
         
         .status-indicator {
             display: inline-block;
-            width: 10px;
-            height: 10px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
-            margin-right: 8px;
+            margin-right: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
         }
         
         .status-running {
-            background: #28a745;
+            background: linear-gradient(135deg, #4caf50 0%, #388e3c 100%);
         }
         
         .status-stopped {
-            background: #dc3545;
+            background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
+        }
+        
+        .status-warning {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
         }
     </style>
 </head>
@@ -292,12 +451,23 @@
             <div class="nav">
                 <button class="nav-item active" onclick="showTab('plugins')">📦 插件管理</button>
                 <button class="nav-item" onclick="showTab('execute')">⚡ 插件执行</button>
-                <button class="nav-item" onclick="showTab('system')">🖥️ 系统状态</button>
+                <button class="nav-item" onclick="showTab('status')">🖥️ 系统状态</button>
+                <button class="nav-item" onclick="openApiDocs()">📚 API文档</button>
+                <button class="nav-item" onclick="openHealthCheck()">💚 健康检查</button>
+                <button class="nav-item" onclick="openDatabaseManagement()">🗄️ 数据库管理</button>
             </div>
             
             <div class="content">
-            <!-- 插件管理标签页 -->
-            <div id="plugins" class="tab-content active">
+                <div class="content-header">
+                    <h3 id="content-title">插件管理</h3>
+                </div>
+                <div class="content-body">
+                    <iframe id="api-docs-frame" class="content-iframe" src=""></iframe>
+                    <iframe id="health-check-frame" class="content-iframe" src=""></iframe>
+                    <iframe id="database-management-frame" class="content-iframe" src=""></iframe>
+                    
+                    <!-- 插件管理标签页 -->
+                    <div id="plugins" class="tab-content active">
                 <div class="card">
                     <h3>📦 已加载插件列表</h3>
                     <button class="btn btn-primary" onclick="loadPlugins()">🔄 刷新插件列表</button>
@@ -322,12 +492,14 @@
             </div>
             
             <!-- 系统状态标签页 -->
-            <div id="system" class="tab-content">
+            <div id="status" class="tab-content">
                 <div class="card">
                     <h3>🖥️ 系统状态监控</h3>
                     <button class="btn btn-primary" onclick="loadSystemStatus()">🔄 刷新状态</button>
                 </div>
-                <div id="system-status" class="loading">正在加载系统状态...</div>
+                <div id="status-status" class="loading">正在加载系统状态...</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -335,28 +507,24 @@
     <script>
         // 显示指定标签页
         function showTab(tabName) {
-            // 隐藏所有标签页
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // 移除所有导航项的active类
-            document.querySelectorAll('.nav-item').forEach(nav => {
-                nav.classList.remove('active');
-            });
+            hideAllContent();
             
             // 显示指定标签页
             document.getElementById(tabName).classList.add('active');
             
-            // 激活对应导航项
-            event.target.classList.add('active');
-            
-            // 根据标签页加载对应数据
+            // 更新标题和导航状态
             if (tabName === 'plugins') {
+                document.getElementById('content-title').textContent = '插件管理';
+                updateActiveNav('plugins');
                 loadPlugins();
-            } else if (tabName === 'system') {
-                loadSystemStatus();
-            }
+            } else if (tabName === 'execute') {
+                document.getElementById('content-title').textContent = '插件执行';
+                updateActiveNav('execute');
+            } else if (tabName === 'status') {
+                 document.getElementById('content-title').textContent = '系统状态';
+                 updateActiveNav('status');
+                 loadSystemStatus();
+             }
         }
         
         // 加载插件列表
@@ -463,7 +631,7 @@
         
         // 加载系统状态
         async function loadSystemStatus() {
-            const container = document.getElementById('system-status');
+            const container = document.getElementById('status-status');
             container.innerHTML = '<div class="loading">正在加载系统状态...</div>';
             
             try {
@@ -496,6 +664,60 @@
             } catch (error) {
                 container.innerHTML = `<div class="card error">网络错误: ${error.message}</div>`;
             }
+        }
+        
+        // 显示API文档
+        function openApiDocs() {
+            hideAllContent();
+            document.getElementById('api-docs-frame').src = 'http://localhost:8081/api';
+            document.getElementById('api-docs-frame').classList.add('active');
+            document.getElementById('content-title').textContent = 'API文档';
+            updateActiveNav('api-docs');
+        }
+        
+        // 显示健康检查
+        function openHealthCheck() {
+            hideAllContent();
+            document.getElementById('health-check-frame').src = 'http://localhost:8081/actuator/health';
+            document.getElementById('health-check-frame').classList.add('active');
+            document.getElementById('content-title').textContent = '健康检查';
+            updateActiveNav('health-check');
+        }
+        
+        // 显示数据库管理
+        function openDatabaseManagement() {
+            hideAllContent();
+            document.getElementById('database-management-frame').src = '/database/config';
+            document.getElementById('database-management-frame').classList.add('active');
+            document.getElementById('content-title').textContent = '数据库管理';
+            updateActiveNav('database-management');
+        }
+        
+        // 隐藏所有内容
+        function hideAllContent() {
+            // 隐藏所有iframe
+            document.querySelectorAll('.content-iframe').forEach(iframe => {
+                iframe.classList.remove('active');
+            });
+            // 隐藏所有tab内容
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+        }
+        
+        // 更新导航激活状态
+        function updateActiveNav(activeId) {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // 根据activeId设置对应的导航项为激活状态
+            const navItems = document.querySelectorAll('.nav-item');
+            if (activeId === 'plugins') navItems[0]?.classList.add('active');
+            else if (activeId === 'execute') navItems[1]?.classList.add('active');
+            else if (activeId === 'status') navItems[2]?.classList.add('active');
+            else if (activeId === 'api-docs') navItems[3]?.classList.add('active');
+            else if (activeId === 'health-check') navItems[4]?.classList.add('active');
+            else if (activeId === 'database-management') navItems[5]?.classList.add('active');
         }
         
         // 页面加载完成后初始化

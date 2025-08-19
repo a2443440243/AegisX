@@ -1,5 +1,6 @@
 package com.example.pf4j.config;
 
+import com.example.pf4j.util.DatabaseUtil;
 import org.pf4j.DefaultPluginManager;
 import org.pf4j.PluginManager;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +37,9 @@ public class PluginManagerConfig {
         // 启动插件管理器
         pluginManager.loadPlugins();
         pluginManager.startPlugins();
+        
+        // 初始化数据库工具类
+        DatabaseUtil.initialize(pluginManager);
         
         return pluginManager;
     }
