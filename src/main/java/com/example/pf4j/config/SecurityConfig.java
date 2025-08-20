@@ -58,6 +58,7 @@ public class SecurityConfig {
                     new AntPathRequestMatcher("/js/**"),
                     new AntPathRequestMatcher("/images/**"),
                     new AntPathRequestMatcher("/api/**"),
+                    new AntPathRequestMatcher("/api-docs/**"),
                     new AntPathRequestMatcher("/database/api/**"),
                     new AntPathRequestMatcher("/actuator/**")
                 ).permitAll()
@@ -79,7 +80,9 @@ public class SecurityConfig {
                 .permitAll()
             )
             // 禁用CSRF（简化开发，生产环境建议启用）
-            .csrf(csrf -> csrf.disable());
+            .csrf(csrf -> csrf.disable())
+            // 允许iframe加载（用于API文档页面）
+            .headers(headers -> headers.frameOptions().sameOrigin());
 
         return http.build();
     }

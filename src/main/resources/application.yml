@@ -46,6 +46,14 @@ spring:
           batch_size: 20
         order_inserts: true
         order_updates: true
+  
+  # Thymeleaf配置
+  thymeleaf:
+    cache: false
+    mode: HTML
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
 
 # Web服务器配置
 server:

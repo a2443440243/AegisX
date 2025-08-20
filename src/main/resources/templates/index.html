@@ -673,11 +673,7 @@
             margin-right: 0.25rem;
         }
 
-        .me-2 {
-            margin-right: 0.5rem;
-        }
-
-        .me-md-2 {
+        .me-2, .me-md-2 {
             margin-right: 0.5rem;
         }
 
@@ -803,53 +799,14 @@
             padding: 1.25rem 1rem;
         }
 
-        .btn-outline-primary {
-            color: #0d6efd;
-            border-color: #0d6efd;
-            background-color: transparent;
-        }
-
-        .btn-outline-primary:hover {
-            color: #fff;
-            background-color: #0d6efd;
-            border-color: #0d6efd;
-        }
-
-        .btn-outline-secondary {
-            color: #6c757d;
-            border-color: #6c757d;
-            background-color: transparent;
-        }
-
-        .btn-outline-secondary:hover {
-            color: #fff;
-            background-color: #6c757d;
-            border-color: #6c757d;
-        }
-
-        .btn-outline-warning {
-            color: #fd7e14;
-            border-color: #fd7e14;
-            background-color: transparent;
-        }
-
-        .btn-outline-warning:hover {
-            color: #fff;
-            background-color: #fd7e14;
-            border-color: #fd7e14;
-        }
-
-        .btn-outline-info {
-            color: #0dcaf0;
-            border-color: #0dcaf0;
-            background-color: transparent;
-        }
-
-        .btn-outline-info:hover {
-            color: #000;
-            background-color: #0dcaf0;
-            border-color: #0dcaf0;
-        }
+        .btn-outline-primary { color: #0d6efd; border-color: #0d6efd; background-color: transparent; }
+        .btn-outline-primary:hover { color: #fff; background-color: #0d6efd; border-color: #0d6efd; }
+        .btn-outline-secondary { color: #6c757d; border-color: #6c757d; background-color: transparent; }
+        .btn-outline-secondary:hover { color: #fff; background-color: #6c757d; border-color: #6c757d; }
+        .btn-outline-warning { color: #fd7e14; border-color: #fd7e14; background-color: transparent; }
+        .btn-outline-warning:hover { color: #fff; background-color: #fd7e14; border-color: #fd7e14; }
+        .btn-outline-info { color: #0dcaf0; border-color: #0dcaf0; background-color: transparent; }
+        .btn-outline-info:hover { color: #000; background-color: #0dcaf0; border-color: #0dcaf0; }
 
         .btn-check {
             position: absolute;
@@ -908,12 +865,11 @@
         
         <div class="main-content">
             <div class="nav">
-                <button class="nav-item active" onclick="showTab('plugins')">📦 插件管理</button>
-                <button class="nav-item" onclick="showTab('execute')">⚡ 插件执行</button>
-                <button class="nav-item" onclick="showTab('status')">🖥️ 系统状态</button>
-                <button class="nav-item" onclick="showTab('api-docs')">📚 API文档</button>
-                <button class="nav-item" onclick="showTab('health-check')">💚 健康检查</button>
-                <button class="nav-item" onclick="showTab('database-management')">🗄️ 数据库管理</button>
+                <button class="nav-item active" data-tab="plugins" onclick="showTab('plugins')">📦 插件管理</button>
+                <button class="nav-item" data-tab="status" onclick="showTab('status')">🖥️ 系统状态</button>
+                <button class="nav-item" data-tab="api-docs" onclick="showTab('api-docs')">📚 API文档</button>
+                <button class="nav-item" data-tab="health-check" onclick="showTab('health-check')">💚 健康检查</button>
+                <button class="nav-item" data-tab="database-management" onclick="showTab('database-management')">🗄️ 数据库管理</button>
             </div>
             
             <div class="content">
@@ -921,96 +877,66 @@
                     <h3 id="content-title">插件管理</h3>
                 </div>
                 <div class="content-body">
-                    <!-- 插件管理标签页 -->
+                            <!-- 插件管理标签页 -->
                     <div id="plugins" class="tab-content active">
-                <div class="card">
-                    <h3>📦 已加载插件列表</h3>
-                    <button class="btn btn-primary" onclick="loadPlugins()">🔄 刷新插件列表</button>
-                    <button class="btn btn-warning" onclick="reloadAllPlugins()">🔄 重新加载所有插件</button>
-                </div>
-                <div id="plugin-list"></div>
-            </div>
-            
-            <!-- 插件执行标签页 -->
-            <div id="execute" class="tab-content">
-                <div class="card">
-                    <h3>⚡ 插件执行测试</h3>
-                    <div class="input-group">
-                        <input type="text" id="plugin-name" placeholder="输入插件名称 (如: HelloWorldPlugin)">
-                        <button class="btn btn-primary" onclick="executePlugin()">执行插件</button>
+                        <div class="card">
+                            <h3>📦 已加载插件列表</h3>
+                            <button class="btn btn-primary" onclick="loadPlugins()">🔄 刷新插件列表</button>
+                            <button class="btn btn-warning" onclick="reloadAllPlugins()">🔄 重新加载所有插件</button>
+                        </div>
+                        <div id="plugin-list"></div>
                     </div>
-                    <div class="input-group">
-                        <input type="text" id="plugin-input" placeholder="输入参数 (可选)">
+            
+                    <!-- 系统状态标签页 -->
+                    <div id="status" class="tab-content">
+                        <div class="card">
+                            <h3>🖥️ 系统状态监控</h3>
+                            <button class="btn btn-primary" onclick="loadSystemStatus()">🔄 刷新状态</button>
+                        </div>
+                        <div id="status-status"></div>
                     </div>
-                </div>
-                <div id="execute-result"></div>
-            </div>
             
-            <!-- 系统状态标签页 -->
-            <div id="status" class="tab-content">
-                <div class="card">
-                    <h3>🖥️ 系统状态监控</h3>
-                    <button class="btn btn-primary" onclick="loadSystemStatus()">🔄 刷新状态</button>
-                </div>
-                <div id="status-status"></div>
-            </div>
+                    <!-- API文档标签页 -->
+                    <div id="api-docs" class="tab-content">
+                        <iframe id="api-docs-iframe" class="content-iframe" src="/api-docs" style="width: 100%; height: 100%; border: none;"></iframe>
+                    </div>
             
-            <!-- API文档标签页 -->
-            <div id="api-docs" class="tab-content">
-                <div class="card">
-                    <h3>📚 API文档</h3>
-                    <p>系统提供的RESTful API接口文档</p>
-                    <button class="btn btn-primary" onclick="window.open('http://localhost:8081/api', '_blank')">🔗 在新窗口打开API文档</button>
-                </div>
-                <div class="card">
-                    <h4>🔗 主要API端点</h4>
-                    <ul>
-                        <li><strong>GET /api/plugins</strong> - 获取插件列表</li>
-                        <li><strong>POST /api/plugins/reload</strong> - 重新加载所有插件</li>
-                        <li><strong>POST /api/plugins/execute</strong> - 执行插件</li>
-                        <li><strong>GET /api/system/status</strong> - 获取系统状态</li>
-                        <li><strong>GET /actuator/health</strong> - 健康检查</li>
-                        <li><strong>GET /database/config</strong> - 数据库配置管理</li>
-                    </ul>
-                </div>
-            </div>
+                    <!-- 健康检查标签页 -->
+                    <div id="health-check" class="tab-content">
+                        <div class="card">
+                            <h3>💚 健康检查</h3>
+                            <button class="btn btn-primary" onclick="loadHealthCheck()">🔄 刷新健康状态</button>
+                        </div>
+                        <div id="health-check-status"></div>
+                    </div>
             
-            <!-- 健康检查标签页 -->
-            <div id="health-check" class="tab-content">
-                <div class="card">
-                    <h3>💚 健康检查</h3>
-                    <button class="btn btn-primary" onclick="loadHealthCheck()">🔄 刷新健康状态</button>
-                </div>
-                <div id="health-check-status"></div>
-            </div>
-            
-            <!-- 数据库管理标签页 -->
-            <div id="database-management" class="tab-content">
-                <!-- 连接状态卡片 -->
-                <div class="row mb-4">
-                    <div class="col-12">
-                        <div class="card config-card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div>
-                                        <h5 class="card-title mb-1">
-                                            <i class="bi bi-activity me-2"></i>
-                                            连接状态
-                                        </h5>
-                                        <p class="card-text mb-0">
-                                            <span class="status-indicator status-disconnected" id="dbStatusIndicator"></span>
-                                            <span class="text-danger fw-bold" id="dbStatusText">未连接</span>
-                                        </p>
+                    <!-- 数据库管理标签页 -->
+                    <div id="database-management" class="tab-content">
+                        <!-- 连接状态卡片 -->
+                        <div class="row mb-4">
+                            <div class="col-12">
+                                <div class="card config-card">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div>
+                                                <h5 class="card-title mb-1">
+                                                    <i class="bi bi-activity me-2"></i>
+                                                    连接状态
+                                                </h5>
+                                                <p class="card-text mb-0">
+                                                    <span class="status-indicator status-disconnected" id="dbStatusIndicator"></span>
+                                                    <span class="text-danger fw-bold" id="dbStatusText">未连接</span>
+                                                </p>
+                                            </div>
+                                            <button type="button" class="btn btn-outline-primary btn-test" onclick="testCurrentConnection()">
+                                                <i class="bi bi-arrow-clockwise me-1"></i>
+                                                测试连接
+                                            </button>
+                                        </div>
                                     </div>
-                                    <button type="button" class="btn btn-outline-primary btn-test" onclick="testCurrentConnection()">
-                                        <i class="bi bi-arrow-clockwise me-1"></i>
-                                        测试连接
-                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
                 <!-- 配置表单 -->
                 <div class="row">
@@ -1163,6 +1089,26 @@
     </div>
     
     <script>
+        // 通用错误处理函数
+        function handleError(error, container, defaultMessage = '操作失败') {
+            const message = error.message || defaultMessage;
+            if (container) {
+                container.innerHTML = `<div class="card error">${message}</div>`;
+            } else {
+                alert(message);
+            }
+        }
+        
+        // 通用API调用函数
+        async function apiCall(url, options = {}) {
+            try {
+                const response = await fetch(url, options);
+                return await response.json();
+            } catch (error) {
+                throw new Error(`网络错误: ${error.message}`);
+            }
+        }
+        
         // 显示指定标签页
         function showTab(tabName) {
             hideAllContent();
@@ -1175,9 +1121,6 @@
                 document.getElementById('content-title').textContent = '插件管理';
                 updateActiveNav('plugins');
                 loadPlugins();
-            } else if (tabName === 'execute') {
-                document.getElementById('content-title').textContent = '插件执行';
-                updateActiveNav('execute');
             } else if (tabName === 'status') {
                 document.getElementById('content-title').textContent = '系统状态';
                 updateActiveNav('status');
@@ -1185,6 +1128,7 @@
             } else if (tabName === 'api-docs') {
                 document.getElementById('content-title').textContent = 'API文档';
                 updateActiveNav('api-docs');
+                document.getElementById('api-docs-iframe').classList.add('active');
             } else if (tabName === 'health-check') {
                 document.getElementById('content-title').textContent = '健康检查';
                 updateActiveNav('health-check');
@@ -1201,8 +1145,7 @@
             container.innerHTML = '<div class="loading">正在加载插件列表...</div>';
             
             try {
-                const response = await fetch('/api/plugins');
-                const result = await response.json();
+                const result = await apiCall('/api/plugins');
                 
                 if (result.code === 200 && result.data) {
                     if (result.data.plugins.length === 0) {
@@ -1228,10 +1171,10 @@
                     });
                     container.innerHTML = html;
                 } else {
-                    container.innerHTML = `<div class="card error">加载失败: ${result.message || '未知错误'}</div>`;
+                    handleError(new Error(result.message || '加载失败'), container);
                 }
             } catch (error) {
-                container.innerHTML = `<div class="card error">网络错误: ${error.message}</div>`;
+                handleError(error, container);
             }
         }
         
@@ -1243,15 +1186,13 @@
             buttonElement.disabled = true;
 
             try {
-                const response = await fetch(`/api/plugins/execute/${pluginName}`, {
+                const result = await apiCall(`/api/plugins/execute/${pluginName}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({}) // No input for now
                 });
-
-                const result = await response.json();
 
                 let html = '';
                 if (result.code === 200) {
@@ -1266,7 +1207,7 @@
                 resultContainer.innerHTML = html;
 
             } catch (error) {
-                resultContainer.innerHTML = `<div class="result error"><h4>执行失败</h4><p>${error.message}</p></div>`;
+                handleError(error, resultContainer, '执行失败');
             } finally {
                 buttonElement.disabled = false;
             }
@@ -1275,19 +1216,18 @@
         // 重新加载所有插件
         async function reloadAllPlugins() {
             try {
-                const response = await fetch('/api/plugins/reload', {
+                const result = await apiCall('/api/plugins/reload', {
                     method: 'POST'
                 });
-                const result = await response.json();
                 
                 if (result.code === 200) {
                     alert('插件重新加载成功');
                     loadPlugins();
                 } else {
-                    alert('插件重新加载失败: ' + result.message);
+                    handleError(new Error(result.message || '插件重新加载失败'));
                 }
             } catch (error) {
-                alert('网络错误: ' + error.message);
+                handleError(error);
             }
         }
         
@@ -1297,8 +1237,7 @@
             container.innerHTML = '<div class="loading">正在加载系统状态...</div>';
             
             try {
-                const response = await fetch('/api/system/status');
-                const result = await response.json();
+                const result = await apiCall('/api/system/status');
                 
                 if (result.code === 200) {
                     const data = result.data;
@@ -1322,10 +1261,10 @@
                     `;
                     container.innerHTML = html;
                 } else {
-                    container.innerHTML = `<div class="card error">加载失败: ${result.message || '未知错误'}</div>`;
+                    handleError(new Error(result.message || '加载失败'), container);
                 }
             } catch (error) {
-                container.innerHTML = `<div class="card error">网络错误: ${error.message}</div>`;
+                handleError(error, container);
             }
         }
         
@@ -1335,8 +1274,7 @@
             container.innerHTML = '<div class="loading">正在加载健康检查状态...</div>';
             
             try {
-                const response = await fetch('/actuator/health');
-                const result = await response.json();
+                const result = await apiCall('/actuator/health');
                 
                 let html = `
                     <div class="card">
@@ -1355,7 +1293,8 @@
                 
                 container.innerHTML = html;
             } catch (error) {
-                container.innerHTML = `<div class="card error">加载失败: ${error.message}</div>`;
+                handleError(error, container, '加载失败');
+            }
             }
         }
         
@@ -1365,6 +1304,10 @@
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
+            // 隐藏所有iframe
+            document.querySelectorAll('.content-iframe').forEach(iframe => {
+                iframe.classList.remove('active');
+            });
         }
         
         // 更新导航激活状态
@@ -1372,14 +1315,11 @@
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
-            // 根据activeId设置对应的导航项为激活状态
-            const navItems = document.querySelectorAll('.nav-item');
-            if (activeId === 'plugins') navItems[0]?.classList.add('active');
-            else if (activeId === 'execute') navItems[1]?.classList.add('active');
-            else if (activeId === 'status') navItems[2]?.classList.add('active');
-            else if (activeId === 'api-docs') navItems[3]?.classList.add('active');
-            else if (activeId === 'health-check') navItems[4]?.classList.add('active');
-            else if (activeId === 'database-management') navItems[5]?.classList.add('active');
+            // 根据data-tab属性设置对应的导航项为激活状态
+            const activeNavItem = document.querySelector(`[data-tab="${activeId}"]`);
+            if (activeNavItem) {
+                activeNavItem.classList.add('active');
+            }
         }
         
         // 数据库配置相关函数

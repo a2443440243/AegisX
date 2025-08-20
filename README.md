@@ -1,43 +1,66 @@
-# PF4J 动态插件管理框架
+# 🚀 AegisX — Enterprise Dynamic Plugin Core Framework
 
-基于 Spring Boot + PF4J + Spring Security 的企业级动态插件管理框架，支持插件热加载、安全认证、Web管理界面等功能。
+> **Motto: No Tech Debt — Eliminate Legacy Code. Simplicity is Power.**
 
-## 项目特性
+[中文文档](README.zh.md) | English
 
-- 🔌 **动态插件加载**: 支持运行时加载、卸载和重新加载插件
-- 🔐 **安全认证**: 集成 Spring Security，支持用户认证和权限控制
-- 🏗️ **MVC 架构**: 清晰的分层架构，易于维护和扩展
-- 🌐 **RESTful API**: 完整的插件管理 REST 接口
-- 📊 **Web 管理界面**: 直观的插件管理 Web 界面
-- 🔧 **开发友好**: 支持开发模式，便于插件开发和调试
-- 📈 **监控支持**: 集成 Spring Boot Actuator 健康检查
+AegisX is not a collection of templates and boilerplate code, but a lightweight plugin kernel forged for **actual production environments**. It unifies "extensibility", "security", "observability" and "developer experience" in an extremely simple and clear architecture.
 
-## 技术栈
+---
 
-- **Spring Boot 2.7.14**: 应用框架
-- **PF4J 3.9.0**: 插件框架
-- **Spring Security 5.7.2**: 安全框架
-- **Spring Data JPA 2.7.14**: 数据访问层
-- **MySQL 8.0+**: 数据库
-- **Thymeleaf**: 模板引擎
-- **Maven**: 项目管理
-- **Jackson**: JSON 处理
-- **SLF4J + Logback**: 日志管理
+# Why Choose AegisX
 
-## 数据库集成
+- ✅ **Zero Redundancy**: Keep the core minimal, eliminate all meaningless dependencies and boilerplate.
+- ✅ **Eliminate Legacy Code**: Convention over configuration, unified code standards and extension points, reduce arbitrariness.
+- ✅ **Hot-swappable Plugins**: Load/unload/update plugins at runtime without service restart, support source code loading and jar deployment.
+- ✅ **Enterprise Security**: Built-in Spring Security authorization and authentication templates, extensible permission granularity.
+- ✅ **Observability**: Actuator + custom monitoring points, business visualization monitoring.
+- ✅ **Developer Friendly**: Minimal templates, example plugins, automated scaffolding, get started in 5 minutes.
 
-框架已集成 MySQL 数据库支持，提供统一的数据库操作服务，插件可以通过扩展点进行数据库操作。
+---
 
-### 数据库配置
+# Highlights Overview
 
-在 `application.yml` 中配置数据源：
+- Dynamic plugin management (load / unload / restart / query)
+- Unified security and authentication model
+- Lightweight REST API and management interface
+- Plugin-level logging, monitoring, isolation
+- Clear module layering (core / api / plugin / web)
+- Complete database integration and operation services
+
+---
+
+# AI-Friendly & Modern Development
+
+- **No Tech Debt — Eliminate Legacy Code**: We have zero tolerance for technical debt, code quality is a hard threshold.
+- **AI Pair Programmer**: Collaborate with LLM programming, provide intelligent completion, suggestions and refactoring.
+- **Prompt Engineering**: Good prompt = good code, AegisX supports prompt-driven development workflow.
+- **LLM-assisted Refactoring**: Use models to provide refactoring suggestions, improve code cleanliness and consistency.
+- **Self-hosted LLM**: Support access to enterprise self-hosted models, ensure privacy and compliance.
+
+# Tech Stack
+
+- Spring Boot 2.x
+- PF4J (Plugin Kernel)
+- Spring Security (Authentication)
+- Spring Data JPA + MySQL (Persistence)
+- Thymeleaf (Management Interface)
+- Actuator (Health Check)
+- Maven (Build)
+
+## Database Integration
+
+The framework provides comprehensive database integration capabilities, supporting dynamic data source configuration and plugin-level database operations.
+
+### Configuration
 
 ```yaml
+# Database configuration
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/pf4j_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/plugin_db?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT%2B8
     username: root
-    password: your_password
+    password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
   
   jpa:
@@ -47,410 +70,351 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-        format_sql: true
 ```
 
-### 数据库实体
-
-框架提供了 `JavaAdmin` 实体类，包含用户管理的基本字段：
+### Entity Example
 
 ```java
 @Entity
-@Table(name = "java_admin")
-public class JavaAdmin {
+@Table(name = "demo_entity")
+public class DemoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    @Column(unique = true, nullable = false)
-    private String username;
+    @Column(name = "name")
+    private String name;
     
-    @Column(nullable = false)
-    private String password;
+    @Column(name = "description")
+    private String description;
     
-    @Column(unique = true)
-    private String email;
+    @Column(name = "created_time")
+    private LocalDateTime createdTime;
     
-    private String phone;
-    private Integer status;
-    private String role;
-    
-    @CreationTimestamp
-    private LocalDateTime createTime;
-    
-    @UpdateTimestamp
-    private LocalDateTime updateTime;
-    
-    // getter/setter 方法...
+    // Getters and Setters
 }
 ```
 
-### 数据库服务
+### Repository Interface
 
-框架提供了 `DatabaseService` 统一数据库操作服务：
+The framework provides the `JavaAdmin` repository interface for business queries:
 
 ```java
-@Service
-public class DatabaseService {
-    // 基础 CRUD 操作
-    public JavaAdmin save(JavaAdmin entity);
-    public Optional<JavaAdmin> findById(Long id);
-    public List<JavaAdmin> findAll();
-    public void deleteById(Long id);
+public interface JavaAdmin<T, ID> extends JpaRepository<T, ID> {
     
-    // 业务查询方法
-    public Optional<JavaAdmin> findByUsername(String username);
-    public Optional<JavaAdmin> findByEmail(String email);
-    public List<JavaAdmin> findByStatus(Integer status);
+    /**
+     * Find entities by name (fuzzy search)
+     */
+    @Query("SELECT e FROM #{#entityName} e WHERE e.name LIKE %:name%")
+    List<T> findByNameContaining(@Param("name") String name);
     
-    // 分页查询
-    public Page<JavaAdmin> findAll(Pageable pageable);
+    /**
+     * Find entities by creation time range
+     */
+    @Query("SELECT e FROM #{#entityName} e WHERE e.createdTime BETWEEN :startTime AND :endTime")
+    List<T> findByCreatedTimeBetween(@Param("startTime") LocalDateTime startTime, 
+                                   @Param("endTime") LocalDateTime endTime);
     
-    // 统计方法
-    public long count();
-    public long countByStatus(Integer status);
+    /**
+     * Paginated query with sorting
+     */
+    @Query("SELECT e FROM #{#entityName} e ORDER BY e.createdTime DESC")
+    Page<T> findAllOrderByCreatedTimeDesc(Pageable pageable);
+    
+    /**
+     * Count entities by status
+     */
+    @Query("SELECT COUNT(e) FROM #{#entityName} e WHERE e.status = :status")
+    long countByStatus(@Param("status") String status);
+    
+    /**
+     * Get statistics data
+     */
+    @Query("SELECT new map(e.status as status, COUNT(e) as count) FROM #{#entityName} e GROUP BY e.status")
+    List<Map<String, Object>> getStatusStatistics();
 }
 ```
 
-### 插件数据库扩展
+### Plugin Database Extension
 
-插件可以通过实现 `DatabaseExtension` 接口来使用数据库功能：
+Plugins can extend database functionality through the `DatabaseExtension` interface:
 
 ```java
 @Extension
-public class MyDatabasePlugin implements DatabaseExtension {
-    
-    private static final Logger logger = LoggerFactory.getLogger(MyDatabasePlugin.class);
+public class DemoPluginDatabaseExtension implements DatabaseExtension {
     
     @Override
-    public String getExtensionName() {
-        return "My Database Plugin";
+    public void initializeDatabase() {
+        // Initialize plugin-specific database tables
+        DatabaseUtil.executeUpdate(
+            "CREATE TABLE IF NOT EXISTS plugin_data (" +
+            "id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
+            "plugin_id VARCHAR(255), " +
+            "data_key VARCHAR(255), " +
+            "data_value TEXT, " +
+            "created_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+            ")"
+        );
     }
     
     @Override
-    public void performDatabaseOperation() {
-        logger.info("执行数据库操作");
-        // 在这里可以通过 DatabaseUtil 进行数据库操作
-        // 例如：DatabaseUtil.findAll();
+    public void cleanupDatabase() {
+        // Clean up plugin data when unloading
+        DatabaseUtil.executeUpdate("DELETE FROM plugin_data WHERE plugin_id = ?", getPluginId());
     }
 }
 ```
 
-### 数据库工具类
+### Database Utility Class
 
-框架提供了 `DatabaseUtil` 工具类，插件可以直接使用：
+The framework provides the `DatabaseUtil` class for convenient database operations:
 
 ```java
-// 查询所有用户
-List<JavaAdmin> users = DatabaseUtil.findAll();
+// Query operations
+List<Map<String, Object>> results = DatabaseUtil.queryForList(
+    "SELECT * FROM demo_entity WHERE name LIKE ?", 
+    "%demo%"
+);
 
-// 根据用户名查询
-Optional<JavaAdmin> user = DatabaseUtil.findByUsername("admin");
+// Update operations
+int affectedRows = DatabaseUtil.executeUpdate(
+    "UPDATE demo_entity SET description = ? WHERE id = ?", 
+    "Updated description", 1L
+);
 
-// 保存用户
-JavaAdmin newUser = new JavaAdmin();
-newUser.setUsername("test");
-newUser.setPassword("password");
-DatabaseUtil.save(newUser);
+// Batch operations
+List<Object[]> batchArgs = Arrays.asList(
+    new Object[]{"Name1", "Desc1"},
+    new Object[]{"Name2", "Desc2"}
+);
+DatabaseUtil.batchUpdate(
+    "INSERT INTO demo_entity (name, description) VALUES (?, ?)", 
+    batchArgs
+);
 
-// 分页查询
-Page<JavaAdmin> userPage = DatabaseUtil.findAll(0, 10, "id", "ASC");
-
-// 统计用户数量
-long totalUsers = DatabaseUtil.count();
+// Transaction operations
+DatabaseUtil.executeInTransaction(() -> {
+    DatabaseUtil.executeUpdate("INSERT INTO demo_entity (name) VALUES (?)", "Test");
+    DatabaseUtil.executeUpdate("UPDATE demo_entity SET description = ? WHERE name = ?", "Updated", "Test");
+    return null;
+});
 ```
 
-### 示例插件
-
-框架提供了完整的数据库操作示例插件 `database-demo-plugin`，展示了如何：
-
-- 实现数据库扩展接口
-- 执行基本的 CRUD 操作
-- 进行业务查询和统计
-- 处理异常和日志记录
-
-插件位置：`plugins/database-demo-plugin-1.0.0-jar-with-dependencies.jar`
-
-## 项目结构
+## Project Structure
 
 ```
-pf4j-scaffold/
-├── src/main/java/com/example/pf4j/
-│   ├── config/
-│   │   └── PluginManagerConfig.java     # 插件管理器配置
-│   ├── controller/
-│   │   ├── PluginController.java        # 插件管理控制器
-│   │   └── SystemController.java        # 系统状态控制器
-│   ├── service/
-│   │   └── PluginService.java           # 插件业务逻辑服务
-│   ├── plugin/
-│   │   ├── PluginInterface.java         # 插件接口定义
-│   │   ├── HelloWorldPlugin.java        # 示例插件1
-│   │   └── DataProcessorPlugin.java     # 示例插件2
-│   └── Pf4jScaffoldApplication.java     # 应用启动类
-├── src/main/resources/
-│   ├── application.yml                  # 应用配置
-│   └── static/
-│       └── index.html                   # Web 管理界面
-├── plugins/                             # 插件目录
-├── pom.xml                              # Maven 配置
-└── README.md                            # 项目说明
+src/
+├── main/
+│   ├── java/
+│   │   └── com/
+│   │       └── example/
+│   │           └── framework/
+│   │               ├── FrameworkApplication.java
+│   │               ├── config/          # Configuration classes
+│   │               ├── controller/      # REST controllers
+│   │               ├── service/         # Business services
+│   │               ├── repository/      # Data access layer
+│   │               ├── entity/          # JPA entities
+│   │               ├── plugin/          # Plugin management
+│   │               └── security/        # Security configuration
+│   └── resources/
+│       ├── application.yml              # Main configuration
+│       ├── templates/                   # Thymeleaf templates
+│       └── static/                      # Static resources
+└── plugins/
+    └── database-demo-plugin/            # Example plugin
 ```
 
-## 快速开始
+---
 
-### 1. 环境要求
-
-- JDK 8+
-- Maven 3.6+
-
-### 2. 启动应用
+# Quick Start (Shortest Runnable Path)
 
 ```bash
-# 编译项目
-mvn clean compile
+# Compile
+mvn clean package
 
-# 启动应用
+# Start in development mode
 mvn spring-boot:run
 ```
 
-### 3. 访问应用
+- Management Console: `http://localhost:8080`
+- Health Check: `http://localhost:8080/actuator/health`
+- Hot Reload Plugins: `POST http://localhost:8080/api/plugins/reload`
 
-- **Web 管理界面**: http://localhost:8080
-- **健康检查**: http://localhost:8080/actuator/health
-- **应用信息**: http://localhost:8080/actuator/info
+## API Interfaces
 
-## API 接口
+### Plugin Management
 
-### 插件管理 API
+```bash
+# Get all plugins
+GET /api/plugins
 
-| 方法 | 路径 | 描述 |
-|------|------|------|
-| GET | `/api/plugins` | 获取所有插件列表 |
-| GET | `/api/plugins/{name}` | 获取指定插件详情 |
-| POST | `/api/plugins/{name}/execute` | 执行指定插件 |
-| POST | `/api/plugins/{name}/start` | 启动指定插件 |
-| POST | `/api/plugins/{name}/stop` | 停止指定插件 |
-| POST | `/api/plugins/reload` | 重新加载所有插件 |
+# Load plugin
+POST /api/plugins/load/{pluginId}
 
-### 系统管理 API
+# Unload plugin
+POST /api/plugins/unload/{pluginId}
 
-| 方法 | 路径 | 描述 |
-|------|------|------|
-| GET | `/api/system/status` | 获取系统状态 |
-| GET | `/api/system/health` | 系统健康检查 |
-| GET | `/api/system/info` | 获取系统信息 |
-| POST | `/api/system/restart` | 重启系统 |
+# Reload plugin
+POST /api/plugins/reload/{pluginId}
 
-## 插件开发
+# Get plugin details
+GET /api/plugins/{pluginId}
+```
 
-### 1. 创建插件项目
+### System Management
 
-创建一个新的 Maven 项目，添加以下依赖：
+```bash
+# System status
+GET /api/system/status
+
+# Health check
+GET /actuator/health
+
+# Application info
+GET /actuator/info
+```
+
+## Plugin Development
+
+### 1. Create Plugin Project
 
 ```xml
 <dependency>
     <groupId>org.pf4j</groupId>
     <artifactId>pf4j</artifactId>
-    <version>3.10.0</version>
+    <version>3.9.0</version>
     <scope>provided</scope>
 </dependency>
 ```
 
-### 2. 实现插件接口
+### 2. Implement Plugin Class
 
 ```java
 @Extension
-public class MyPlugin implements PluginInterface {
+public class DemoPlugin extends Plugin {
     
-    @Override
-    public String getName() {
-        return "MyPlugin";
+    public DemoPlugin(PluginWrapper wrapper) {
+        super(wrapper);
     }
     
     @Override
-    public String getVersion() {
-        return "1.0.0";
+    public void start() {
+        System.out.println("Demo Plugin started!");
     }
     
     @Override
-    public String getDescription() {
-        return "我的自定义插件";
-    }
-    
-    @Override
-    public Object execute(Object input) {
-        // 插件业务逻辑
-        return "执行结果";
+    public void stop() {
+        System.out.println("Demo Plugin stopped!");
     }
 }
 ```
 
-### 3. 创建插件描述文件
+### 3. Plugin Configuration
 
-在 `src/main/resources/META-INF` 目录下创建 `extensions.idx` 文件：
-
-```
-com.example.MyPlugin
-```
-
-### 4. 打包插件
-
-```bash
-mvn clean package
+```properties
+# plugin.properties
+plugin.id=demo-plugin
+plugin.class=com.example.DemoPlugin
+plugin.version=1.0.0
+plugin.provider=Example Corp
+plugin.dependencies=
 ```
 
-### 5. 部署插件
+## Configuration
 
-将生成的 JAR 文件复制到应用的 `plugins` 目录下，然后调用重新加载 API。
-
-## 配置说明
-
-### application.yml 配置项
-
-```yaml
-# 服务器配置
-server:
-  port: 8080
-
-# 插件配置
-pf4j:
-  plugin-path: plugins          # 插件目录路径
-  development-mode: true        # 开发模式
-
-# 日志配置
-logging:
-  level:
-    com.example.pf4j: DEBUG
-    org.pf4j: INFO
-```
-
-## 开发模式
-
-开发模式下的特性：
-
-- 支持从源码目录加载插件
-- 自动检测插件变更
-- 详细的调试日志
-- 热重载支持
-
-## 生产部署
-
-### 1. 构建生产包
-
-```bash
-mvn clean package -Pprod
-```
-
-### 2. 配置生产环境
-
-修改 `application.yml`：
+### Development Mode
 
 ```yaml
 pf4j:
-  development-mode: false
-
-logging:
-  level:
-    root: WARN
-    com.example.pf4j: INFO
+  mode: development
+  pluginsDir: plugins
+  systemVersion: 1.0.0
 ```
 
-### 3. 启动应用
+### Production Mode
 
-```bash
-java -jar target/pf4j-scaffold-1.0.0.jar
+```yaml
+pf4j:
+  mode: deployment
+  pluginsDir: /opt/app/plugins
+  systemVersion: 1.0.0
 ```
 
-## 监控和运维
+## Monitoring and Operations
 
-### 健康检查
+### Health Check
 
 ```bash
 curl http://localhost:8080/actuator/health
 ```
 
-### 查看插件状态
+### Plugin Status Monitoring
 
 ```bash
-curl http://localhost:8080/api/plugins
+curl http://localhost:8080/api/plugins/status
 ```
 
-### 重新加载插件
-
-```bash
-curl -X POST http://localhost:8080/api/plugins/reload
-```
-
-## 故障排除
-
-### 常见问题
-
-1. **插件加载失败**
-   - 检查插件 JAR 文件是否在正确的目录
-   - 验证插件的 `extensions.idx` 文件
-   - 查看应用日志中的错误信息
-
-2. **插件执行异常**
-   - 检查插件的依赖是否完整
-   - 验证插件接口实现是否正确
-   - 查看插件的日志输出
-
-3. **Web 界面无法访问**
-   - 确认应用已正常启动
-   - 检查端口是否被占用
-   - 验证防火墙设置
-
-### 日志配置
-
-增加调试日志：
+### Log Configuration
 
 ```yaml
 logging:
   level:
-    org.pf4j: DEBUG
-    com.example.pf4j: DEBUG
+    com.example.framework: DEBUG
+    org.pf4j: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 ```
 
-## 扩展开发
+## Troubleshooting
 
-### 自定义插件接口
+### Common Issues
 
-可以根据业务需求扩展插件接口：
+1. **Plugin loading failure**
+   - Check plugin.properties configuration
+   - Verify plugin dependencies
+   - Check log output
 
-```java
-public interface CustomPluginInterface extends ExtensionPoint {
-    void customMethod();
-}
-```
+2. **Database connection issues**
+   - Verify database configuration
+   - Check network connectivity
+   - Confirm database permissions
 
-### 插件生命周期管理
+3. **Permission issues**
+   - Check Spring Security configuration
+   - Verify user roles and permissions
+   - Review authentication settings
 
-实现插件的初始化和销毁逻辑：
+## Extension Development
 
-```java
-@Override
-public void initialize() {
-    // 插件初始化逻辑
-}
+The framework supports multiple extension points:
 
-@Override
-public void destroy() {
-    // 插件销毁逻辑
-}
-```
+- **Plugin Extensions**: Extend plugin functionality
+- **Security Extensions**: Custom authentication and authorization
+- **Database Extensions**: Custom data access logic
+- **Web Extensions**: Custom web interfaces
 
-## 许可证
+---
 
-MIT License
+# License
 
-## 贡献
+MIT License — Free to use, just keep the copyright notice.
 
-欢迎提交 Issue 和 Pull Request！
+# Contribution Guidelines
 
-## 联系方式
+We welcome all forms of contributions!
 
-如有问题，请通过以下方式联系：
+- 🐛 **Bug Reports**: Please submit Issues if you find problems
+- 💡 **Feature Suggestions**: Share your great ideas
+- 🔧 **Code Contributions**: Submit PRs to improve the project
+- 📖 **Documentation Improvements**: Help improve documentation
 
-- 邮箱: example@example.com
-- Gitee: https://gitee.com/cuixin_1/pf4j-dynamic-plugin-framework
+**Contribution Principle**: No Tech Debt — Eliminate legacy code, maintain code quality
+
+---
+
+# Contact
+
+📧 **Email**: cenzui1314520@gmail.com
+
+If you have any questions or suggestions, feel free to contact us via email!

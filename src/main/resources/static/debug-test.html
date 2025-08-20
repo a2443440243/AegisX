@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body>
+    <h1>Debug Test Page</h1>
+    <div id="output"></div>
+    
+    <script>
+        console.log('页面加载开始');
+        
+        // 测试基本JavaScript功能
+        document.getElementById('output').innerHTML = '<p>JavaScript正常工作</p>';
+        
+        // 测试fetch API
+        fetch('/api-docs/data')
+            .then(response => {
+                console.log('API响应状态:', response.status);
+                return response.json();
+            })
+            .then(data => {
+                console.log('API数据:', data);
+                document.getElementById('output').innerHTML += '<p>API数据获取成功，检查控制台</p>';
+            })
+            .catch(error => {
+                console.error('API请求失败:', error);
+                document.getElementById('output').innerHTML += '<p>API请求失败: ' + error.message + '</p>';
+            });
+    </script>
+</body>
+</html>

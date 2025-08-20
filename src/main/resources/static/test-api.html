@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API测试页面</title>
+</head>
+<body>
+    <h1>API数据测试</h1>
+    <div id="result"></div>
+    <div id="debug"></div>
+    
+    <script>
+        console.log('测试页面加载完成');
+        
+        async function testApiData() {
+            try {
+                console.log('开始测试API数据...');
+                const response = await fetch('/api-docs/data');
+                console.log('响应状态:', response.status);
+                
+                const result = await response.json();
+                console.log('完整响应数据:', result);
+                
+                document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(result, null, 2) + '</pre>';
+                
+                if (result.code === 200) {
+                    const data = result.data;
+                    console.log('插件数据:', data.plugins);
+                    console.log('系统API数据:', data.systemApis);
+                    
+                    let debugInfo = '';
+                    debugInfo += '插件数量: ' + (data.plugins ? data.plugins.length : 0) + '<br>';
+                    debugInfo += '系统API数量: ' + (data.systemApis ? data.systemApis.length : 0) + '<br>';
+                    
+                    if (data.plugins && data.plugins.length > 0) {
+                        debugInfo += '第一个插件: ' + data.plugins[0].name + '<br>';
+                    }
+                    
+                    document.getElementById('debug').innerHTML = debugInfo;
+                } else {
+                    document.getElementById('debug').innerHTML = '错误: ' + result.message;
+                }
+            } catch (error) {
+                console.error('测试失败:', error);
+                document.getElementById('debug').innerHTML = '网络错误: ' + error.message;
+            }
+        }
+        
+        // 页面加载后立即测试
+        document.addEventListener('DOMContentLoaded', testApiData);
+    </script>
+</body>
+</html>
