@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>插件方法调用测试</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .method-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .method-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .method-header {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-bottom: 1px solid #dee2e6;
+            border-radius: 8px 8px 0 0;
+        }
+        .method-body {
+            padding: 15px;
+        }
+        .param-input {
+            margin-bottom: 10px;
+        }
+        .result-area {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 10px;
+            min-height: 100px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+        }
+        .plugin-selector {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .quick-test {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 侧边栏 -->
+            <div class="col-md-3">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="height: 100vh;">
+                    <h4 class="mb-3">
+                        <i class="fas fa-plug text-primary"></i>
+                        插件方法调用
+                    </h4>
+                    
+                    <!-- 插件选择器 -->
+                    <div class="plugin-selector">
+                        <h6><i class="fas fa-cube"></i> 选择插件</h6>
+                        <select id="pluginSelect" class="form-select">
+                            <option value="">请选择插件...</option>
+                        </select>
+                        <button id="loadMethods" class="btn btn-light btn-sm mt-2 w-100">
+                            <i class="fas fa-sync"></i> 加载方法
+                        </button>
+                    </div>
+                    
+                    <!-- 快速测试 -->
+                    <div class="quick-test">
+                        <h6><i class="fas fa-rocket"></i> 快速测试</h6>
+                        <div class="input-group mb-2">
+                            <input type="text" id="quickPlugin" class="form-control" placeholder="插件名">
+                        </div>
+                        <div class="input-group mb-2">
+                            <input type="text" id="quickMethod" class="form-control" placeholder="方法名">
+                        </div>
+                        <button id="quickTest" class="btn btn-light btn-sm w-100">
+                            <i class="fas fa-play"></i> 执行
+                        </button>
+                    </div>
+                    
+                    <!-- 导航链接 -->
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link">
+                                <i class="fas fa-home"></i> 首页
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/plugins" class="nav-link">
+                                <i class="fas fa-puzzle-piece"></i> 插件管理
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/database/config" class="nav-link">
+                                <i class="fas fa-database"></i> 数据库配置
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- 主内容区 -->
+            <div class="col-md-9">
+                <div class="container-fluid py-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-cogs text-primary"></i> 插件方法动态调用</h2>
+                        <div>
+                            <button id="refreshPlugins" class="btn btn-outline-primary">
+                                <i class="fas fa-refresh"></i> 刷新插件
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- 状态信息 -->
+                    <div id="statusAlert" class="alert alert-info" style="display: none;">
+                        <i class="fas fa-info-circle"></i>
+                        <span id="statusMessage">准备就绪</span>
+                    </div>
+                    
+                    <!-- 插件信息 -->
+                    <div id="pluginInfo" class="card mb-4" style="display: none;">
+                        <div class="card-header">
+                            <h5><i class="fas fa-info-circle"></i> 插件信息</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <strong>插件名称:</strong> <span id="pluginName"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <strong>类名:</strong> <span id="pluginClass"></span>
+                                </div>
+                            </div>
+                            <div class="row mt-2">
+                                <div class="col-md-12">
+                                    <strong>可用方法数量:</strong> <span id="methodCount"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 方法列表 -->
+                    <div id="methodsList" class="row">
+                        <!-- 动态生成的方法卡片将在这里显示 -->
+                    </div>
+                    
+                    <!-- 执行结果 -->
+                    <div id="resultSection" class="card mt-4" style="display: none;">
+                        <div class="card-header">
+                            <h5><i class="fas fa-terminal"></i> 执行结果</h5>
+                        </div>
+                        <div class="card-body">
+                            <div id="resultContent" class="result-area"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentPlugin = null;
+        let currentMethods = [];
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPlugins();
+            bindEvents();
+        });
+        
+        // 绑定事件
+        function bindEvents() {
+            document.getElementById('refreshPlugins').addEventListener('click', loadPlugins);
+            document.getElementById('loadMethods').addEventListener('click', loadPluginMethods);
+            document.getElementById('quickTest').addEventListener('click', quickTest);
+            document.getElementById('pluginSelect').addEventListener('change', function() {
+                currentPlugin = this.value;
+                if (currentPlugin) {
+                    loadPluginMethods();
+                }
+            });
+        }
+        
+        // 加载所有插件
+        function loadPlugins() {
+            showStatus('正在加载插件列表...', 'info');
+            
+            fetch('/api/plugins')
+                .then(response => response.json())
+                .then(data => {
+                    const select = document.getElementById('pluginSelect');
+                    select.innerHTML = '<option value="">请选择插件...</option>';
+                    
+                    if (data && Array.isArray(data)) {
+                        data.forEach(plugin => {
+                            const option = document.createElement('option');
+                            option.value = plugin.pluginName || plugin.name;
+                            option.textContent = `${plugin.pluginName || plugin.name} (${plugin.pluginVersion || plugin.version})`;
+                            select.appendChild(option);
+                        });
+                        showStatus(`成功加载 ${data.length} 个插件`, 'success');
+                    } else {
+                        showStatus('未找到可用插件', 'warning');
+                    }
+                })
+                .catch(error => {
+                    console.error('加载插件失败:', error);
+                    showStatus('加载插件失败: ' + error.message, 'danger');
+                });
+        }
+        
+        // 加载插件方法
+        function loadPluginMethods() {
+            if (!currentPlugin) {
+                showStatus('请先选择一个插件', 'warning');
+                return;
+            }
+            
+            showStatus('正在加载插件方法...', 'info');
+            
+            fetch(`/api/plugins/method/${currentPlugin}/methods`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentMethods = data.methods || [];
+                        displayPluginInfo(data);
+                        displayMethods(currentMethods);
+                        showStatus(`成功加载 ${currentMethods.length} 个方法`, 'success');
+                    } else {
+                        showStatus('加载方法失败: ' + data.error, 'danger');
+                    }
+                })
+                .catch(error => {
+                    console.error('加载方法失败:', error);
+                    showStatus('加载方法失败: ' + error.message, 'danger');
+                });
+        }
+        
+        // 显示插件信息
+        function displayPluginInfo(data) {
+            document.getElementById('pluginName').textContent = currentPlugin;
+            document.getElementById('pluginClass').textContent = data.className || 'Unknown';
+            document.getElementById('methodCount').textContent = (data.methods || []).length;
+            document.getElementById('pluginInfo').style.display = 'block';
+        }
+        
+        // 显示方法列表
+        function displayMethods(methods) {
+            const container = document.getElementById('methodsList');
+            container.innerHTML = '';
+            
+            if (!methods || methods.length === 0) {
+                container.innerHTML = '<div class="col-12"><div class="alert alert-info">该插件没有可调用的方法</div></div>';
+                return;
+            }
+            
+            methods.forEach((method, index) => {
+                const methodCard = createMethodCard(method, index);
+                container.appendChild(methodCard);
+            });
+        }
+        
+        // 创建方法卡片
+        function createMethodCard(method, index) {
+            const col = document.createElement('div');
+            col.className = 'col-md-6 col-lg-4';
+            
+            const card = document.createElement('div');
+            card.className = 'method-card';
+            
+            const header = document.createElement('div');
+            header.className = 'method-header';
+            header.innerHTML = `
+                <strong>${method.name}</strong>
+                <small class="text-muted float-end">${method.returnType}</small>
+            `;
+            
+            const body = document.createElement('div');
+            body.className = 'method-body';
+            
+            let parametersHtml = '';
+            if (method.parameters && method.parameters.length > 0) {
+                parametersHtml = '<div class="mb-2"><small class="text-muted">参数:</small></div>';
+                method.parameters.forEach((param, paramIndex) => {
+                    parametersHtml += `
+                        <div class="param-input">
+                            <label class="form-label">${param.name} (${param.type})</label>
+                            <input type="text" class="form-control form-control-sm" 
+                                   id="param_${index}_${paramIndex}" 
+                                   placeholder="输入${param.name}">
+                        </div>
+                    `;
+                });
+            } else {
+                parametersHtml = '<div class="text-muted"><small>无参数</small></div>';
+            }
+            
+            body.innerHTML = `
+                ${parametersHtml}
+                <button class="btn btn-primary btn-sm w-100" onclick="executeMethod('${method.name}', ${index})">
+                    <i class="fas fa-play"></i> 执行方法
+                </button>
+            `;
+            
+            card.appendChild(header);
+            card.appendChild(body);
+            col.appendChild(card);
+            
+            return col;
+        }
+        
+        // 执行方法
+        function executeMethod(methodName, methodIndex) {
+            if (!currentPlugin) {
+                showStatus('请先选择插件', 'warning');
+                return;
+            }
+            
+            const method = currentMethods[methodIndex];
+            const params = {};
+            
+            // 收集参数
+            if (method.parameters && method.parameters.length > 0) {
+                method.parameters.forEach((param, paramIndex) => {
+                    const input = document.getElementById(`param_${methodIndex}_${paramIndex}`);
+                    if (input && input.value.trim()) {
+                        params[param.name] = input.value.trim();
+                    }
+                });
+            }
+            
+            showStatus(`正在执行方法: ${methodName}...`, 'info');
+            
+            const requestBody = Object.keys(params).length > 0 ? params : null;
+            const url = `/api/plugins/method/${currentPlugin}/${methodName}`;
+            
+            const fetchOptions = {
+                method: requestBody ? 'POST' : 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            
+            if (requestBody) {
+                fetchOptions.body = JSON.stringify(requestBody);
+            }
+            
+            fetch(url, fetchOptions)
+                .then(response => response.json())
+                .then(data => {
+                    displayResult(data);
+                    if (data.success) {
+                        showStatus(`方法执行成功: ${methodName}`, 'success');
+                    } else {
+                        showStatus(`方法执行失败: ${data.error}`, 'danger');
+                    }
+                })
+                .catch(error => {
+                    console.error('执行方法失败:', error);
+                    showStatus('执行方法失败: ' + error.message, 'danger');
+                    displayResult({
+                        success: false,
+                        error: error.message,
+                        plugin: currentPlugin,
+                        method: methodName
+                    });
+                });
+        }
+        
+        // 快速测试
+        function quickTest() {
+            const plugin = document.getElementById('quickPlugin').value.trim();
+            const method = document.getElementById('quickMethod').value.trim();
+            
+            if (!plugin || !method) {
+                showStatus('请输入插件名和方法名', 'warning');
+                return;
+            }
+            
+            showStatus(`正在执行: ${plugin}.${method}...`, 'info');
+            
+            fetch(`/api/plugins/method/${plugin}/${method}`, {
+                method: 'GET'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    displayResult(data);
+                    if (data.success) {
+                        showStatus(`快速测试成功: ${plugin}.${method}`, 'success');
+                    } else {
+                        showStatus(`快速测试失败: ${data.error}`, 'danger');
+                    }
+                })
+                .catch(error => {
+                    console.error('快速测试失败:', error);
+                    showStatus('快速测试失败: ' + error.message, 'danger');
+                    displayResult({
+                        success: false,
+                        error: error.message,
+                        plugin: plugin,
+                        method: method
+                    });
+                });
+        }
+        
+        // 显示执行结果
+        function displayResult(data) {
+            const resultContent = document.getElementById('resultContent');
+            const resultSection = document.getElementById('resultSection');
+            
+            resultContent.textContent = JSON.stringify(data, null, 2);
+            resultSection.style.display = 'block';
+            
+            // 滚动到结果区域
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 显示状态信息
+        function showStatus(message, type = 'info') {
+            const alert = document.getElementById('statusAlert');
+            const messageSpan = document.getElementById('statusMessage');
+            
+            alert.className = `alert alert-${type}`;
+            messageSpan.textContent = message;
+            alert.style.display = 'block';
+            
+            // 3秒后自动隐藏成功和信息消息
+            if (type === 'success' || type === 'info') {
+                setTimeout(() => {
+                    alert.style.display = 'none';
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>

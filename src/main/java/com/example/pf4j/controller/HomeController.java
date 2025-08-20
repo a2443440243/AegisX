@@ -19,4 +19,14 @@ public class HomeController {
     public String home() {
         return "index";
     }
+    
+    /**
+     * 插件方法调用测试页面
+     * 
+     * @return 插件方法测试页面模板名称
+     */
+    @GetMapping("/plugin-method")
+    public String pluginMethod() {
+        return "plugin-method";
+    }
 }
