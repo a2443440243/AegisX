@@ -1,3 +1,5 @@
+
+
 # PF4J 动态插件管理框架
 
 基于 Spring Boot + PF4J + Spring Security 的企业级动态插件管理框架，支持插件热加载、安全认证、Web管理界面等功能。
@@ -8,7 +10,7 @@
 - 🔐 **安全认证**: 集成 Spring Security，支持用户认证和权限控制
 - 🏗️ **MVC 架构**: 清晰的分层架构，易于维护和扩展
 - 🌐 **RESTful API**: 完整的插件管理 REST 接口
-- 📊 **Web 管理界面**: 直观的插件管理 Web 界面
+- 📊 **Web �1.0.0.jar 管理界面**: 直观的插件管理 Web 界面
 - 🔧 **开发友好**: 支持开发模式，便于插件开发和调试
 - 📈 **监控支持**: 集成 Spring Boot Actuator 健康检查
 
@@ -52,124 +54,23 @@ spring:
 
 ### 数据库实体
 
-框架提供了 `JavaAdmin` 实体类，包含用户管理的基本字段：
-
-```java
-@Entity
-@Table(name = "java_admin")
-public class JavaAdmin {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    @Column(unique = true, nullable = false)
-    private String username;
-    
-    @Column(nullable = false)
-    private String password;
-    
-    @Column(unique = true)
-    private String email;
-    
-    private String phone;
-    private Integer status;
-    private String role;
-    
-    @CreationTimestamp
-    private LocalDateTime createTime;
-    
-    @UpdateTimestamp
-    private LocalDateTime updateTime;
-    
-    // getter/setter 方法...
-}
-```
+框架提供了 `JavaAdmin` 实体类，包含用户管理的基本字段。
 
 ### 数据库服务
 
-框架提供了 `DatabaseService` 统一数据库操作服务：
-
-```java
-@Service
-public class DatabaseService {
-    // 基础 CRUD 操作
-    public JavaAdmin save(JavaAdmin entity);
-    public Optional<JavaAdmin> findById(Long id);
-    public List<JavaAdmin> findAll();
-    public void deleteById(Long id);
-    
-    // 业务查询方法
-    public Optional<JavaAdmin> findByUsername(String username);
-    public Optional<JavaAdmin> findByEmail(String email);
-    public List<JavaAdmin> findByStatus(Integer status);
-    
-    // 分页查询
-    public Page<JavaAdmin> findAll(Pageable pageable);
-    
-    // 统计方法
-    public long count();
-    public long countByStatus(Integer status);
-}
-```
+框架提供了 `DatabaseService` 统一数据库操作服务，包含基础 CRUD 操作、业务查询、分页查询和统计功能。
 
 ### 插件数据库扩展
 
-插件可以通过实现 `DatabaseExtension` 接口来使用数据库功能：
-
-```java
-@Extension
-public class MyDatabasePlugin implements DatabaseExtension {
-    
-    private static final Logger logger = LoggerFactory.getLogger(MyDatabasePlugin.class);
-    
-    @Override
-    public String getExtensionName() {
-        return "My Database Plugin";
-    }
-    
-    @Override
-    public void performDatabaseOperation() {
-        logger.info("执行数据库操作");
-        // 在这里可以通过 DatabaseUtil 进行数据库操作
-        // 例如：DatabaseUtil.findAll();
-    }
-}
-```
+插件可以通过实现 `DatabaseExtension` 接口来使用数据库功能。
 
 ### 数据库工具类
 
-框架提供了 `DatabaseUtil` 工具类，插件可以直接使用：
+框架提供了 `DatabaseUtil` 工具类，插件可以直接使用进行数据库操作。
 
-```java
-// 查询所有用户
-List<JavaAdmin> users = DatabaseUtil.findAll();
+## 示例插件
 
-// 根据用户名查询
-Optional<JavaAdmin> user = DatabaseUtil.findByUsername("admin");
-
-// 保存用户
-JavaAdmin newUser = new JavaAdmin();
-newUser.setUsername("test");
-newUser.setPassword("password");
-DatabaseUtil.save(newUser);
-
-// 分页查询
-Page<JavaAdmin> userPage = DatabaseUtil.findAll(0, 10, "id", "ASC");
-
-// 统计用户数量
-long totalUsers = DatabaseUtil.count();
-```
-
-### 示例插件
-
-框架提供了完整的数据库操作示例插件 `database-demo-plugin`，展示了如何：
-
-- 实现数据库扩展接口
-- 执行基本的 CRUD 操作
-- 进行业务查询和统计
-- 处理异常和日志记录
-
-插件位置：`plugins/database-demo-plugin-1.0.0-jar-with-dependencies.jar`
+框架提供了完整的数据库操作示例插件 `database-demo-plugin`，展示了如何实现数据库扩展接口和执行基本的数据库操作。
 
 ## 项目结构
 
@@ -191,7 +92,7 @@ pf4j-scaffold/
 ├── src/main/resources/
 │   ├── application.yml                  # 应用配置
 │   └── static/
-│       └── index.html                   # Web 管理界面
+│       └── index.html                   # Web �1.0.0.jar管理界面
 ├── plugins/                             # 插件目录
 ├── pom.xml                              # Maven 配置
 └── README.md                            # 项目说明
@@ -316,7 +217,7 @@ server:
 # 插件配置
 pf4j:
   plugin-path: plugins          # 插件目录路径
-  development-mode: true        # 开发模式
+  development-mode: true       # 开发模式
 
 # 日志配置
 logging:
@@ -435,7 +336,7 @@ public void initialize() {
 }
 
 @Override
-public void destroy() {
+public public void destroy() {
     // 插件销毁逻辑
 }
 ```
