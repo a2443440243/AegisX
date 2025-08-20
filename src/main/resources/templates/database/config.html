@@ -40,6 +40,64 @@
         .loading-spinner {
             display: none;
         }
+        
+        /* 全屏优化样式 */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container-fluid {
+            max-width: none;
+            width: 100%;
+        }
+        
+        .navbar .container {
+            max-width: none;
+            width: 100%;
+            padding: 0 2rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .navbar .container {
+                padding: 0 1rem;
+            }
+            
+            .card-body {
+                padding: 1.5rem;
+            }
+            
+            .btn-group .btn {
+                font-size: 0.875rem;
+                padding: 0.5rem 0.75rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .container-fluid {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            
+            .navbar .container {
+                padding: 0 0.5rem;
+            }
+            
+            .card-body {
+                padding: 1rem;
+            }
+            
+            .col-xl-8.col-lg-10.col-md-12 {
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -62,7 +120,7 @@
             </div>
         </nav>
 
-        <div class="container">
+        <div class="container-fluid px-4">
             <!-- 页面标题 -->
             <div class="row mb-4">
                 <div class="col-12">
@@ -103,8 +161,8 @@
             </div>
 
             <!-- 配置表单 -->
-            <div class="row">
-                <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-lg-10 col-md-12">
                     <div class="card config-card">
                         <div class="card-header">
                             <h5 class="mb-0">

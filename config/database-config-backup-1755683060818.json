@@ -1,0 +1,17 @@
+{
+  "url" : null,
+  "host" : "localhost",
+  "port" : 3306,
+  "database" : "pf4j_db",
+  "username" : "root",
+  "password" : null,
+  "driverClassName" : "com.mysql.cj.jdbc.Driver",
+  "maxPoolSize" : 10,
+  "minPoolSize" : 1,
+  "connectionTimeout" : 30000,
+  "idleTimeout" : 600000,
+  "maxLifetime" : 1800000,
+  "valid" : true,
+  "summary" : "用户: root, URL: jdbc:mysql://localhost:3306/pf4j_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true",
+  "jdbcUrl" : "jdbc:mysql://localhost:3306/pf4j_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true"
+}

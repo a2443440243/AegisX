@@ -1,5 +1,6 @@
 package com.example.pf4j.controller;
 
+import com.example.pf4jscaffold.common.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
@@ -24,7 +25,7 @@ public class SystemController {
      * @return 系统状态信息
      */
     @GetMapping("/status")
-    public ResponseEntity<Map<String, Object>> getSystemStatus() {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getSystemStatus() {
         Map<String, Object> status = new HashMap<>();
         status.put("status", "running");
         status.put("timestamp", LocalDateTime.now());
@@ -41,9 +42,8 @@ public class SystemController {
         jvmInfo.put("processors", runtime.availableProcessors());
         
         status.put("jvm", jvmInfo);
-        status.put("success", true);
         
-        return ResponseEntity.ok(status);
+        return ResponseEntity.ok(ApiResponse.success(status));
     }
     
     /**
@@ -51,7 +51,7 @@ public class SystemController {
      * @return 健康状态
      */
     @GetMapping("/health")
-    public ResponseEntity<Map<String, Object>> healthCheck() {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> healthCheck() {
         Map<String, Object> health = new HashMap<>();
         health.put("status", "UP");
         health.put("timestamp", LocalDateTime.now());
@@ -61,7 +61,7 @@ public class SystemController {
             "diskSpace", "UP"
         ));
         
-        return ResponseEntity.ok(health);
+        return ResponseEntity.ok(ApiResponse.success(health));
     }
     
     /**
@@ -69,7 +69,7 @@ public class SystemController {
      * @return 系统详细信息
      */
     @GetMapping("/info")
-    public ResponseEntity<Map<String, Object>> getSystemInfo() {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getSystemInfo() {
         Map<String, Object> info = new HashMap<>();
         
         // 系统属性
@@ -87,9 +87,8 @@ public class SystemController {
             "version", "1.0.0",
             "description", "基于PF4J的动态插件加载脚手架"
         ));
-        info.put("success", true);
         
-        return ResponseEntity.ok(info);
+        return ResponseEntity.ok(ApiResponse.success(info));
     }
     
     /**
@@ -97,13 +96,11 @@ public class SystemController {
      * @return 操作结果
      */
     @PostMapping("/restart")
-    public ResponseEntity<Map<String, Object>> restartSystem() {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> restartSystem() {
         Map<String, Object> response = new HashMap<>();
-        response.put("success", true);
-        response.put("message", "系统重启请求已接收，请稍后...");
         response.put("timestamp", LocalDateTime.now());
         
         // 注意：实际生产环境中需要谨慎实现系统重启功能
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(ApiResponse.success("系统重启请求已接收，请稍后...", response));
     }
 }

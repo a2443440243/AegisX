@@ -1,5 +1,6 @@
 package com.example.pf4jscaffold.controller;
 
+import com.example.pf4jscaffold.common.ApiResponse;
 import com.example.pf4jscaffold.config.DatabaseConfig;
 import com.example.pf4jscaffold.service.DatabaseConfigService;
 import lombok.extern.slf4j.Slf4j;
@@ -70,34 +71,18 @@ public class DatabaseConfigController {
      */
     @GetMapping("/api/config")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> getCurrentConfig() {
-        try {
-            DatabaseConfig config = databaseConfigService.getCurrentConfig().copyWithoutPassword();
-            boolean isConnected = databaseConfigService.isConnected();
-            boolean configExists = databaseConfigService.getConfigManager().configFileExists();
-            
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", true);
-            response.put("config", config);
-            response.put("isConnected", isConnected);
-            response.put("configExists", configExists);
-            response.put("message", "配置获取成功");
-            
-            log.debug("API获取配置成功: {}", config.getSummary());
-            return ResponseEntity.ok(response);
-            
-        } catch (Exception e) {
-            log.error("API获取数据库配置失败", e);
-            
-            Map<String, Object> response = new HashMap<>();
-            response.put("success", false);
-            response.put("message", "获取配置失败: " + e.getMessage());
-            response.put("config", DatabaseConfig.createDefault().copyWithoutPassword());
-            response.put("isConnected", false);
-            response.put("configExists", false);
-            
-            return ResponseEntity.internalServerError().body(response);
-        }
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getCurrentConfig() {
+        DatabaseConfig config = databaseConfigService.getCurrentConfig().copyWithoutPassword();
+        boolean isConnected = databaseConfigService.isConnected();
+        boolean configExists = databaseConfigService.getConfigManager().configFileExists();
+        
+        Map<String, Object> data = new HashMap<>();
+        data.put("config", config);
+        data.put("isConnected", isConnected);
+        data.put("configExists", configExists);
+        
+        log.debug("API获取配置成功: {}", config.getSummary());
+        return ResponseEntity.ok(ApiResponse.success("配置获取成功", data));
     }
     
     /**
@@ -108,45 +93,27 @@ public class DatabaseConfigController {
      */
     @PostMapping("/api/config")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> updateConfig(@RequestBody DatabaseConfig config) {
-        Map<String, Object> response = new HashMap<>();
+    public ResponseEntity<ApiResponse<Map<String, Object>>> updateConfig(@RequestBody DatabaseConfig config) {
+        log.info("接收到数据库配置更新请求: {}", config.getSummary());
         
-        try {
-            log.info("接收到数据库配置更新请求: {}", config.getSummary());
+        // 验证配置完整性
+        if (!config.isValid()) {
+            log.warn("配置验证失败: {}", config.getSummary());
+            return ResponseEntity.badRequest().body(ApiResponse.error("配置信息不完整，请检查必填项（URL/主机、用户名、密码）"));
+        }
+        
+        // 尝试更新配置
+        boolean success = databaseConfigService.updateConfig(config);
+        
+        if (success) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("isConnected", databaseConfigService.isConnected());
             
-            // 验证配置完整性
-            if (!config.isValid()) {
-                response.put("success", false);
-                response.put("message", "配置信息不完整，请检查必填项（URL/主机、用户名、密码）");
-                log.warn("配置验证失败: {}", config.getSummary());
-                return ResponseEntity.badRequest().body(response);
-            }
-            
-            // 尝试更新配置
-            boolean success = databaseConfigService.updateConfig(config);
-            
-            if (success) {
-                response.put("success", true);
-                response.put("message", "配置更新成功，数据源已重新加载");
-                response.put("isConnected", databaseConfigService.isConnected());
-                
-                log.info("数据库配置更新成功: {}", config.getSummary());
-                return ResponseEntity.ok(response);
-            } else {
-                response.put("success", false);
-                response.put("message", "配置更新失败，请检查配置信息和数据库连接");
-                
-                log.warn("数据库配置更新失败: {}", config.getSummary());
-                return ResponseEntity.badRequest().body(response);
-            }
-            
-        } catch (Exception e) {
-            log.error("更新数据库配置时发生异常: {}", config.getSummary(), e);
-            
-            response.put("success", false);
-            response.put("message", "更新失败: " + e.getMessage());
-            
-            return ResponseEntity.internalServerError().body(response);
+            log.info("数据库配置更新成功: {}", config.getSummary());
+            return ResponseEntity.ok(ApiResponse.success("配置更新成功，数据源已重新加载", data));
+        } else {
+            log.warn("数据库配置更新失败: {}", config.getSummary());
+            return ResponseEntity.badRequest().body(ApiResponse.error("配置更新失败，请检查配置信息和数据库连接"));
         }
     }
     
@@ -158,40 +125,26 @@ public class DatabaseConfigController {
      */
     @PostMapping("/api/test")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> testConnection(@RequestBody(required = false) DatabaseConfig config) {
-        Map<String, Object> response = new HashMap<>();
+    public ResponseEntity<ApiResponse<Map<String, Object>>> testConnection(@RequestBody(required = false) DatabaseConfig config) {
+        DatabaseConfigService.ConnectionTestResult result;
         
-        try {
-            DatabaseConfigService.ConnectionTestResult result;
-            
-            if (config != null && config.isValid()) {
-                log.info("测试指定的数据库配置: {}", config.getSummary());
-                result = databaseConfigService.testConnection(config);
-            } else {
-                log.info("测试当前数据库配置");
-                result = databaseConfigService.testCurrentConnection();
-            }
-            
-            response.put("success", result.isSuccess());
-            response.put("message", result.getDisplayMessage());
-            response.put("duration", result.getDuration());
-            
-            if (result.isSuccess()) {
-                log.info("数据库连接测试成功: {}", result.toString());
-                return ResponseEntity.ok(response);
-            } else {
-                log.warn("数据库连接测试失败: {}", result.toString());
-                return ResponseEntity.badRequest().body(response);
-            }
-            
-        } catch (Exception e) {
-            log.error("数据库连接测试时发生异常", e);
-            
-            response.put("success", false);
-            response.put("message", "测试异常: " + e.getMessage());
-            response.put("duration", 0);
-            
-            return ResponseEntity.internalServerError().body(response);
+        if (config != null && config.isValid()) {
+            log.info("测试指定的数据库配置: {}", config.getSummary());
+            result = databaseConfigService.testConnection(config);
+        } else {
+            log.info("测试当前数据库配置");
+            result = databaseConfigService.testCurrentConnection();
+        }
+        
+        Map<String, Object> data = new HashMap<>();
+        data.put("duration", result.getDuration());
+        
+        if (result.isSuccess()) {
+            log.info("数据库连接测试成功: {}", result.toString());
+            return ResponseEntity.ok(ApiResponse.success(result.getDisplayMessage(), data));
+        } else {
+            log.warn("数据库连接测试失败: {}", result.toString());
+            return ResponseEntity.badRequest().body(ApiResponse.error(result.getDisplayMessage()));
         }
     }
     
@@ -202,31 +155,17 @@ public class DatabaseConfigController {
      */
     @PostMapping("/api/reload")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> reloadDataSource() {
-        Map<String, Object> response = new HashMap<>();
+    public ResponseEntity<ApiResponse<Map<String, Object>>> reloadDataSource() {
+        log.info("手动重新加载数据源");
         
-        try {
-            log.info("手动重新加载数据源");
-            
-            databaseConfigService.reloadDataSource();
-            boolean isConnected = databaseConfigService.isConnected();
-            
-            response.put("success", true);
-            response.put("message", "数据源重新加载成功");
-            response.put("isConnected", isConnected);
-            
-            log.info("数据源重新加载成功，连接状态: {}", isConnected);
-            return ResponseEntity.ok(response);
-            
-        } catch (Exception e) {
-            log.error("重新加载数据源失败", e);
-            
-            response.put("success", false);
-            response.put("message", "重新加载失败: " + e.getMessage());
-            response.put("isConnected", false);
-            
-            return ResponseEntity.internalServerError().body(response);
-        }
+        databaseConfigService.reloadDataSource();
+        boolean isConnected = databaseConfigService.isConnected();
+        
+        Map<String, Object> data = new HashMap<>();
+        data.put("isConnected", isConnected);
+        
+        log.info("数据源重新加载成功，连接状态: {}", isConnected);
+        return ResponseEntity.ok(ApiResponse.success("数据源重新加载成功", data));
     }
     
     /**
@@ -236,35 +175,19 @@ public class DatabaseConfigController {
      */
     @PostMapping("/api/reset")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> resetConfig() {
-        Map<String, Object> response = new HashMap<>();
+    public ResponseEntity<ApiResponse<Map<String, Object>>> resetConfig() {
+        log.info("重置数据库配置为默认值");
         
-        try {
-            log.info("重置数据库配置为默认值");
+        boolean success = databaseConfigService.resetToDefault();
+        
+        if (success) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("config", databaseConfigService.getCurrentConfig().copyWithoutPassword());
             
-            boolean success = databaseConfigService.resetToDefault();
-            
-            if (success) {
-                response.put("success", true);
-                response.put("message", "配置已重置为默认值");
-                response.put("config", databaseConfigService.getCurrentConfig().copyWithoutPassword());
-                
-                log.info("数据库配置重置成功");
-                return ResponseEntity.ok(response);
-            } else {
-                response.put("success", false);
-                response.put("message", "重置配置失败");
-                
-                return ResponseEntity.internalServerError().body(response);
-            }
-            
-        } catch (Exception e) {
-            log.error("重置数据库配置失败", e);
-            
-            response.put("success", false);
-            response.put("message", "重置失败: " + e.getMessage());
-            
-            return ResponseEntity.internalServerError().body(response);
+            log.info("数据库配置重置成功");
+            return ResponseEntity.ok(ApiResponse.success("配置已重置为默认值", data));
+        } else {
+            return ResponseEntity.internalServerError().body(ApiResponse.serverError("重置配置失败"));
         }
     }
     
@@ -275,31 +198,14 @@ public class DatabaseConfigController {
      */
     @GetMapping("/api/status")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> getConnectionStatus() {
-        Map<String, Object> response = new HashMap<>();
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getConnectionStatus() {
+        boolean isConnected = databaseConfigService.isConnected();
+        DatabaseConfig config = databaseConfigService.getCurrentConfig();
         
-        try {
-            boolean isConnected = databaseConfigService.isConnected();
-            boolean configExists = databaseConfigService.getConfigManager().configFileExists();
-            DatabaseConfig config = databaseConfigService.getCurrentConfig();
-            
-            response.put("success", true);
-            response.put("isConnected", isConnected);
-            response.put("configExists", configExists);
-            response.put("configSummary", config.getSummary());
-            response.put("message", isConnected ? "数据库连接正常" : "数据库未连接");
-            
-            return ResponseEntity.ok(response);
-            
-        } catch (Exception e) {
-            log.error("获取连接状态失败", e);
-            
-            response.put("success", false);
-            response.put("isConnected", false);
-            response.put("configExists", false);
-            response.put("message", "获取状态失败: " + e.getMessage());
-            
-            return ResponseEntity.internalServerError().body(response);
-        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("isConnected", isConnected);
+        data.put("config", config.copyWithoutPassword());
+        
+        return ResponseEntity.ok(ApiResponse.success(data));
     }
 }

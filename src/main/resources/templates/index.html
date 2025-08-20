@@ -15,28 +15,29 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 0;
+            margin: 0;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
+            width: 100%;
+            margin: 0;
             background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            border-radius: 0;
+            box-shadow: none;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: calc(100vh - 40px);
+            height: 100vh;
         }
         
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 25px 35px;
-            border-radius: 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.3);
+            border-radius: 0;
+            margin-bottom: 0;
+            box-shadow: none;
             position: relative;
             overflow: hidden;
         }
@@ -116,7 +117,8 @@
         }
         
         .nav {
-            width: 200px;
+            width: 250px;
+            min-width: 200px;
             background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
             border-right: 1px solid #dee2e6;
             display: flex;
@@ -124,6 +126,7 @@
             padding: 20px 0;
             flex-shrink: 0;
             box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            transition: width 0.3s ease;
         }
         
         .nav-item {
@@ -162,10 +165,11 @@
             background: white;
             display: flex;
             flex-direction: column;
+            min-width: 0;
         }
         
         .content-header {
-            padding: 20px 30px;
+            padding: 15px 20px;
             border-bottom: 1px solid #dee2e6;
             background: white;
         }
@@ -173,6 +177,7 @@
         .content-body {
             flex: 1;
             overflow: hidden;
+            padding: 0;
         }
         
         .content-iframe {
@@ -190,7 +195,9 @@
             display: none;
             height: 100%;
             overflow-y: auto;
-            padding: 30px;
+            padding: 15px;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         .tab-content.active {
@@ -502,6 +509,73 @@
         .btn-group .btn:last-child {
             border-top-left-radius: 0;
             border-bottom-left-radius: 0;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            body {
+                padding: 5px;
+            }
+            
+            .container {
+                border-radius: 8px;
+                height: calc(100vh - 10px);
+            }
+            
+            .nav {
+                width: 60px;
+                min-width: 60px;
+            }
+            
+            .nav-item {
+                padding: 12px 8px;
+                font-size: 14px;
+                text-align: center;
+            }
+            
+            .header {
+                padding: 15px 20px;
+            }
+            
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .header p {
+                font-size: 1em;
+            }
+            
+            .user-info {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-top: 10px;
+                justify-content: center;
+            }
+            
+            .tab-content {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .nav {
+                width: 50px;
+                min-width: 50px;
+            }
+            
+            .nav-item {
+                padding: 10px 5px;
+                font-size: 12px;
+            }
+            
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .tab-content {
+                padding: 10px;
+            }
         }
 
         .loading-spinner {
@@ -854,7 +928,7 @@
                     <button class="btn btn-primary" onclick="loadPlugins()">🔄 刷新插件列表</button>
                     <button class="btn btn-warning" onclick="reloadAllPlugins()">🔄 重新加载所有插件</button>
                 </div>
-                <div id="plugin-list" class="loading">正在加载插件列表...</div>
+                <div id="plugin-list"></div>
             </div>
             
             <!-- 插件执行标签页 -->
@@ -878,7 +952,7 @@
                     <h3>🖥️ 系统状态监控</h3>
                     <button class="btn btn-primary" onclick="loadSystemStatus()">🔄 刷新状态</button>
                 </div>
-                <div id="status-status" class="loading">正在加载系统状态...</div>
+                <div id="status-status"></div>
             </div>
             
             <!-- API文档标签页 -->
@@ -907,7 +981,7 @@
                     <h3>💚 健康检查</h3>
                     <button class="btn btn-primary" onclick="loadHealthCheck()">🔄 刷新健康状态</button>
                 </div>
-                <div id="health-check-status" class="loading">正在加载健康检查状态...</div>
+                <div id="health-check-status"></div>
             </div>
             
             <!-- 数据库管理标签页 -->
@@ -1130,24 +1204,25 @@
                 const response = await fetch('/api/plugins');
                 const result = await response.json();
                 
-                if (result.success && result.data) {
-                    if (result.data.length === 0) {
+                if (result.code === 200 && result.data) {
+                    if (result.data.plugins.length === 0) {
                         container.innerHTML = '<div class="card">暂无已加载的插件</div>';
                         return;
                     }
                     
                     let html = '';
-                    result.data.forEach(plugin => {
+                    result.data.plugins.forEach(plugin => {
                         html += `
-                            <div class="plugin-item">
+                            <div class="plugin-item" id="plugin-item-${plugin.name}">
                                 <div class="plugin-header">
                                     <span class="plugin-name">${plugin.name}</span>
                                     <span class="plugin-version">v${plugin.version}</span>
                                 </div>
                                 <div class="plugin-description">${plugin.description}</div>
                                 <div class="plugin-actions">
-                                    <button class="btn btn-primary" onclick="executePluginByName('${plugin.name}')">执行插件</button>
+                                    <button class="btn btn-primary" onclick="executePluginByName('${plugin.name}', this)">执行插件</button>
                                 </div>
+                                <div class="plugin-execution-result"></div>
                             </div>
                         `;
                     });
@@ -1160,48 +1235,41 @@
             }
         }
         
-        // 执行插件
-        async function executePlugin() {
-            const pluginName = document.getElementById('plugin-name').value.trim();
-            const pluginInput = document.getElementById('plugin-input').value.trim();
-            
-            if (!pluginName) {
-                alert('请输入插件名称');
-                return;
-            }
-            
-            const resultContainer = document.getElementById('execute-result');
+        // 通过插件名称执行插件
+        async function executePluginByName(pluginName, buttonElement) {
+            const pluginItem = buttonElement.closest('.plugin-item');
+            const resultContainer = pluginItem.querySelector('.plugin-execution-result');
             resultContainer.innerHTML = '<div class="loading">正在执行插件...</div>';
-            
+            buttonElement.disabled = true;
+
             try {
-                const requestBody = pluginInput ? { input: pluginInput } : {};
                 const response = await fetch(`/api/plugins/execute/${pluginName}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(requestBody)
+                    body: JSON.stringify({}) // No input for now
                 });
-                
+
                 const result = await response.json();
-                
-                let html = `<div class="result ${result.success ? '' : 'error'}">`;
-                html += `<h4>执行结果</h4>`;
-                html += `<pre>${JSON.stringify(result, null, 2)}</pre>`;
-                html += `</div>`;
-                
+
+                let html = '';
+                if (result.code === 200) {
+                    let resultData = result.data;
+                    if (typeof resultData === 'object') {
+                        resultData = JSON.stringify(resultData, null, 2);
+                    }
+                    html = `<div class="result"><pre>${resultData}</pre></div>`;
+                } else {
+                    html = `<div class="result error"><h4>执行失败</h4><p>${result.message}</p></div>`;
+                }
                 resultContainer.innerHTML = html;
+
             } catch (error) {
                 resultContainer.innerHTML = `<div class="result error"><h4>执行失败</h4><p>${error.message}</p></div>`;
+            } finally {
+                buttonElement.disabled = false;
             }
-        }
-        
-        // 通过插件名称执行插件
-        function executePluginByName(pluginName) {
-            document.getElementById('plugin-name').value = pluginName;
-            showTab('execute');
-            document.querySelector('.nav-item:nth-child(2)').classList.add('active');
-            document.querySelector('.nav-item:nth-child(1)').classList.remove('active');
         }
         
         // 重新加载所有插件
@@ -1212,7 +1280,7 @@
                 });
                 const result = await response.json();
                 
-                if (result.success) {
+                if (result.code === 200) {
                     alert('插件重新加载成功');
                     loadPlugins();
                 } else {
@@ -1232,23 +1300,24 @@
                 const response = await fetch('/api/system/status');
                 const result = await response.json();
                 
-                if (result.success) {
+                if (result.code === 200) {
+                    const data = result.data;
                     let html = `
                         <div class="card">
                             <h4>🖥️ 系统信息</h4>
-                            <p><strong>状态:</strong> <span class="status-indicator status-running"></span>${result.status}</p>
-                            <p><strong>版本:</strong> ${result.version}</p>
-                            <p><strong>框架:</strong> ${result.framework}</p>
-                            <p><strong>时间:</strong> ${new Date(result.timestamp).toLocaleString()}</p>
+                            <p><strong>状态:</strong> <span class="status-indicator status-running"></span>${data.status}</p>
+                            <p><strong>版本:</strong> ${data.version}</p>
+                            <p><strong>框架:</strong> ${data.framework}</p>
+                            <p><strong>时间:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
                         </div>
                         
                         <div class="card">
                             <h4>💾 JVM 信息</h4>
-                            <p><strong>总内存:</strong> ${(result.jvm.totalMemory / 1024 / 1024).toFixed(2)} MB</p>
-                            <p><strong>已用内存:</strong> ${(result.jvm.usedMemory / 1024 / 1024).toFixed(2)} MB</p>
-                            <p><strong>空闲内存:</strong> ${(result.jvm.freeMemory / 1024 / 1024).toFixed(2)} MB</p>
-                            <p><strong>最大内存:</strong> ${(result.jvm.maxMemory / 1024 / 1024).toFixed(2)} MB</p>
-                            <p><strong>处理器数量:</strong> ${result.jvm.processors}</p>
+                            <p><strong>总内存:</strong> ${(data.jvm.totalMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>已用内存:</strong> ${(data.jvm.usedMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>空闲内存:</strong> ${(data.jvm.freeMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>最大内存:</strong> ${(data.jvm.maxMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>处理器数量:</strong> ${data.jvm.processors}</p>
                         </div>
                     `;
                     container.innerHTML = html;
@@ -1387,15 +1456,15 @@
                 body: JSON.stringify(data)
             })
             .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    showDbMessage('数据库连接测试成功！', 'success');
-                    updateConnectionStatus(true, '连接正常');
-                } else {
-                    showDbMessage(`连接测试失败: ${result.message}`, 'error');
-                    updateConnectionStatus(false, '连接失败');
-                }
-            })
+                .then(result => {
+                    if (result.code === 200) {
+                        showDbMessage('数据库连接测试成功！', 'success');
+                        updateConnectionStatus(true, '连接正常');
+                    } else {
+                        showDbMessage(`连接测试失败: ${result.message}`, 'error');
+                        updateConnectionStatus(false, '连接失败');
+                    }
+                })
             .catch(error => {
                 showDbMessage(`连接测试异常: ${error.message}`, 'error');
                 updateConnectionStatus(false, '连接异常');
@@ -1410,7 +1479,7 @@
             fetch('/database/api/status')
             .then(response => response.json())
             .then(result => {
-                if (result.connected) {
+                if (result.code === 200 && result.data && result.data.connected) {
                     showDbMessage('当前数据库连接正常', 'success');
                     updateConnectionStatus(true, result.message || '连接正常');
                 } else {
@@ -1455,7 +1524,7 @@
                 })
                 .then(response => response.json())
                 .then(result => {
-                    if (result.success) {
+                    if (result.code === 200) {
                         showDbMessage('数据源重新加载成功', 'success');
                         loadCurrentConfig();
                     } else {
@@ -1472,9 +1541,9 @@
             fetch('/database/api/config')
             .then(response => response.json())
             .then(result => {
-                if (result.success) {
-                    populateForm(result.config);
-                    updateConnectionStatus(result.isConnected, result.isConnected ? '连接正常' : '连接断开');
+                if (result.code === 200) {
+                    populateForm(result.data.config);
+                    updateConnectionStatus(result.data.isConnected, result.data.isConnected ? '连接正常' : '连接断开');
                 } else {
                     showDbMessage(`加载配置失败: ${result.message}`, 'error');
                 }
@@ -1543,7 +1612,7 @@
                     })
                     .then(response => response.json())
                     .then(result => {
-                        if (result.success) {
+                        if (result.code === 200) {
                             showDbMessage('数据库配置保存成功！', 'success');
                             testCurrentConnection();
                         } else {

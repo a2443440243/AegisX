@@ -1,6 +1,7 @@
 package com.example.pf4j.controller;
 
 import com.example.pf4j.service.PluginMethodService;
+import com.example.pf4jscaffold.common.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class PluginMethodController {
      * @return 方法执行结果
      */
     @PostMapping("/{pluginName}/{methodName}")
-    public ResponseEntity<?> executePluginMethod(
+    public ResponseEntity<ApiResponse<Map<String, Object>>> executePluginMethod(
             @PathVariable String pluginName,
             @PathVariable String methodName,
             @RequestBody(required = false) Map<String, Object> params) {
@@ -41,20 +42,15 @@ public class PluginMethodController {
         
         try {
             Object result = pluginMethodService.executeMethod(pluginName, methodName, params);
-            return ResponseEntity.ok(Map.of(
-                "success", true,
+            Map<String, Object> data = Map.of(
                 "plugin", pluginName,
                 "method", methodName,
                 "result", result
-            ));
+            );
+            return ResponseEntity.ok(ApiResponse.success(data));
         } catch (Exception e) {
-            logger.error("插件方法执行失败: {}#{}", pluginName, methodName, e);
-            return ResponseEntity.badRequest().body(Map.of(
-                "success", false,
-                "plugin", pluginName,
-                "method", methodName,
-                "error", e.getMessage()
-            ));
+            logger.error("插件方法执行失败: {}#{}, 错误: {}", pluginName, methodName, e.getMessage());
+            return ResponseEntity.ok(ApiResponse.error("插件方法执行失败: " + e.getMessage()));
         }
     }
     
@@ -66,7 +62,7 @@ public class PluginMethodController {
      * @return 方法执行结果
      */
     @GetMapping("/{pluginName}/{methodName}")
-    public ResponseEntity<?> executePluginMethodGet(
+    public ResponseEntity<ApiResponse<Map<String, Object>>> executePluginMethodGet(
             @PathVariable String pluginName,
             @PathVariable String methodName) {
         
@@ -74,20 +70,15 @@ public class PluginMethodController {
         
         try {
             Object result = pluginMethodService.executeMethod(pluginName, methodName, null);
-            return ResponseEntity.ok(Map.of(
-                "success", true,
+            Map<String, Object> data = Map.of(
                 "plugin", pluginName,
                 "method", methodName,
                 "result", result
-            ));
+            );
+            return ResponseEntity.ok(ApiResponse.success(data));
         } catch (Exception e) {
-            logger.error("插件方法执行失败: {}#{}", pluginName, methodName, e);
-            return ResponseEntity.badRequest().body(Map.of(
-                "success", false,
-                "plugin", pluginName,
-                "method", methodName,
-                "error", e.getMessage()
-            ));
+            logger.error("插件方法执行失败(GET): {}#{}, 错误: {}", pluginName, methodName, e.getMessage());
+            return ResponseEntity.ok(ApiResponse.error("插件方法执行失败: " + e.getMessage()));
         }
     }
     
@@ -98,21 +89,17 @@ public class PluginMethodController {
      * @return 方法列表
      */
     @GetMapping("/{pluginName}/methods")
-    public ResponseEntity<?> getPluginMethods(@PathVariable String pluginName) {
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getPluginMethods(@PathVariable String pluginName) {
         try {
             Map<String, Object> methods = pluginMethodService.getPluginMethods(pluginName);
-            return ResponseEntity.ok(Map.of(
-                "success", true,
+            Map<String, Object> data = Map.of(
                 "plugin", pluginName,
                 "methods", methods
-            ));
+            );
+            return ResponseEntity.ok(ApiResponse.success(data));
         } catch (Exception e) {
-            logger.error("获取插件方法列表失败: {}", pluginName, e);
-            return ResponseEntity.badRequest().body(Map.of(
-                "success", false,
-                "plugin", pluginName,
-                "error", e.getMessage()
-            ));
+            logger.error("获取插件方法列表失败: {}, 错误: {}", pluginName, e.getMessage());
+            return ResponseEntity.ok(ApiResponse.error("获取插件方法列表失败: " + e.getMessage()));
         }
     }
 }

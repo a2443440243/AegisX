@@ -12,7 +12,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * 这是一个基于Spring Boot和PF4J框架的动态插件加载系统
  * 支持插件的热加载、热卸载和动态管理
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"com.example.pf4j", "com.example.pf4jscaffold"})
 public class Pf4jScaffoldApplication {
     
     private static final Logger logger = LoggerFactory.getLogger(Pf4jScaffoldApplication.class);

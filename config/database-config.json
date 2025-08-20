@@ -1,0 +1,14 @@
+{
+  "url" : null,
+  "host" : "192.168.100.221",
+  "port" : 3306,
+  "database" : "java_admin",
+  "username" : "java_admin",
+  "password" : "2BLTERiG425JNYMt",
+  "driverClassName" : "com.mysql.cj.jdbc.Driver",
+  "maxPoolSize" : 10,
+  "minPoolSize" : 1,
+  "connectionTimeout" : 30000,
+  "idleTimeout" : 600000,
+  "maxLifetime" : 1800000
+}

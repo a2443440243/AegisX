@@ -22,7 +22,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(securityInterceptor)
-                .addPathPatterns("/api/**") // 只拦截API请求
-                .excludePathPatterns("/login", "/logout", "/css/**", "/js/**", "/images/**");
+                .addPathPatterns("/api/admin/**") // 只拦截需要管理员权限的API
+                .excludePathPatterns("/login", "/logout", "/css/**", "/js/**", "/images/**", "/api/**", "/database/api/**", "/actuator/**");
     }
 }
