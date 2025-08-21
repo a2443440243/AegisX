@@ -1,123 +1,130 @@
-# 🚀 AegisX — A New-Generation Enterprise-Grade Plugin Architecture
+# 🚀 AegisX — Enterprise Plugin Development Framework: Embracing the AI Era, Empowering Efficient Development
 
-> **"Embrace Change, Stay Ahead"**
+> **🌟 Let AI become the primary productivity force for code | Revolutionary improvement in development efficiency**
 >
-> **AegisX is more than just a framework; it\'s a future-oriented software engineering philosophy. We firmly believe that through superior architectural design, we can build highly adaptive, self-evolving systems that stand invincible in the ever-changing tide of technology.**
+> **💡 Core Philosophy: AegisX provides a solid architectural foundation, allowing developers to easily integrate and utilize AI tools, focusing on innovation rather than repetitive labor**
 
 English | [中文](README.zh.md)
 
 ---
 
-## 🌟 Core Features
+## 🎯 Why Choose AegisX?
 
-### 🚀 New-Generation Enterprise-Grade Plugin Architecture
-- **Microkernel Architecture**: AegisX employs a highly cohesive microkernel design. The core system contains only the most fundamental functionalities, with all business capabilities delivered through independently deployable plugins. This design ensures the stability and lightweight nature of the core system while granting unprecedented flexibility to business function modules.
-- **Dynamic Hot-Swapping**: Plugins support dynamic loading, unloading, and updating at runtime without restarting the main application. This enables zero-downtime continuous evolution and maintenance, a key guarantee for high-availability (99.99%) systems.
-- **Dependency Isolation & Management**: Each plugin has its own class loader and resource space, completely resolving the dependency conflict issues common in traditional monolithic applications. A fine-grained dependency management mechanism ensures the stable coexistence of plugins.
+At the pinnacle of the digital wave, the only constant is change itself. AegisX redefines how enterprise-level software is built. It's not just a plugin framework, but a future-oriented, highly available, and adaptive architectural solution.
 
-### ☁️ Born for Cloud-Native & DevOps
-- **DevOps-Friendly**: A standardized Maven project structure and build process seamlessly integrate into any CI/CD pipeline, enabling full automation from code submission to production deployment.
-- **Built-in Health Monitoring**: Integrated with Spring Boot Actuator, it provides out-of-the-box application monitoring, health checks, and metrics endpoints, simplifying operations and enhancing system observability.
-- **Containerization-Ready**: Its concise architecture and clear dependencies make it extremely easy to containerize (e.g., Docker, Kubernetes), perfectly meeting the deployment requirements of the cloud-native era.
+### 🚀 Embracing AI-Driven Development Mode
+- **🔌 Flexible AI Tool Integration**: AegisX's plugin architecture allows you to easily integrate various AI code generation tools into your development workflow.
+- **⚡ Enhanced Development Efficiency**: With external AI tools, developers can quickly generate boilerplate code, data models, and business logic, investing more time in core business innovation.
+- **🧩 Focus on Business Logic**: AegisX handles underlying architecture, plugin lifecycle, and dependency management, allowing you to focus on implementing core business functions.
+- **💡 Inspire Innovation**: By delegating repetitive coding work to AI, your team can explore more creative solutions.
 
-### 🛡️ Indestructible Enterprise-Grade Foundation
-- **Industrial-Grade Stability**: Built on the world\'s most trusted Java ecosystem—Spring Boot—it provides stability and reliability validated in massive production environments.
-- **Enterprise-Grade Security**: Deeply integrated with Spring Security, it offers an extensible and powerful authentication and authorization system to safeguard your core assets.
-- **High-Performance Data Access**: Integrated with Spring Data JPA, it provides an efficient, flexible, and standardized data persistence solution.
+### ☁️ Born for Cloud Native
+- **DevOps Friendly**: Standardized Maven project structure and build process, seamlessly integrating into any CI/CD pipeline.
+- **Built-in Health Monitoring**: Integrated Spring Boot Actuator provides out-of-the-box application monitoring, health checks, and metrics endpoints, simplifying operations.
+- **Container Ready**: Clean architecture and clear dependencies make containerized deployment (Docker, Kubernetes) extremely easy.
+
+### 🛡️ Unbreakable Enterprise Foundation
+- **Industrial-Grade Stability**: Based on the world's most trusted Java ecosystem—Spring Boot, providing stability and reliability verified by massive production environments.
+- **Enterprise-Level Security**: Deep integration with Spring Security, providing scalable and powerful authentication and authorization systems to protect your core assets.
+- **High-Performance Data Access**: Integrated Spring Data JPA provides efficient, flexible, and standardized data persistence solutions.
+
+### 🌐 Future-Oriented Unlimited Integration
+- **Architecture Neutrality**: Decoupled plugin design makes it a "universal adhesive" that easily integrates AI services, big data platforms, message queues, IoT devices, and any heterogeneous systems.
+- **AI Integration Empowerment**: AegisX's open architecture makes it an ideal platform for integrating external AI services. Whether connecting large language models (LLMs), integrating machine learning pipelines, or building intelligent automation processes, everything becomes effortless.
 
 ---
 
-## 🏛️ Architectural Design
+## 🏛️ Architecture Design
 
-### 🎯 Microkernel Architecture
-- **Core Framework**: Lightweight kernel built on PF4J 3.9.0
-- **Plugin System**: Support for dynamic loading, unloading, and hot updates (30-second scan interval)
-- **Extension Point Mechanism**: Flexible interface definition and implementation
-- **Dependency Isolation**: Each plugin has its own independent class loader
-- **Spring Integration**: Seamless integration with Spring Boot through pf4j-spring
-
-### System Architecture Diagram
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Web Management UI                    │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
-│  │Plugin Mgmt  │ │ API Docs    │ │System Monitor│      │
-│  └─────────────┘ └─────────────┘ └─────────────┘      │
-├─────────────────────────────────────────────────────────┤
-│                   REST API Layer                       │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
-│  │PluginController│ ApiController│HealthController│    │
-│  └─────────────┘ └─────────────┘ └─────────────┘      │
-├─────────────────────────────────────────────────────────┤
-│                  Business Service Layer                │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
-│  │PluginService│ │UserService  │ │CommonService│      │
-│  └─────────────┘ └─────────────┘ └─────────────┘      │
-├─────────────────────────────────────────────────────────┤
-│                   Data Access Layer                    │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
-│  │JavaAdminRepo│ │DatabaseUtil │ │  JPA/ORM   │      │
-│  └─────────────┘ └─────────────┘ └─────────────┘      │
-├─────────────────────────────────────────────────────────┤
-│                  Plugin Management Layer               │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
-│  │PluginManager│ │ExtensionMgr │ │ClassLoader  │      │
-│  └─────────────┘ └─────────────┘ └─────────────┘      │
-├─────────────────────────────────────────────────────────┤
-│                  Extension Point Interface             │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
-│  │PluginInterface│DatabaseExt  │ CustomExt   │      │
-│  └─────────────┘ └─────────────┘ └─────────────┘      │
-├─────────────────────────────────────────────────────────┤
-│                     Plugin Instances                   │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
-│  │database-demo│ │ custom-plugin│ │future-plugin│     │
-│  └─────────────┘ └─────────────┘ └─────────────┘      │
-└─────────────────────────────────────────────────────────┘
-```
-
-### 🎯 Core Architectural Layers
+### 🎯 Core Architecture Layers
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                   🧩 Business Capability Plugin Layer               │
+│                   🧩 Business Capability Plugin Layer                  │
 │  ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
 │  │Database Demo│Custom Plugin│Business Plugin│      ...           │   │
 │  └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
 ├─────────────────────────────────────────────────────────────────────┤
-│                   ⚙️ Dynamic Plugin Engine                         │
+│                   ⚙️ Dynamic Plugin Engine                            │
 │  ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
 │  │Plugin Service│PF4J Manager │Lifecycle Mgmt│ Plugin Controller  │   │
 │  └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
 ├─────────────────────────────────────────────────────────────────────┤
-│                   🚌 Core Service Bus                             │
+│                   🚌 Core Service Bus                                 │
 │  ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
 │  │Security Config│JPA Service │System Service│ Actuator Monitor   │   │
 │  └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
 ├─────────────────────────────────────────────────────────────────────┤
-│                   📡 Unified API Gateway                          │
+│                   📡 Unified API Gateway                              │
 │  ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
 │  │Plugin API   │System API   │Web Controller│ API Documentation  │   │
 │  └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
 ├─────────────────────────────────────────────────────────────────────┤
-│                   🔧 Enterprise Technology Foundation             │
+│                   🔧 Enterprise Technology Foundation                  │
 │  ┌─────────────┬─────────────┬─────────────┬─────────────────────┐   │
 │  │Spring Boot  │   PF4J 3.9  │Spring Security│     MySQL 8.0+    │   │
 │  └─────────────┴─────────────┴─────────────┴─────────────────────┘   │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
+### 🏗️ Microkernel Architecture Design
+- **Core Framework**: Lightweight kernel built on PF4J 3.9.0
+- **Plugin System**: Supports dynamic loading, unloading, and hot updates (30-second scan interval)
+- **Extension Point Mechanism**: Flexible interface definition and implementation
+- **Dependency Isolation**: Each plugin has its own independent class loader
+- **Spring Integration**: Seamless integration with Spring Boot through pf4j-spring
+
+### 📊 System Architecture Diagram
+```
+┌─────────────────────────────────────────────────────────┐
+│                    Web Management Interface              │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
+│  │Plugin Mgmt  │ │ API Docs    │ │System Monitor│      │
+│  └─────────────┘ └─────────────┘ └─────────────┘      │
+├─────────────────────────────────────────────────────────┤
+│                   REST API Layer                        │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
+│  │PluginController│ ApiController│HealthController│    │
+│  └─────────────┘ └─────────────┘ └─────────────┘      │
+├─────────────────────────────────────────────────────────┤
+│                    Business Service Layer               │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
+│  │PluginService│ │UserService  │ │CommonService│      │
+│  └─────────────┘ └─────────────┘ └─────────────┘      │
+├─────────────────────────────────────────────────────────┤
+│                   Data Access Layer                     │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
+│  │JavaAdminRepo│ │DatabaseUtil │ │  JPA/ORM   │      │
+│  └─────────────┘ └─────────────┘ └─────────────┘      │
+├─────────────────────────────────────────────────────────┤
+│                    Plugin Management Layer              │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
+│  │PluginManager│ │ExtensionMgr │ │ClassLoader  │      │
+│  └─────────────┘ └─────────────┘ └─────────────┘      │
+├─────────────────────────────────────────────────────────┤
+│                    Extension Point Interface            │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
+│  │PluginInterface│DatabaseExt  │ CustomExt   │      │
+│  └─────────────┘ └─────────────┘ └─────────────┘      │
+├─────────────────────────────────────────────────────────┤
+│                     Plugin Instances                    │
+│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐      │
+│  │database-demo│ │ custom-plugin│ │future-plugin│     │
+│  └─────────────┘ └─────────────┘ └─────────────┘      │
+└─────────────────────────────────────────────────────────┘
+```
+
 ### 🧩 Core Module Analysis
 
 #### 🔌 Plugin Management Layer
-- **Dynamic Plugin Loading**: Based on the PF4J framework, supports dynamic loading and unloading of plugins.
-- **Plugin Lifecycle**: Complete management of plugin start, stop, and reload.
-- **Plugin Service**: A unified plugin management service that provides interfaces for querying and operating plugins.
+- **Dynamic Plugin Loading**: Based on PF4J framework, supports dynamic loading and unloading of plugins
+- **Plugin Lifecycle**: Complete plugin startup, stop, and reload management
+- **Plugin Service**: Unified plugin management service providing plugin information query and operation interfaces
 
 #### 🌐 Business Service Layer
-- **Security Authentication**: User authentication and permission management based on Spring Security.
-- **Data Persistence**: A complete data access layer with JPA + MySQL.
-- **System Monitoring**: Integrated with Actuator to provide application health checks and monitoring endpoints.
+- **Security Authentication**: User authentication and permission management based on Spring Security
+- **Data Persistence**: Complete data access layer with JPA + MySQL
+- **System Monitoring**: Integrated Actuator providing application health checks and monitoring endpoints
 
 ---
 
@@ -129,14 +136,14 @@ English | [中文](README.zh.md)
 - **PF4J 3.9.0**: Plugin framework core engine
 - **pf4j-spring 0.8.0**: Spring integration adapter
 
-### Data Layer Technologies
+### Data Layer Technology
 - **Spring Data JPA**: ORM data access layer
 - **Hibernate**: JPA implementation
-- **MySQL 8.0.33**: Production database
+- **MySQL 8.0.33**: Production environment database
 - **H2 Database**: Development and testing database
 - **HikariCP**: High-performance connection pool
 
-### Web Layer Technologies
+### Web Layer Technology
 - **Spring MVC**: RESTful API framework
 - **Thymeleaf**: Server-side template engine
 - **Jackson**: JSON serialization/deserialization
@@ -145,22 +152,22 @@ English | [中文](README.zh.md)
 
 ### Development Toolchain
 - **Maven**: Project build and dependency management
-- **Spring Boot DevTools**: Hot reload during development
+- **Spring Boot DevTools**: Development hot reload
 - **Lombok**: Reduce boilerplate code
 - **Bean Validation**: Data validation framework
 - **Logback**: Enterprise logging framework
 
-### Operations & Monitoring
+### Operations Monitoring
 - **Spring Boot Actuator**: Application monitoring endpoints
 - **Health Check**: Health check mechanism
 - **Metrics**: Performance metrics collection
 - **Hot Deployment**: Plugin hot deployment support
 
-| Category | Technology | Version | Role |
+| Technology Domain | Core Technology | Version | Purpose |
 |:---:|:---:|:---:|:---|
-| **Backend Framework** | Spring Boot | 2.7.14 | Foundation for enterprise applications |
-| **Plugin Engine** | PF4J | 3.9.0 | Core of dynamic plugin management |
-| **Security Framework** | Spring Security | 5.7.x | Authentication and authorization |
+| **Backend Framework** | Spring Boot | 2.7.14 | Enterprise application foundation framework |
+| **Plugin Engine** | PF4J | 3.9.0 | Dynamic plugin management core |
+| **Security Framework** | Spring Security | 5.7.x | Authentication authorization security protection |
 | **Database** | MySQL | 8.0+ | Relational database |
 | **ORM Framework** | Spring Data JPA | 2.7.x | Data access layer |
 | **Template Engine** | Thymeleaf | 3.0.x | Web page rendering |
@@ -171,22 +178,47 @@ English | [中文](README.zh.md)
 
 ## 🚀 Quick Start
 
-### Requirements
-- **JDK 11+**: Recommended OpenJDK 11 or Oracle JDK 11
-- **Maven 3.6+**: Project build tool
-- **MySQL 8.0+**: Production database
-- **IDE**: Recommended IntelliJ IDEA or Eclipse
+### ✅ Environment Requirements
+- JDK 11+
+- Maven 3.6+
+- MySQL 8.0+
 
-### Installation Steps
+### 🛠️ Startup Steps
 
-#### 1. Clone the project
 ```bash
-git clone https://github.com/your-org/pf4j-scaffold.git
-cd pf4j-scaffold
+# 1. Clone project
+git clone https://github.com/a2443440243/AegisX.git
+cd AegisX
+
+# 2. Configure database
+#    Open src/main/resources/application.yml
+#    Modify url, username, password under spring.datasource
+
+# 3. Maven build
+mvn clean compile
+
+# 4. Start application
+mvn spring-boot:run
 ```
 
-#### 2. Database Configuration
-Create database and configure connection:
+### 🌐 Access Points
+- **Management Console**: `http://localhost:8081`
+  - Default account: `admin` / `147896325a`
+- **API Documentation**: `http://localhost:8081/api-docs`
+- **System Health Check**: `http://localhost:8081/actuator/health`
+- **Plugin Management API**: `http://localhost:8081/api/plugins`
+- **System Status API**: `http://localhost:8081/api/system/status`
+
+#### 🛠️ Detailed Installation Steps
+
+##### 1. Clone Project
+```bash
+git clone https://github.com/a2443440243/AegisX.git
+cd AegisX
+```
+
+##### 2. Database Configuration
+Create database and configure connection information:
 ```sql
 CREATE DATABASE java_admin CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ```
@@ -207,7 +239,7 @@ spring:
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
 
-# Plugin Configuration
+# Plugin configuration
 plugin:
   path: plugins
   development:
@@ -219,7 +251,7 @@ server:
   port: 8081
 ```
 
-#### 3. Build and Run
+##### 3. Compile and Run
 ```bash
 # Clean and compile project
 mvn clean compile
@@ -231,62 +263,22 @@ mvn install
 mvn spring-boot:run
 ```
 
-#### 4. Access Application
-After successful startup, you can access:
-
-- **Homepage**: http://localhost:8081
-- **Plugin Management**: http://localhost:8081/plugins
-- **API Documentation**: http://localhost:8081/api-docs
-- **Health Check**: http://localhost:8081/actuator/health
-- **API Test Page**: http://localhost:8081/test-api.html
-
-#### 5. Verify Installation
-Access the homepage, you should see:
+##### 4. Verify Installation
+Access the main page, you should see:
 - System running status
 - Loaded plugin list
-- Plugin management functionality
+- Plugin management functions
 - Real-time monitoring data
-
-### ✅ Prerequisites
-- JDK 11+
-- Maven 3.6+
-- MySQL 8.0+
-
-### 🛠️ Steps to Start
-
-```bash
-# 1. Clone the project
-git clone https://github.com/a2443440243/AegisX.git
-cd AegisX
-
-# 2. Configure the database
-#    Open src/main/resources/application.yml
-#    Modify the url, username, and password under spring.datasource
-
-# 3. Build with Maven
-mvn clean compile
-
-# 4. Run the application
-mvn spring-boot:run
-```
-
-### 🌐 Access Points
-- **Admin Console**: `http://localhost:8081`
-  - Default credentials: `admin` / `147896325a`
-- **API Documentation**: `http://localhost:8081/api-docs`
-- **System Health Check**: `http://localhost:8081/actuator/health`
-- **Plugin Management API**: `http://localhost:8081/api/plugins`
-- **System Status API**: `http://localhost:8081/api/system/status`
 
 ---
 
-## 🔌 Plugin Development
+## 🧩 Plugin Development
 
 ### Development Overview
 
-AegisX provides enterprise-grade plugin development capabilities based on the PF4J framework, supporting dynamic loading, hot updates, and dependency isolation. Through standardized extension point interfaces, developers can safely and efficiently extend system functionality.
+AegisX provides enterprise-level plugin development capabilities based on the PF4J framework, supporting dynamic loading, hot updates, and dependency isolation. Through standardized extension point interfaces, developers can safely and efficiently extend system functionality.
 
-**Complete Development Guide**: [Plugin Development Guide](PLUGIN_DEVELOPMENT_GUIDE.md)
+**Complete Development Guide**: [Plugin Development Guide](docs/PLUGIN_DEVELOPMENT_GUIDE.md)
 
 ### Core Extension Points
 
@@ -306,13 +298,13 @@ public interface PluginInterface extends ExtensionPoint {
 Provides unified database access capabilities, including:
 - **CRUD Operations**: save, findById, findAll, deleteById, etc.
 - **Conditional Queries**: findByUsername, findByEmail, findByStatus, etc.
-- **Paginated Queries**: Advanced queries with sorting and pagination support
+- **Paginated Queries**: Advanced queries supporting sorting and pagination
 - **Batch Operations**: saveAll, deleteByIds, batchUpdateStatus, etc.
 - **Statistical Functions**: count, countByStatus, getUserStatistics, etc.
 
 ### Example: database-demo-plugin
 
-The project includes a complete plugin development example demonstrating enterprise-grade plugin standard implementation:
+The project includes a complete plugin development example demonstrating standard implementation of enterprise-level plugins:
 
 #### Project Structure
 ```
@@ -335,8 +327,8 @@ database-demo-plugin/
 - `delete()`: Resource release when plugin is uninstalled
 
 **2. Database Extension Implementation**
-- Simulate user authentication and permission checking
-- Demonstrate standard database operation procedures
+- Simulate user validation and permission checks
+- Demonstrate standard database operation processes
 - Show error handling and logging
 
 **3. Configuration Management**
@@ -353,71 +345,85 @@ plugin.description=Database operation demonstration plugin
 
 1. **Basic Structure**: Understand plugin directory structure and configuration files
 2. **Interface Implementation**: Learn how to implement standard extension point interfaces
-3. **Lifecycle**: Master plugin startup, running, and stopping processes
+3. **Lifecycle**: Master plugin startup, running, and stop processes
 4. **Data Access**: Learn how to safely access the main application's data layer
-5. **Error Handling**: Learn exception handling best practices in plugin development
-6. **Testing & Debugging**: Master local development and debugging techniques for plugins
+5. **Error Handling**: Learn best practices for exception handling in plugin development
+6. **Testing and Debugging**: Master local development and debugging techniques for plugins
 
-This example provides a complete reference template and best practice guidance for enterprise-grade plugin development.
-
-The core of AegisX lies in its powerful plugin ecosystem. We provide a complete development guide and examples to help you quickly build your own plugins.
+This example provides a complete reference template and best practice guidance for enterprise-level plugin development.
 
 ### 📘 Development Process Overview
 
-1.  **Create a Plugin Project**: Use our provided Maven archetype or refer to the `database-demo-plugin` example project structure.
-2.  **Define Extension Points**: Define `ExtensionPoint` interfaces in your plugin, which serve as the contract for interaction with the main application.
-3.  **Implement Extensions**: Write classes that implement the `@Extension` annotation to realize specific business logic.
-4.  **Package the Plugin**: Package your plugin into a standalone JAR file.
-5.  **Deploy Dynamically**: Place the plugin JAR file into the `plugins` directory of the main application, and AegisX will automatically load and activate it.
+1. **Create Plugin Project**: Use our provided Maven archetype or refer to the `database-demo-plugin` example project structure.
+2. **Define Extension Points**: Define `ExtensionPoint` interfaces in the plugin, which are contracts for plugin-main application interaction.
+3. **Implement Extensions**: Write classes with `@Extension` annotations to implement specific business logic.
+4. **Package Plugin**: Package the plugin into an independent JAR file.
+5. **Dynamic Deployment**: Place the plugin JAR in the main application's `plugins` directory, and AegisX will automatically load and activate it.
 
-> For detailed development steps, API usage, and best practices, please refer to the **[Plugin Development Guide](docs/PLUGIN_DEVELOPMENT_GUIDE.md)**.
+### 🔥 System Features
 
-### 📦 Example Plugin: `database-demo-plugin`
+#### 🔥 Dynamic Hot-Swapping
+- **Runtime Loading**: Load new plugins without restarting the application
+- **Hot Update Support**: Automatically scan plugin directory changes every 30 seconds
+- **Version Management**: Support plugin version upgrades and rollbacks
+- **Dependency Checking**: Automatically parse and validate plugin dependencies
 
-To help you get started quickly, we provide an out-of-the-box database demo plugin.
+#### 🛡️ Enterprise-Level Security
+- **Class Loading Isolation**: Each plugin has its own independent class loader
+- **Permission Control**: Access control based on Spring Security
+- **Data Isolation**: Complete data access isolation between plugins
+- **Security Audit**: Complete plugin operation logging
 
-- **Location**: `plugins/database-demo-plugin`
-- **Functionality**: Demonstrates how to define extension points, implement business logic, and display its lifecycle through log output.
-- **Source Code Structure**:
-  ```
-  database-demo-plugin/
-  ├── pom.xml
-  └── src/
-      └── main/
-          ├── java/com/example/plugin/database/
-          │   ├── DatabaseDemoExtension.java  // Extension implementation
-          │   └── DatabaseDemoPlugin.java     // Plugin main class
-          └── resources/
-              └── plugin.properties           // Plugin metadata
-  ```
-- **Learning Value**: By analyzing this plugin, you can quickly grasp the core essentials of AegisX plugin development.
+#### 📊 Intelligent Monitoring
+- **Real-time Status**: Real-time monitoring of plugin running status
+- **Performance Metrics**: Key metrics like memory usage, execution time
+- **Health Checks**: Automatic detection of plugin health status
+- **Alert Mechanism**: Automatic alerts and recovery for abnormal situations
+
+#### 🔧 Visual Management
+- **Web Console**: Intuitive plugin management interface
+- **Batch Operations**: Support batch start, stop, and update of plugins
+- **Configuration Management**: Online editing of plugin configuration parameters
+- **Log Viewing**: Real-time viewing of plugin running logs
+
+#### 📚 Developer Friendly
+- **Rich APIs**: Complete plugin development APIs and extension points
+- **Code Generation**: Plugin templates and scaffolding tools
+- **Debug Support**: Hot reload and debugging in development mode
+- **Complete Documentation**: Detailed development guides and example code
+
+#### 🌐 Cloud Native Ready
+- **Container Support**: Docker and Kubernetes deployment
+- **Microservice Architecture**: Seamless integration with Spring Cloud ecosystem
+- **Configuration Center**: Support external configuration management
+- **Service Discovery**: Automatic registration and discovery of plugin services
 
 ---
 
-## 🤖 Practicing Next-Generation Development Model
+## 🤖 Practicing Next-Generation Development Mode
 
 ### AI-Driven Enterprise Development
 
-AegisX, as a next-generation enterprise-grade plugin architecture, not only provides powerful technical capabilities but more importantly serves as an ideal platform for enterprises to practice AI-driven development models. We encourage development teams to fully utilize AI programming assistants to achieve dual improvements in development efficiency and code quality.
+AegisX, as a next-generation enterprise plugin architecture, not only provides powerful technical capabilities but more importantly serves as an ideal platform for enterprises to practice AI-driven development modes. We encourage development teams to fully utilize AI programming assistants to achieve dual improvements in development efficiency and code quality.
 
 ### 🎯 AI-Assisted Plugin Development Workflow
 
-#### 1. Requirements Analysis & Architecture Design
+#### 1. Requirements Analysis and Architecture Design
 ```
 Developer + AI Collaboration Process:
 ├── Business Requirements Analysis → AI helps organize feature points and technical solutions
 ├── Plugin Architecture Design → AI recommends best practices and design patterns
 ├── Interface Definition → AI generates standardized extension point interfaces
-└── Technology Selection → AI provides technology stack recommendations and risk assessment
+└── Technology Selection → AI provides technology stack suggestions and risk assessment
 ```
 
-#### 2. Code Generation & Implementation
+#### 2. Code Generation and Implementation
 - **Plugin Skeleton Generation**: Based on `database-demo-plugin` template, AI quickly generates new plugin structure
 - **Extension Point Implementation**: AI assists in implementing `PluginInterface` and `DatabaseExtension` interfaces
 - **Configuration File Generation**: Automatically generate `plugin.properties` and Maven configuration
 - **Data Model Design**: Based on `JavaAdmin` entity, AI designs new data models
 
-#### 3. Quality Assurance & Optimization
+#### 3. Quality Assurance and Optimization
 - **Code Review**: AI checks code standards, security vulnerabilities, and performance issues
 - **Test Generation**: Automatically generate unit tests, integration tests, and end-to-end tests
 - **Performance Optimization**: AI analyzes plugin performance bottlenecks and provides optimization suggestions
@@ -425,22 +431,23 @@ Developer + AI Collaboration Process:
 
 ### 🛠️ Recommended AI Development Toolchain
 
-#### Code Generation & Completion
+#### Code Generation and Completion
 - **GitHub Copilot**: Intelligent code completion and function generation
 - **Tabnine**: Context-based code suggestions
 - **Cursor**: AI-driven code editor
 - **CodeWhisperer**: Amazon's AI programming assistant
+- **Trae**: Claude-based intelligent programming assistant
 
-#### Architecture Design & Problem Solving
+#### Architecture Design and Problem Solving
 - **ChatGPT-4**: Architecture design and complex problem solving
 - **Claude**: Code review and refactoring suggestions
-- **Bard**: Technical solution evaluation and selection recommendations
+- **Bard**: Technical solution evaluation and selection advice
 
 #### Professional Development Tools
 - **JetBrains AI Assistant**: AI assistant integrated in IntelliJ IDEA
 - **Visual Studio IntelliCode**: Intelligent code suggestions and refactoring
 
-### 📋 AI Collaboration Development Best Practices
+### 📋 AI Collaborative Development Best Practices
 
 #### Phase 1: Project Initialization
 ```bash
@@ -454,14 +461,14 @@ mvn archetype:generate -DgroupId=com.example.plugin
 
 #### Phase 2: Core Development
 ```java
-// AI-assisted plugin main class generation
+// AI-assisted generation of plugin main class
 @Extension
 public class UserPermissionPlugin implements PluginInterface {
     // AI-generated standard implementation
 }
 ```
 
-#### Phase 3: Testing & Deployment
+#### Phase 3: Testing and Deployment
 ```bash
 # AI-generated test scripts
 mvn test
@@ -471,7 +478,7 @@ mvn package
 
 ### 🚀 Enterprise Development Efficiency Improvement
 
-Through AI-driven development models, enterprise teams can achieve:
+Through AI-driven development mode, enterprise teams can achieve:
 
 - **60% Development Efficiency Improvement**: Automate repetitive coding work
 - **40% Code Quality Improvement**: AI-assisted code review and optimization
@@ -488,49 +495,45 @@ Through AI-driven development models, enterprise teams can achieve:
 
 AegisX is committed to becoming the best practice platform for AI-driven development in enterprise digital transformation.
 
-## 🤝 Practicing the Next-Generation Development Model
+**Development Process Example:**
 
-The design philosophy of AegisX is "separation of concerns." The framework itself is responsible for the application\'s skeleton and infrastructure, while external tools (like AI programming assistants) act as the developer\'s "external brain" to accelerate code writing.
+1. **Define Interfaces**: Define plugin interfaces and extension points in AegisX.
+2. **Use AI to Generate Implementation**:
+   * Open your favorite AI programming assistant (e.g., GitHub Copilot integrated in VSCode).
+   * Describe the functionality you need in natural language, for example: "Create a plugin that implements the `DataProcessorPlugin` interface, which reads CSV data from a file and stores it in a database."
+   * The AI assistant will generate an initial draft of the code for you.
+3. **Review and Refactor**: Review, test, and refactor the AI-generated code to ensure it meets project standards and quality requirements.
+4. **Package and Deploy**: Package the completed plugin into a JAR file and deploy it to the AegisX framework.
 
-**Example Development Workflow:**
-
-1.  **Define Interfaces**: Define plugin interfaces and extension points in AegisX.
-2.  **Generate Implementation with AI**:\
-    *   Open your favorite AI programming assistant (e.g., GitHub Copilot integrated into VSCode).
-    *   Describe the functionality you need in natural language, for example: "Create a plugin that implements the `DataProcessorPlugin` interface, reads CSV data from a file, and stores it in a database."
-    *   The AI assistant will generate a draft of the code for you.
-3.  **Review and Refactor**: Review, test, and refactor the AI-generated code to ensure it meets project specifications and quality standards.
-4.  **Package and Deploy**: Package the completed plugin into a JAR file and deploy it to the AegisX framework.
-
-This model perfectly combines the stability of the core framework with the flexibility of business plugins, while openly embracing ecosystem tools to achieve unparalleled development efficiency.
+This mode perfectly combines the stability of the core framework with the flexibility of business plugins, while openly embracing ecosystem tools to create unparalleled development efficiency.
 
 ---
 
-## 📞 Community & Support
+## 📞 Community and Support
 
 ### 🆘 Getting Help
 
 #### Official Resources
-- 📖 **Complete Documentation**: [Plugin Development Guide](PLUGIN_DEVELOPMENT_GUIDE.md)
-- 🎯 **Quick Examples**: Reference `database-demo-plugin` project
+- 📖 **Complete Documentation**: [Plugin Development Guide](docs/PLUGIN_DEVELOPMENT_GUIDE.md)
+- 🎯 **Quick Examples**: Refer to `database-demo-plugin` project
 - 📋 **API Reference**: Visit http://localhost:8081/api-docs
 - 🔍 **Source Code Analysis**: Check `src/main/java/com/example/pf4j/` directory
 
 #### Community Support
-- 💬 **Technical Discussions**: [GitHub Discussions](https://github.com/your-org/pf4j-scaffold/discussions)
-- 🐛 **Issue Reporting**: [GitHub Issues](https://github.com/your-org/pf4j-scaffold/issues)
-- 📧 **Enterprise Support**: enterprise@aegisx.dev
+- 💬 **Technical Discussion**: [GitHub Discussions](https://github.com/a2443440243/AegisX/discussions)
+- 🐛 **Issue Feedback**: [GitHub Issues](https://github.com/a2443440243/AegisX/issues)
+- 📧 **Business Support**: enterprise@aegisx.dev
 - 🤝 **Technical Exchange Group**: Join developer community
 
 ### 🤝 Contributing
 
-#### Ways to Contribute
+#### Contribution Methods
 - **Code Contribution**: Submit Pull Requests to improve the framework
 - **Plugin Sharing**: Share excellent plugins you've developed
 - **Documentation Improvement**: Help improve documentation and examples
 - **Issue Feedback**: Report bugs and suggest improvements
 
-#### Development Guide
+#### Development Guidelines
 1. Fork the project to your GitHub account
 2. Create feature branch: `git checkout -b feature/your-feature`
 3. Commit changes: `git commit -am 'Add some feature'`
@@ -542,10 +545,10 @@ This model perfectly combines the stability of the core framework with the flexi
 - **Project Name**: PF4J Scaffold (AegisX)
 - **Current Version**: 1.0.0
 - **Technology Stack**: Java 11 + Spring Boot + PF4J
-- **License**: [Apache License 2.0](LICENSE)
+- **License**: [MIT License](LICENSE)
 - **Maintenance Status**: 🟢 Actively maintained
 
-### 🎯 Development Roadmap
+### 🎯 Roadmap
 
 #### Near-term Plans (v1.1)
 - [ ] Plugin marketplace and online installation
@@ -555,9 +558,9 @@ This model perfectly combines the stability of the core framework with the flexi
 
 #### Medium-term Goals (v2.0)
 - [ ] Microservice plugin support
-- [ ] Cloud-native deployment optimization
+- [ ] Cloud native deployment optimization
 - [ ] AI-assisted plugin development
-- [ ] Enterprise-grade security enhancements
+- [ ] Enterprise security enhancements
 
 #### Long-term Vision (v3.0)
 - [ ] Low-code plugin development platform
@@ -565,25 +568,21 @@ This model perfectly combines the stability of the core framework with the flexi
 - [ ] Cross-language plugin support
 - [ ] Edge computing plugin framework
 
-## 🌟 Community & Support
-
-### 💬 Project Addresses
+### 💬 Project Repositories
 - 🐙 **GitHub**: [https://github.com/a2443440243/AegisX](https://github.com/a2443440243/AegisX)
 - 📦 **Gitee**: [https://gitee.com/cuixin_1/AegisX](https://gitee.com/cuixin_1/AegisX)
 
-### 🤝 Contribution Guidelines
-
-We welcome you to submit Issues and Pull Requests to help improve the project!
+Welcome to submit Issues and Pull Requests to help improve the project!
 
 1. Fork the project
-2. Create a feature branch (`git checkout -b feature/NewFeature`)
-3. Commit your changes (`git commit -m 'Add NewFeature'`)
-4. Push to the branch (`git push origin feature/NewFeature`)
-5. Create a Pull Request
+2. Create feature branch (`git checkout -b feature/NewFeature`)
+3. Commit changes (`git commit -m 'Add NewFeature'`)
+4. Push to branch (`git push origin feature/NewFeature`)
+5. Create Pull Request
 
 ---
 
-## 📄 License
+## 📄 Open Source License
 
 This project is licensed under the [MIT License](LICENSE).
 
@@ -591,7 +590,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 <div align="center">
 
-**🚀 AegisX - A New-Generation Enterprise-Grade Plugin Architecture 🚀**
+**🚀 AegisX - Next-Generation Enterprise Plugin Architecture 🚀**
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.7.14-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![PF4J](https://img.shields.io/badge/PF4J-3.9.0-blue.svg)](https://github.com/pf4j/pf4j)
