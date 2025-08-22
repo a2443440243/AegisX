@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -129,5 +130,50 @@ public class PluginService {
         } catch (Exception e) {
             logger.error("插件重新加载失败", e);
         }
+    }
+    
+    /**
+     * 获取插件统计信息
+     * @return 插件统计数据
+     */
+    public Map<String, Object> getPluginStats() {
+        Map<String, Object> stats = new HashMap<>();
+        
+        List<PluginWrapper> allPlugins = pluginManager.getPlugins();
+        List<PluginInterface> activePlugins = getAllPlugins();
+        
+        // 总插件数
+        stats.put("totalPlugins", allPlugins.size());
+        
+        // 活跃插件数
+        stats.put("activePlugins", activePlugins.size());
+        
+        // 已启动插件数
+        long startedPlugins = allPlugins.stream()
+            .filter(plugin -> plugin.getPluginState().toString().equals("STARTED"))
+            .count();
+        stats.put("startedPlugins", startedPlugins);
+        
+        // 已停止插件数
+        long stoppedPlugins = allPlugins.stream()
+            .filter(plugin -> plugin.getPluginState().toString().equals("STOPPED"))
+            .count();
+        stats.put("stoppedPlugins", stoppedPlugins);
+        
+        // 失败插件数
+        long failedPlugins = allPlugins.stream()
+            .filter(plugin -> plugin.getPluginState().toString().equals("FAILED"))
+            .count();
+        stats.put("failedPlugins", failedPlugins);
+        
+        // 插件状态分布
+        Map<String, Long> statusDistribution = allPlugins.stream()
+            .collect(Collectors.groupingBy(
+                plugin -> plugin.getPluginState().toString(),
+                Collectors.counting()
+            ));
+        stats.put("statusDistribution", statusDistribution);
+        
+        return stats;
     }
 }

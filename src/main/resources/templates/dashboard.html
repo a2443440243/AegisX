@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统仪表盘 - AegisX</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .dashboard-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dashboard-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .card-header h3 {
+            margin: 0;
+            color: #495057;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .card-header h3 i {
+            margin-right: 10px;
+            color: #6c757d;
+        }
+        
+        .card-content {
+            color: #6c757d;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .card h4 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .card h4 i {
+            margin-right: 8px;
+            color: #007bff;
+        }
+        
+        .card p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .card.error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-running {
+            background-color: #28a745;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+        }
+        
+        .status-stopped {
+            background-color: #dc3545;
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
+        }
+        
+        .status-error {
+            background-color: #ffc107;
+            box-shadow: 0 0 10px rgba(255, 193, 7, 0.5);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-style: italic;
+        }
+        
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #6c757d;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-header h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h2><i class="bi bi-house"></i> 系统仪表盘</h2>
+            <p>欢迎使用 AegisX 企业级智能插件平台</p>
+        </div>
+        
+        <div class="dashboard-grid">
+            <!-- 系统状态卡片 -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="bi bi-pc-display"></i> 系统状态</h3>
+                    <button class="btn btn-primary btn-sm" onclick="loadSystemStatus()"><i class="bi bi-arrow-clockwise"></i> 刷新</button>
+                </div>
+                <div id="system-status" class="card-content">
+                    <div class="loading">正在加载系统状态...</div>
+                </div>
+            </div>
+            
+            <!-- 插件统计卡片 -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="bi bi-plugin"></i> 插件统计</h3>
+                    <button class="btn btn-primary btn-sm" onclick="loadPluginStats()"><i class="bi bi-arrow-clockwise"></i> 刷新</button>
+                </div>
+                <div id="plugin-stats" class="card-content">
+                    <div class="loading">正在加载插件统计...</div>
+                </div>
+            </div>
+            
+            <!-- 健康检查卡片 -->
+            <div class="dashboard-card">
+                <div class="card-header">
+                    <h3><i class="bi bi-heart-pulse"></i> 健康检查</h3>
+                    <button class="btn btn-primary btn-sm" onclick="loadHealthCheck()"><i class="bi bi-arrow-clockwise"></i> 刷新</button>
+                </div>
+                <div id="health-status" class="card-content">
+                    <div class="loading">正在加载健康状态...</div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+    
+    <script>
+        // 通用错误处理函数
+        function handleError(error, container, defaultMessage = '操作失败') {
+            const message = error.message || defaultMessage;
+            if (container) {
+                container.innerHTML = `<div class="card error">${message}</div>`;
+            } else {
+                alert(message);
+            }
+        }
+        
+        // 通用API调用函数
+        async function apiCall(url, options = {}) {
+            try {
+                const response = await fetch(url, options);
+                return await response.json();
+            } catch (error) {
+                throw new Error(`网络错误: ${error.message}`);
+            }
+        }
+        
+        // 加载系统状态
+        async function loadSystemStatus() {
+            const container = document.getElementById('system-status');
+            if (!container) return;
+            container.innerHTML = '<div class="loading">正在加载系统状态...</div>';
+            
+            try {
+                const result = await apiCall('/api/system/status');
+                
+                if (result.code === 200) {
+                    const data = result.data;
+                    let html = `
+                        <div class="card">
+                            <h4><i class="bi bi-pc-display"></i> 系统信息</h4>
+                            <p><strong>状态:</strong> <span class="status-indicator status-running"></span>${data.status}</p>
+                            <p><strong>版本:</strong> ${data.version}</p>
+                            <p><strong>框架:</strong> ${data.framework}</p>
+                            <p><strong>时间:</strong> ${new Date(data.timestamp).toLocaleString()}</p>
+                        </div>
+                        
+                        <div class="card">
+                            <h4><i class="bi bi-memory"></i> JVM 信息</h4>
+                            <p><strong>总内存:</strong> ${(data.jvm.totalMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>已用内存:</strong> ${(data.jvm.usedMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>空闲内存:</strong> ${(data.jvm.freeMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>最大内存:</strong> ${(data.jvm.maxMemory / 1024 / 1024).toFixed(2)} MB</p>
+                            <p><strong>处理器数量:</strong> ${data.jvm.processors}</p>
+                        </div>
+                    `;
+                    container.innerHTML = html;
+                } else {
+                    handleError(new Error(result.message || '加载失败'), container);
+                }
+            } catch (error) {
+                handleError(error, container);
+            }
+        }
+        
+        // 加载健康检查状态
+        async function loadHealthCheck() {
+            const container = document.getElementById('health-status');
+            if (!container) return;
+            container.innerHTML = '<div class="loading">正在加载健康检查状态...</div>';
+            
+            try {
+                const result = await apiCall('/actuator/health');
+                
+                let html = `
+                    <div class="card">
+                        <h4><i class="bi bi-heart-pulse"></i> 应用健康状态</h4>
+                        <p><strong>状态:</strong> <span class="status-indicator ${result.status === 'UP' ? 'status-running' : 'status-stopped'}"></span>${result.status}</p>
+                    </div>
+                `;
+                
+                if (result.components) {
+                    html += '<div class="card"><h4><i class="bi bi-gear"></i> 组件状态</h4>';
+                    for (const [key, value] of Object.entries(result.components)) {
+                        html += `<p><strong>${key}:</strong> <span class="status-indicator ${value.status === 'UP' ? 'status-running' : 'status-stopped'}"></span>${value.status}</p>`;
+                    }
+                    html += '</div>';
+                }
+                
+                container.innerHTML = html;
+            } catch (error) {
+                handleError(error, container, '加载失败');
+            }
+        }
+        
+        // 加载插件统计数据
+        async function loadPluginStats() {
+            const container = document.getElementById('plugin-stats');
+            if (!container) return;
+            container.innerHTML = '<div class="loading">正在加载插件统计...</div>';
+            
+            try {
+                const result = await apiCall('/api/plugins/stats');
+                
+                if (result.code === 200) {
+                    const data = result.data;
+                    const html = `
+                        <div class="card">
+                            <h4><i class="bi bi-box"></i> 插件概览</h4>
+                            <p><strong>总插件数:</strong> ${data.totalPlugins || 0}</p>
+                            <p><strong>已启用:</strong> <span class="status-indicator status-running"></span>${data.activePlugins || 0}</p>
+                            <p><strong>已启动:</strong> <span class="status-indicator status-running"></span>${data.startedPlugins || 0}</p>
+                            <p><strong>已停止:</strong> <span class="status-indicator status-stopped"></span>${data.stoppedPlugins || 0}</p>
+                            <p><strong>异常:</strong> <span class="status-indicator status-error"></span>${data.failedPlugins || 0}</p>
+                        </div>
+                        
+                        <div class="card">
+                            <h4><i class="bi bi-graph-up"></i> 状态分布</h4>
+                            ${Object.entries(data.statusDistribution || {}).map(([status, count]) => 
+                                `<p><strong>${status}:</strong> ${count}</p>`
+                            ).join('')}
+                        </div>
+                    `;
+                    container.innerHTML = html;
+                } else {
+                    handleError(new Error(result.message || '加载插件统计失败'), container);
+                }
+            } catch (error) {
+                handleError(error, container, '加载插件统计失败');
+            }
+        }
+        
+        // 页面导航函数
+        function navigateToPage(page) {
+            // 通过postMessage与父页面通信
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'navigate',
+                    page: page
+                }, '*');
+            } else {
+                // 如果不在iframe中，直接跳转
+                window.location.href = `/${page}`;
+            }
+        }
+        
+        // iframe通信功能
+        function sendMessageToParent(action, data) {
+            if (window.parent && window.parent !== window) {
+                window.parent.postMessage({
+                    type: 'IFRAME_MESSAGE',
+                    source: 'dashboard',
+                    action: action,
+                    data: data
+                }, '*');
+            }
+        }
+        
+        // 监听来自父页面的消息
+        window.addEventListener('message', function(event) {
+            if (event.origin !== window.location.origin) {
+                return;
+            }
+            
+            const message = event.data;
+            if (message && message.type === 'PARENT_MESSAGE' && message.target === 'dashboard') {
+                handleParentMessage(message.data);
+            } else if (message && message.type === 'BROADCAST') {
+                handleBroadcastMessage(message);
+            }
+        });
+        
+        // 处理来自父页面的消息
+        function handleParentMessage(data) {
+            if (data.action === 'REFRESH') {
+                loadSystemStatus();
+                loadHealthCheck();
+                loadPluginStats();
+            } else if (data.action === 'UPDATE_THEME') {
+                // 处理主题更新
+                document.body.className = data.theme || '';
+            }
+        }
+        
+        // 处理广播消息
+        function handleBroadcastMessage(message) {
+            if (message.data && message.data.type === 'PLUGIN_STATUS_CHANGED') {
+                // 插件状态改变时刷新仪表盘数据
+                loadSystemStatus();
+                loadHealthCheck();
+                loadPluginStats();
+                sendMessageToParent('SHOW_NOTIFICATION', {
+                    message: '插件状态已更新，仪表盘数据已刷新',
+                    type: 'info'
+                });
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载仪表盘数据
+            loadSystemStatus();
+            loadHealthCheck();
+            loadPluginStats();
+            
+            // 通知父页面仪表盘已加载
+            sendMessageToParent('SHOW_NOTIFICATION', {
+                message: '仪表盘加载完成',
+                type: 'success'
+            });
+        });
+    </script>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

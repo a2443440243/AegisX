@@ -119,4 +119,14 @@ public class PluginController {
         pluginService.reloadPlugins();
         return ResponseEntity.ok(ApiResponse.success("插件重新加载成功", null));
     }
+    
+    /**
+     * 获取插件统计信息
+     * @return 插件统计数据
+     */
+    @GetMapping("/stats")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> getPluginStats() {
+        Map<String, Object> stats = pluginService.getPluginStats();
+        return ResponseEntity.ok(ApiResponse.success(stats));
+    }
 }

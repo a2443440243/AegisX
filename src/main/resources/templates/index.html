@@ -4,45 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AegisX 企业级智能插件平台</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <script>
+        // iframe相关函数 - 在head中定义确保全局可访问
+        function hideIframeLoading(iframeName) {
+            const loadingElement = document.getElementById(`${iframeName}-loading`);
+            if (loadingElement) {
+                loadingElement.style.display = 'none';
+            }
         }
         
+        function showIframeError(iframeName) {
+            const loadingElement = document.getElementById(`${iframeName}-loading`);
+            const errorElement = document.getElementById(`${iframeName}-error`);
+            
+            if (loadingElement) {
+                loadingElement.style.display = 'none';
+            }
+            if (errorElement) {
+                errorElement.style.display = 'flex';
+            }
+        }
+        
+        function reloadIframe(iframeName) {
+            const iframe = document.getElementById(`${iframeName}-iframe`);
+            const loadingElement = document.getElementById(`${iframeName}-loading`);
+            const errorElement = document.getElementById(`${iframeName}-error`);
+            
+            if (errorElement) {
+                errorElement.style.display = 'none';
+            }
+            if (loadingElement) {
+                loadingElement.style.display = 'flex';
+            }
+            if (iframe) {
+                const dataSrc = iframe.getAttribute('data-src');
+                if (dataSrc) {
+                    iframe.src = dataSrc;
+                }
+            }
+        }
+    </script>
+    <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            padding: 0;
             margin: 0;
         }
         
-        .container {
-            width: 100%;
-            margin: 0;
+        .main-container {
+            max-width: 1400px;
+            margin: 20px auto;
             background: white;
-            border-radius: 0;
-            box-shadow: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: calc(100vh - 40px);
         }
         
-        .header {
+        .page-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 25px 35px;
-            border-radius: 0;
-            margin-bottom: 0;
-            box-shadow: none;
             position: relative;
             overflow: hidden;
         }
         
-        .header::before {
+        .page-header::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -60,14 +92,16 @@
         
         .header-content {
             text-align: center;
+            position: relative;
+            z-index: 1;
         }
         
-        .header h1 {
+        .page-header h1 {
             font-size: 2.5em;
             margin-bottom: 10px;
         }
         
-        .header p {
+        .page-header p {
             font-size: 1.2em;
             opacity: 0.9;
         }
@@ -79,7 +113,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            z-index: 1;
+            z-index: 2;
         }
         
         .user-name {
@@ -87,13 +121,12 @@
             opacity: 0.9;
         }
         
-        .logout-btn {
+        .btn-outline-light {
             background: rgba(255,255,255,0.15);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 10px 20px;
             border-radius: 25px;
-            cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             font-size: 0.9rem;
@@ -101,7 +134,7 @@
             font-weight: 500;
         }
         
-        .logout-btn:hover {
+        .btn-outline-light:hover {
             background: rgba(255,255,255,0.25);
             color: white;
             text-decoration: none;
@@ -111,12 +144,12 @@
         }
         
         .main-content {
-            display: flex;
             flex: 1;
-            overflow: hidden;
+            overflow-y: auto;
+            display: flex;
         }
         
-        .nav {
+        .sidebar {
             width: 250px;
             min-width: 200px;
             background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
@@ -126,7 +159,6 @@
             padding: 20px 0;
             flex-shrink: 0;
             box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-            transition: width 0.3s ease;
         }
         
         .nav-item {
@@ -141,6 +173,7 @@
             margin: 2px 10px;
             border-radius: 8px;
             font-weight: 500;
+            color: #495057;
         }
         
         .nav-item:hover {
@@ -156,6 +189,169 @@
             border-left-color: #0d47a1;
             transform: translateX(5px);
             box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+        
+        /* 水平导航菜单样式 */
+        .navigation {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-bottom: 2px solid #e9ecef;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .navigation .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            font-size: 16px;
+            font-weight: 500;
+            color: #495057;
+            text-decoration: none;
+            border-radius: 8px;
+            border-left: none;
+            transform: none;
+        }
+        
+        .navigation .nav-item:hover {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1976d2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
+        }
+        
+        .navigation .nav-item.active {
+            background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+        }
+        
+        .nav-icon {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .navigation .nav-item span {
+            font-weight: 500;
+        }
+        
+        /* 仪表盘样式 */
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .dashboard-header h2 {
+            margin: 0 0 10px 0;
+            font-size: 2.2em;
+            font-weight: 600;
+        }
+        
+        .dashboard-header p {
+            margin: 0;
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            padding: 0 10px;
+        }
+        
+        .dashboard-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 1px solid #e9ecef;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        
+        .dashboard-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .dashboard-card .card-header h3 {
+            margin: 0;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .dashboard-card .card-content {
+            padding: 20px;
+            min-height: 200px;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+        
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+        }
+        
+        .quick-actions .btn {
+            padding: 12px 16px;
+            font-size: 14px;
+            border-radius: 8px;
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-running {
+            background: #28a745;
+            box-shadow: 0 0 10px rgba(40, 167, 69, 0.5);
+        }
+        
+        .status-stopped {
+            background: #dc3545;
+            box-shadow: 0 0 10px rgba(220, 53, 69, 0.5);
         }
         
         .content {
@@ -204,27 +400,29 @@
             display: block;
         }
         
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
         .card {
-            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            background: white;
             border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
-            border-left: 4px solid #2196f3;
+            border: 1px solid #dee2e6;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
+            margin-bottom: 20px;
         }
         
         .card:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-bottom: 1px solid #dee2e6;
+            padding: 1rem 1.25rem;
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .card-body {
+            padding: 1.25rem;
         }
         
         .plugin-item {
@@ -436,6 +634,192 @@
             background: linear-gradient(135deg, #f44336 0%, #d32f2f 100%);
         }
         
+        /* 插件管理样式 */
+        .plugin-management-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        
+        .plugin-management-header h2 {
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        
+        .plugin-management-header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .plugin-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .toolbar-left {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .toolbar-right .search-box {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .search-box input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 200px;
+        }
+        
+        .plugin-stats-overview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid #007bff;
+        }
+        
+        .stat-icon {
+            font-size: 30px;
+            margin-right: 15px;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .plugin-list-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .plugin-list-container h3 {
+            margin-top: 0;
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        
+        .plugin-list {
+            min-height: 200px;
+        }
+        
+        /* 模态框样式 */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            color: #333;
+        }
+        
+        .close {
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+            color: white;
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+            color: white;
+        }
+        
         .status-warning {
             background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
         }
@@ -581,6 +965,81 @@
         .loading-spinner {
             width: 1rem;
             height: 1rem;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #2196f3;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* iframe统一样式 */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .iframe-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(248, 249, 250, 0.95);
+            z-index: 10;
+        }
+        
+        .loading-text {
+            margin-top: 15px;
+            color: #666;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .iframe-error {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: rgba(248, 249, 250, 0.95);
+            z-index: 10;
+        }
+        
+        .error-icon {
+            font-size: 48px;
+            color: #dc3545;
+            margin-bottom: 15px;
+        }
+        
+        .error-text {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .content-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+            background: white;
         }
 
         .alert {
@@ -851,11 +1310,11 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+    <div class="main-container">
+        <div class="page-header">
             <div class="user-info">
                 <span class="user-name" sec:authentication="name">用户</span>
-                <a href="/logout" class="logout-btn">登出</a>
+                <a href="/logout" class="btn btn-outline-light">登出</a>
             </div>
             <div class="header-content">
                 <h1>🛡️ AegisX 企业级智能插件平台</h1>
@@ -863,224 +1322,83 @@
             </div>
         </div>
         
-        <div class="main-content">
-            <div class="nav">
-                <button class="nav-item active" data-tab="plugins" onclick="showTab('plugins')">📦 插件管理</button>
-                <button class="nav-item" data-tab="status" onclick="showTab('status')">🖥️ 系统状态</button>
-                <button class="nav-item" data-tab="api-docs" onclick="showTab('api-docs')">📚 API文档</button>
-                <button class="nav-item" data-tab="health-check" onclick="showTab('health-check')">💚 健康检查</button>
-                <button class="nav-item" data-tab="database-management" onclick="showTab('database-management')">🗄️ 数据库管理</button>
-            </div>
-            
-            <div class="content">
-                <div class="content-header">
-                    <h3 id="content-title">插件管理</h3>
+        <!-- 导航菜单 -->
+        <nav class="navigation">
+            <div class="nav-container">
+                <div class="nav-item active" data-tab="dashboard" onclick="showTab('dashboard')">
+                    <i class="bi bi-speedometer2 nav-icon"></i>
+                    <span>仪表盘</span>
                 </div>
-                <div class="content-body">
-                            <!-- 插件管理标签页 -->
-                    <div id="plugins" class="tab-content active">
-                        <div class="card">
-                            <h3>📦 已加载插件列表</h3>
-                            <button class="btn btn-primary" onclick="loadPlugins()">🔄 刷新插件列表</button>
-                            <button class="btn btn-warning" onclick="reloadAllPlugins()">🔄 重新加载所有插件</button>
+                <div class="nav-item" data-tab="plugin-management" onclick="showTab('plugin-management')">
+                    <i class="bi bi-plugin nav-icon"></i>
+                    <span>插件管理</span>
+                </div>
+                <div class="nav-item" data-tab="database-management" onclick="showTab('database-management')">
+                    <i class="bi bi-database nav-icon"></i>
+                    <span>数据管理</span>
+                </div>
+                <div class="nav-item" data-tab="api-docs" onclick="showTab('api-docs')">
+                    <i class="bi bi-book nav-icon"></i>
+                    <span>API文档</span>
+                </div>
+            </div>
+        </nav>
+        
+        <div class="main-content">
+            <div class="content">
+                <div id="dashboard" class="tab-content active">
+                    <div class="iframe-container">
+                        <div class="iframe-loading" id="dashboard-loading">
+                            <div class="loading-spinner"></div>
+                            <div class="loading-text">正在加载仪表盘...</div>
                         </div>
-                        <div id="plugin-list"></div>
-                    </div>
-            
-                    <!-- 系统状态标签页 -->
-                    <div id="status" class="tab-content">
-                        <div class="card">
-                            <h3>🖥️ 系统状态监控</h3>
-                            <button class="btn btn-primary" onclick="loadSystemStatus()">🔄 刷新状态</button>
+                        <iframe id="dashboard-iframe" data-src="/dashboard" class="content-iframe" onload="hideIframeLoading('dashboard')" onerror="showIframeError('dashboard')"></iframe>
+                        <div class="iframe-error" id="dashboard-error" style="display: none;">
+                            <div class="error-icon"><i class="bi bi-exclamation-triangle"></i></div>
+                            <div class="error-text">加载失败，请稍后重试</div>
+                            <button class="btn btn-primary" onclick="reloadIframe('dashboard')">重新加载</button>
                         </div>
-                        <div id="status-status"></div>
                     </div>
-            
-                    <!-- API文档标签页 -->
-                    <div id="api-docs" class="tab-content">
-                        <iframe id="api-docs-iframe" class="content-iframe" src="/api-docs" style="width: 100%; height: 100%; border: none;"></iframe>
-                    </div>
-            
-                    <!-- 健康检查标签页 -->
-                    <div id="health-check" class="tab-content">
-                        <div class="card">
-                            <h3>💚 健康检查</h3>
-                            <button class="btn btn-primary" onclick="loadHealthCheck()">🔄 刷新健康状态</button>
+                </div>
+                <div id="plugin-management" class="tab-content">
+                    <div class="iframe-container">
+                        <div class="iframe-loading" id="plugin-management-loading">
+                            <div class="loading-spinner"></div>
+                            <div class="loading-text">正在加载插件管理...</div>
                         </div>
-                        <div id="health-check-status"></div>
-                    </div>
-            
-                    <!-- 数据库管理标签页 -->
-                    <div id="database-management" class="tab-content">
-                        <!-- 连接状态卡片 -->
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <div class="card config-card">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <div>
-                                                <h5 class="card-title mb-1">
-                                                    <i class="bi bi-activity me-2"></i>
-                                                    连接状态
-                                                </h5>
-                                                <p class="card-text mb-0">
-                                                    <span class="status-indicator status-disconnected" id="dbStatusIndicator"></span>
-                                                    <span class="text-danger fw-bold" id="dbStatusText">未连接</span>
-                                                </p>
-                                            </div>
-                                            <button type="button" class="btn btn-outline-primary btn-test" onclick="testCurrentConnection()">
-                                                <i class="bi bi-arrow-clockwise me-1"></i>
-                                                测试连接
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                        <iframe id="plugin-management-iframe" data-src="/plugin-management" class="content-iframe" onload="hideIframeLoading('plugin-management')" onerror="showIframeError('plugin-management')"></iframe>
+                        <div class="iframe-error" id="plugin-management-error" style="display: none;">
+                            <div class="error-icon"><i class="bi bi-exclamation-triangle"></i></div>
+                            <div class="error-text">加载失败，请稍后重试</div>
+                            <button class="btn btn-primary" onclick="reloadIframe('plugin-management')">重新加载</button>
                         </div>
-
-                <!-- 配置表单 -->
-                <div class="row">
-                    <div class="col-lg-8 col-md-10 mx-auto">
-                        <div class="card config-card">
-                            <div class="card-header">
-                                <h5 class="mb-0">
-                                    <i class="bi bi-gear-fill me-2"></i>
-                                    数据库连接配置
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <!-- 消息提示区域 -->
-                                <div id="dbMessageArea"></div>
-
-                                <form id="dbConfigForm">
-                                    <!-- 连接方式选择 -->
-                                    <div class="mb-4">
-                                        <label class="form-label">
-                                            <i class="bi bi-toggles me-1"></i>
-                                            连接方式
-                                        </label>
-                                        <div class="btn-group w-100" role="group">
-                                            <input type="radio" class="btn-check" name="configMode" id="urlMode" value="url" checked>
-                                            <label class="btn btn-outline-primary" for="urlMode">
-                                                <i class="bi bi-link-45deg me-1"></i>
-                                                URL连接
-                                            </label>
-                                            <input type="radio" class="btn-check" name="configMode" id="separateMode" value="separate">
-                                            <label class="btn btn-outline-primary" for="separateMode">
-                                                <i class="bi bi-list-ul me-1"></i>
-                                                分离配置
-                                            </label>
-                                        </div>
-                                    </div>
-
-                                    <!-- URL模式配置 -->
-                                    <div id="urlModeConfig">
-                                        <div class="mb-3">
-                                            <label for="dbUrl" class="form-label">
-                                                <i class="bi bi-link me-1"></i>
-                                                数据库URL
-                                            </label>
-                                            <input type="text" class="form-control" id="dbUrl" name="url" 
-                                                   placeholder="jdbc:mysql://localhost:3306/database_name">
-                                            <div class="form-text">
-                                                示例: jdbc:mysql://localhost:3306/pf4j_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- 分离模式配置 -->
-                                    <div id="separateModeConfig" style="display: none;">
-                                        <div class="row">
-                                            <div class="col-md-8">
-                                                <div class="mb-3">
-                                                    <label for="dbHost" class="form-label">
-                                                        <i class="bi bi-hdd-network me-1"></i>
-                                                        主机地址
-                                                    </label>
-                                                    <input type="text" class="form-control" id="dbHost" name="host" 
-                                                           placeholder="localhost">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="mb-3">
-                                                    <label for="dbPort" class="form-label">
-                                                        <i class="bi bi-ethernet me-1"></i>
-                                                        端口
-                                                    </label>
-                                                    <input type="number" class="form-control" id="dbPort" name="port" 
-                                                           placeholder="3306" min="1" max="65535">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="dbName" class="form-label">
-                                                <i class="bi bi-database me-1"></i>
-                                                数据库名
-                                            </label>
-                                            <input type="text" class="form-control" id="dbName" name="database" 
-                                                   placeholder="pf4j_db">
-                                        </div>
-                                    </div>
-
-                                    <!-- 认证信息 -->
-                                    <div class="mb-3">
-                                        <label for="dbUsername" class="form-label">
-                                            <i class="bi bi-person me-1"></i>
-                                            用户名
-                                        </label>
-                                        <input type="text" class="form-control" id="dbUsername" name="username" 
-                                               placeholder="root" required>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="dbPassword" class="form-label">
-                                            <i class="bi bi-key me-1"></i>
-                                            密码
-                                        </label>
-                                        <div class="input-group">
-                                            <input type="password" class="form-control" id="dbPassword" name="password" 
-                                                   placeholder="请输入数据库密码">
-                                            <button class="btn btn-outline-secondary" type="button" onclick="toggleDbPassword()">
-                                                <i class="bi bi-eye" id="dbPasswordToggleIcon"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-
-                                    <!-- 高级配置 -->
-                                    <div class="mb-3">
-                                        <label for="driverClassName" class="form-label">
-                                            <i class="bi bi-cpu me-1"></i>
-                                            驱动类名
-                                        </label>
-                                        <select class="form-select" id="driverClassName" name="driverClassName">
-                                            <option value="com.mysql.cj.jdbc.Driver">MySQL 8.0+</option>
-                                            <option value="com.mysql.jdbc.Driver">MySQL 5.x</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- 操作按钮 -->
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <button type="button" class="btn btn-outline-secondary me-md-2" onclick="resetDbConfig()">
-                                            <i class="bi bi-arrow-counterclockwise me-1"></i>
-                                            重置配置
-                                        </button>
-                                        <button type="button" class="btn btn-outline-warning me-md-2" onclick="reloadDataSource()">
-                                            <i class="bi bi-arrow-clockwise me-1"></i>
-                                            重新加载
-                                        </button>
-                                        <button type="button" class="btn btn-outline-info me-md-2" onclick="testDbConnection()">
-                                            <i class="bi bi-check-circle me-1"></i>
-                                            <span class="loading-spinner spinner-border spinner-border-sm me-1" role="status" style="display: none;"></span>
-                                            测试连接
-                                        </button>
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="bi bi-check-lg me-1"></i>
-                                            <span class="loading-spinner spinner-border spinner-border-sm me-1" role="status" style="display: none;"></span>
-                                            保存配置
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                    </div>
+                </div>
+                <div id="database-management" class="tab-content">
+                    <div class="iframe-container">
+                        <div class="iframe-loading" id="database-management-loading">
+                            <div class="loading-spinner"></div>
+                            <div class="loading-text">正在加载数据管理...</div>
+                        </div>
+                        <iframe id="database-management-iframe" data-src="/database/config" class="content-iframe" onload="hideIframeLoading('database-management')" onerror="showIframeError('database-management')"></iframe>
+                        <div class="iframe-error" id="database-management-error" style="display: none;">
+                            <div class="error-icon"><i class="bi bi-exclamation-triangle"></i></div>
+                            <div class="error-text">加载失败，请稍后重试</div>
+                            <button class="btn btn-primary" onclick="reloadIframe('database-management')">重新加载</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="api-docs" class="tab-content">
+                    <div class="iframe-container">
+                        <div class="iframe-loading" id="api-docs-loading">
+                            <div class="loading-spinner"></div>
+                            <div class="loading-text">正在加载API文档...</div>
+                        </div>
+                        <iframe id="api-docs-iframe" data-src="/api-docs" class="content-iframe" onload="hideIframeLoading('api-docs')" onerror="showIframeError('api-docs')"></iframe>
+                        <div class="iframe-error" id="api-docs-error" style="display: none;">
+                            <div class="error-icon"><i class="bi bi-exclamation-triangle"></i></div>
+                            <div class="error-text">加载失败，请稍后重试</div>
+                            <button class="btn btn-primary" onclick="reloadIframe('api-docs')">重新加载</button>
                         </div>
                     </div>
                 </div>
@@ -1089,6 +1407,8 @@
     </div>
     
     <script>
+
+        
         // 通用错误处理函数
         function handleError(error, container, defaultMessage = '操作失败') {
             const message = error.message || defaultMessage;
@@ -1109,131 +1429,14 @@
             }
         }
         
-        // 显示指定标签页
-        function showTab(tabName) {
-            hideAllContent();
-            
-            // 显示指定标签页
-            document.getElementById(tabName).classList.add('active');
-            
-            // 更新标题和导航状态
-            if (tabName === 'plugins') {
-                document.getElementById('content-title').textContent = '插件管理';
-                updateActiveNav('plugins');
-                loadPlugins();
-            } else if (tabName === 'status') {
-                document.getElementById('content-title').textContent = '系统状态';
-                updateActiveNav('status');
-                loadSystemStatus();
-            } else if (tabName === 'api-docs') {
-                document.getElementById('content-title').textContent = 'API文档';
-                updateActiveNav('api-docs');
-                document.getElementById('api-docs-iframe').classList.add('active');
-            } else if (tabName === 'health-check') {
-                document.getElementById('content-title').textContent = '健康检查';
-                updateActiveNav('health-check');
-                loadHealthCheck();
-            } else if (tabName === 'database-management') {
-                document.getElementById('content-title').textContent = '数据库管理';
-                updateActiveNav('database-management');
-            }
-        }
-        
-        // 加载插件列表
-        async function loadPlugins() {
-            const container = document.getElementById('plugin-list');
-            container.innerHTML = '<div class="loading">正在加载插件列表...</div>';
-            
-            try {
-                const result = await apiCall('/api/plugins');
-                
-                if (result.code === 200 && result.data) {
-                    if (result.data.plugins.length === 0) {
-                        container.innerHTML = '<div class="card">暂无已加载的插件</div>';
-                        return;
-                    }
-                    
-                    let html = '';
-                    result.data.plugins.forEach(plugin => {
-                        html += `
-                            <div class="plugin-item" id="plugin-item-${plugin.name}">
-                                <div class="plugin-header">
-                                    <span class="plugin-name">${plugin.name}</span>
-                                    <span class="plugin-version">v${plugin.version}</span>
-                                </div>
-                                <div class="plugin-description">${plugin.description}</div>
-                                <div class="plugin-actions">
-                                    <button class="btn btn-primary" onclick="executePluginByName('${plugin.name}', this)">执行插件</button>
-                                </div>
-                                <div class="plugin-execution-result"></div>
-                            </div>
-                        `;
-                    });
-                    container.innerHTML = html;
-                } else {
-                    handleError(new Error(result.message || '加载失败'), container);
-                }
-            } catch (error) {
-                handleError(error, container);
-            }
-        }
-        
-        // 通过插件名称执行插件
-        async function executePluginByName(pluginName, buttonElement) {
-            const pluginItem = buttonElement.closest('.plugin-item');
-            const resultContainer = pluginItem.querySelector('.plugin-execution-result');
-            resultContainer.innerHTML = '<div class="loading">正在执行插件...</div>';
-            buttonElement.disabled = true;
 
-            try {
-                const result = await apiCall(`/api/plugins/execute/${pluginName}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({}) // No input for now
-                });
-
-                let html = '';
-                if (result.code === 200) {
-                    let resultData = result.data;
-                    if (typeof resultData === 'object') {
-                        resultData = JSON.stringify(resultData, null, 2);
-                    }
-                    html = `<div class="result"><pre>${resultData}</pre></div>`;
-                } else {
-                    html = `<div class="result error"><h4>执行失败</h4><p>${result.message}</p></div>`;
-                }
-                resultContainer.innerHTML = html;
-
-            } catch (error) {
-                handleError(error, resultContainer, '执行失败');
-            } finally {
-                buttonElement.disabled = false;
-            }
-        }
         
-        // 重新加载所有插件
-        async function reloadAllPlugins() {
-            try {
-                const result = await apiCall('/api/plugins/reload', {
-                    method: 'POST'
-                });
-                
-                if (result.code === 200) {
-                    alert('插件重新加载成功');
-                    loadPlugins();
-                } else {
-                    handleError(new Error(result.message || '插件重新加载失败'));
-                }
-            } catch (error) {
-                handleError(error);
-            }
-        }
+
         
         // 加载系统状态
         async function loadSystemStatus() {
-            const container = document.getElementById('status-status');
+            const container = document.getElementById('systemStatus');
+            if (!container) return;
             container.innerHTML = '<div class="loading">正在加载系统状态...</div>';
             
             try {
@@ -1243,7 +1446,7 @@
                     const data = result.data;
                     let html = `
                         <div class="card">
-                            <h4>🖥️ 系统信息</h4>
+                            <h4><i class="bi bi-pc-display"></i> 系统信息</h4>
                             <p><strong>状态:</strong> <span class="status-indicator status-running"></span>${data.status}</p>
                             <p><strong>版本:</strong> ${data.version}</p>
                             <p><strong>框架:</strong> ${data.framework}</p>
@@ -1251,7 +1454,7 @@
                         </div>
                         
                         <div class="card">
-                            <h4>💾 JVM 信息</h4>
+                            <h4><i class="bi bi-memory"></i> JVM 信息</h4>
                             <p><strong>总内存:</strong> ${(data.jvm.totalMemory / 1024 / 1024).toFixed(2)} MB</p>
                             <p><strong>已用内存:</strong> ${(data.jvm.usedMemory / 1024 / 1024).toFixed(2)} MB</p>
                             <p><strong>空闲内存:</strong> ${(data.jvm.freeMemory / 1024 / 1024).toFixed(2)} MB</p>
@@ -1270,7 +1473,8 @@
         
         // 加载健康检查状态
         async function loadHealthCheck() {
-            const container = document.getElementById('health-check-status');
+            const container = document.getElementById('healthStatus');
+            if (!container) return;
             container.innerHTML = '<div class="loading">正在加载健康检查状态...</div>';
             
             try {
@@ -1278,13 +1482,13 @@
                 
                 let html = `
                     <div class="card">
-                        <h4>💚 应用健康状态</h4>
+                        <h4><i class="bi bi-heart-pulse"></i> 应用健康状态</h4>
                         <p><strong>状态:</strong> <span class="status-indicator ${result.status === 'UP' ? 'status-running' : 'status-stopped'}"></span>${result.status}</p>
                     </div>
                 `;
                 
                 if (result.components) {
-                    html += '<div class="card"><h4>🔧 组件状态</h4>';
+                    html += '<div class="card"><h4><i class="bi bi-gear"></i> 组件状态</h4>';
                     for (const [key, value] of Object.entries(result.components)) {
                         html += `<p><strong>${key}:</strong> <span class="status-indicator ${value.status === 'UP' ? 'status-running' : 'status-stopped'}"></span>${value.status}</p>`;
                     }
@@ -1297,11 +1501,43 @@
             }
         }
         
+        // 导航切换功能
+        function showTab(tabId) {
+            // 隐藏所有内容
+            hideAllContent();
+            
+            // 显示选中的内容
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+                targetTab.style.display = 'block';
+                
+                // 同时激活对应的iframe
+                const iframe = document.getElementById(tabId + '-iframe');
+                if (iframe) {
+                    if (iframe.dataset.src) {
+                        iframe.src = iframe.dataset.src;
+                        delete iframe.dataset.src;
+                    }
+                    iframe.classList.add('active');
+                }
+            }
+            
+            // 更新导航激活状态
+            updateActiveNav(tabId);
+        }
+        
+        // 页面加载时默认显示仪表盘
+        document.addEventListener('DOMContentLoaded', () => {
+            showTab('dashboard');
+        });
+        
         // 隐藏所有内容
         function hideAllContent() {
             // 隐藏所有tab内容
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
+                tab.style.display = 'none';
             });
             // 隐藏所有iframe
             document.querySelectorAll('.content-iframe').forEach(iframe => {
@@ -1319,6 +1555,131 @@
             if (activeNavItem) {
                 activeNavItem.classList.add('active');
             }
+        }
+        
+
+        
+        // 初始化所有iframe的加载状态
+        function initializeIframes() {
+            const iframes = ['dashboard', 'plugin-management', 'database-management', 'api-docs'];
+            iframes.forEach(type => {
+                const iframe = document.getElementById(type + '-iframe');
+                const loading = document.getElementById(type + '-loading');
+                if (iframe && loading) {
+                    // 如果iframe还没有加载完成，显示加载状态
+                    if (!iframe.contentDocument || iframe.contentDocument.readyState !== 'complete') {
+                        loading.style.display = 'flex';
+                    }
+                }
+            });
+        }
+        
+        // iframe通信机制
+        function sendMessageToIframe(iframeName, message) {
+            const iframe = document.getElementById(iframeName + '-iframe');
+            if (iframe && iframe.contentWindow) {
+                iframe.contentWindow.postMessage({
+                    type: 'PARENT_MESSAGE',
+                    source: 'parent',
+                    target: iframeName,
+                    data: message
+                }, '*');
+            }
+        }
+        
+        function sendMessageToAllIframes(message) {
+            const iframes = ['dashboard', 'plugin-management', 'database-management', 'api-docs'];
+            iframes.forEach(iframeName => {
+                sendMessageToIframe(iframeName, message);
+            });
+        }
+        
+        // 监听来自iframe的消息
+        window.addEventListener('message', function(event) {
+            // 验证消息来源
+            if (event.origin !== window.location.origin) {
+                return;
+            }
+            
+            const message = event.data;
+            if (message && message.type === 'IFRAME_MESSAGE') {
+                handleIframeMessage(message);
+            }
+        });
+        
+        // 处理来自iframe的消息
+        function handleIframeMessage(message) {
+            const { source, action, data } = message;
+            
+            switch (action) {
+                case 'NAVIGATE_TO':
+                    // 切换到指定页面
+                    if (data && data.tab) {
+                        showTab(data.tab);
+                    }
+                    break;
+                    
+                case 'SHOW_NOTIFICATION':
+                    // 显示通知消息
+                    if (data && data.message) {
+                        showNotification(data.message, data.type || 'info');
+                    }
+                    break;
+                    
+                case 'UPDATE_TITLE':
+                    // 更新页面标题
+                    if (data && data.title) {
+                        document.title = data.title;
+                    }
+                    break;
+                    
+                case 'RELOAD_IFRAME':
+                    // 重新加载指定iframe
+                    if (data && data.target) {
+                        reloadIframe(data.target);
+                    }
+                    break;
+                    
+                case 'BROADCAST':
+                    // 广播消息到其他iframe
+                    if (data) {
+                        const iframes = ['dashboard', 'plugin-management', 'database-management', 'api-docs'];
+                        iframes.forEach(iframeName => {
+                            if (iframeName !== source) {
+                                sendMessageToIframe(iframeName, {
+                                    type: 'BROADCAST',
+                                    source: source,
+                                    data: data
+                                });
+                            }
+                        });
+                    }
+                    break;
+                    
+                default:
+                    console.log('未处理的iframe消息:', message);
+            }
+        }
+        
+        // 显示通知消息
+        function showNotification(message, type = 'info') {
+            // 创建通知元素
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type === 'success' ? 'success' : type === 'warning' ? 'warning' : 'info'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // 自动移除通知
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.remove();
+                }
+            }, 5000);
         }
         
         // 数据库配置相关函数
@@ -1521,7 +1882,22 @@
         
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
-            loadPlugins();
+            // 初始化所有iframe
+            initializeIframes();
+            
+            // 默认显示仪表盘
+            showTab('dashboard');
+            
+            // 为导航菜单添加点击事件
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const tabId = this.getAttribute('data-tab');
+                    if (tabId) {
+                        showTab(tabId);
+                    }
+                });
+            });
             
             // 配置模式切换事件
             document.querySelectorAll('input[name="configMode"]').forEach(radio => {
@@ -1577,5 +1953,8 @@
             </div>
         </div>
     </div>
+    
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

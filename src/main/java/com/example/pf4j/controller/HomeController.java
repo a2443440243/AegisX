@@ -29,4 +29,24 @@ public class HomeController {
     public String pluginMethod() {
         return "plugin-method";
     }
+    
+    /**
+     * 系统仪表盘页面
+     * 
+     * @return 仪表盘页面模板名称
+     */
+    @GetMapping("/dashboard")
+    public String dashboard() {
+        return "dashboard";
+    }
+    
+    /**
+     * 插件管理页面
+     * 
+     * @return 插件管理页面模板名称
+     */
+    @GetMapping("/plugin-management")
+    public String pluginManagement() {
+        return "plugin-management";
+    }
 }
