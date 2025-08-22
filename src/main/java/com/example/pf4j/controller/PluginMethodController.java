@@ -50,7 +50,7 @@ public class PluginMethodController {
             return ResponseEntity.ok(ApiResponse.success(data));
         } catch (Exception e) {
             logger.error("插件方法执行失败: {}#{}, 错误: {}", pluginName, methodName, e.getMessage());
-            return ResponseEntity.ok(ApiResponse.error("插件方法执行失败: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(ApiResponse.error("插件方法执行失败: " + e.getMessage()));
         }
     }
     
@@ -78,7 +78,7 @@ public class PluginMethodController {
             return ResponseEntity.ok(ApiResponse.success(data));
         } catch (Exception e) {
             logger.error("插件方法执行失败(GET): {}#{}, 错误: {}", pluginName, methodName, e.getMessage());
-            return ResponseEntity.ok(ApiResponse.error("插件方法执行失败: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(ApiResponse.error("插件方法执行失败: " + e.getMessage()));
         }
     }
     
@@ -99,7 +99,7 @@ public class PluginMethodController {
             return ResponseEntity.ok(ApiResponse.success(data));
         } catch (Exception e) {
             logger.error("获取插件方法列表失败: {}, 错误: {}", pluginName, e.getMessage());
-            return ResponseEntity.ok(ApiResponse.error("获取插件方法列表失败: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(ApiResponse.error("获取插件方法列表失败: " + e.getMessage()));
         }
     }
 }

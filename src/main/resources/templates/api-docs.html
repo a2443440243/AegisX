@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API文档 - PF4J插件框架</title>
+    <title>API文档 - AegisX企业级智能插件平台</title>
     <style>
         * {
             margin: 0;
@@ -378,7 +378,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🚀 API文档中心</h1>
+            <h1>🚀 AegisX API文档中心</h1>
             <p>动态插件接口文档与在线调用平台</p>
 
         </div>
@@ -652,8 +652,12 @@ fetch('${api.path}', {
             
             // 显示加载状态
             button.disabled = true;
-            btnText.style.display = 'none';
-            loading.style.display = 'inline-block';
+            if (btnText) {
+                btnText.style.display = 'none';
+            }
+            if (loading) {
+                loading.style.display = 'inline-block';
+            }
             
             try {
                 let input = inputElement.value.trim();
@@ -689,8 +693,12 @@ fetch('${api.path}', {
             } finally {
                 // 恢复按钮状态
                 button.disabled = false;
-                btnText.style.display = 'inline';
-                loading.style.display = 'none';
+                if (btnText) {
+                    btnText.style.display = 'inline';
+                }
+                if (loading) {
+                    loading.style.display = 'none';
+                }
             }
         }
         

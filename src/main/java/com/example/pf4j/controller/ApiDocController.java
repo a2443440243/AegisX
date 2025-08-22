@@ -73,15 +73,10 @@ public class ApiDocController {
             Object input = requestBody != null ? requestBody.get("input") : null;
             Object result = pluginService.executePlugin(pluginName, input);
             
-            Map<String, Object> data = new HashMap<>();
-            data.put("pluginName", pluginName);
-            data.put("input", input);
-            data.put("result", result);
-            data.put("timestamp", System.currentTimeMillis());
-            
-            return ResponseEntity.ok(ApiResponse.success("插件调用成功", data));
+            // 直接返回插件执行结果作为data，保持简洁的响应结构
+            return ResponseEntity.ok(ApiResponse.success("插件调用成功", result));
         } catch (Exception e) {
-            return ResponseEntity.ok(ApiResponse.error("插件调用失败: " + e.getMessage()));
+            return ResponseEntity.badRequest().body(ApiResponse.error("插件调用失败: " + e.getMessage()));
         }
     }
     
