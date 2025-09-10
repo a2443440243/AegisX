@@ -1,0 +1,2192 @@
+* {
+  box-sizing: border-box;
+}
+
+.background {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: var(--color-violet-8, #121018);
+  width: 1920px;
+  height: 6503px;
+
+  .designsWithPowerfulF2 {
+    line-height: 58px;
+    letter-spacing: 0;
+    color: var(--explore-customeow-io-Jade, #00b980);
+    font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+  }
+
+  .designsWithPowerfulF {
+    line-height: 58px;
+    letter-spacing: 0;
+    color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+    font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+    font-size: 48px;
+    font-weight: 600;
+  }
+
+  .component1 {
+    flex-shrink: 0;
+    width: 183px;
+    height: 25px;
+    overflow: hidden;
+  }
+
+  .buttonPartternBg {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    margin-top: -25px;
+
+    .container2 {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      flex-grow: 1;
+      align-items: flex-start;
+      margin-right: -1px;
+
+      .container {
+        display: flex;
+        position: absolute;
+        top: 25px;
+        right: 1px;
+        left: 0;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: flex-start;
+        justify-content: center;
+        border: 1px solid var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+        border-radius: 6px;
+        padding-right: 15px;
+        padding-left: 15px;
+        width: 129px;
+        height: 36px;
+
+        .getStarted {
+          flex-shrink: 0;
+          line-height: 22px;
+          letter-spacing: 0;
+          color: var(--explore-customeow-io-White, #ffffff);
+          font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          text-transform: UPPERCASE;
+        }
+      }
+
+      .a2ZCduNsuPb1JfrqRoL2 {
+        flex-shrink: 0;
+        align-self: stretch;
+        z-index: 1;
+        width: 129px;
+        height: 72px;
+        overflow: hidden;
+      }
+    }
+  }
+
+  .container7 {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+
+    .horizontalBorder {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      align-items: center;
+      border-width: 0px 0px 1px;
+      border-style: solid;
+      border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+
+      .maskGroup {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+      }
+
+      .navDefault {
+        display: flex;
+        align-items: center;
+        align-self: stretch;
+        background: var(--color-violet-8-80, #121018cc);
+        backdrop-filter: blur(5px);
+
+        .header {
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+          justify-content: space-between;
+          border-width: 0px 0px 1px;
+          border-style: solid;
+          border-color: var(--explore-customeow-io-Dull-Lavender-20, #afa6e533);
+          padding-right: 360px;
+          padding-left: 360px;
+          width: 1920px;
+          min-width: 1920px;
+          height: 80px;
+
+          .imageFill {
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            align-items: flex-start;
+            padding: 8px 7px;
+            overflow: hidden;
+          }
+
+          .links {
+            display: inline-flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            column-gap: 56px;
+            overflow: hidden;
+
+            .home {
+              flex-shrink: 0;
+              padding: 9px 0px;
+              line-height: 24px;
+              letter-spacing: 0;
+              color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+              font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+              font-size: 16px;
+            }
+
+            .closed {
+              display: inline-flex;
+              flex-shrink: 0;
+              align-items: center;
+              justify-content: center;
+              column-gap: 4px;
+              padding-top: 5px;
+              padding-bottom: 5px;
+              overflow: hidden;
+
+              .explore {
+                flex-shrink: 0;
+                line-height: 32px;
+                letter-spacing: -0.16px;
+                color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                font-size: 16px;
+              }
+            }
+          }
+
+          .a36 {
+            display: flex;
+            flex-shrink: 0;
+            align-items: flex-start;
+            border-radius: 6px;
+            height: 36px;
+            overflow: hidden;
+            background-image: linear-gradient(
+              107.87deg,
+              var(--color-blue-70, #7c67ff) 0.01%,
+              var(--color-cyan-52, #31c0d6) 51.54%,
+              var(--color-spring-green-45, #17d08c) 99.99%
+            );
+          }
+        }
+      }
+
+      .container6 {
+        display: flex;
+        align-items: center;
+        align-self: stretch;
+        margin-right: 320px;
+        margin-left: 320px;
+
+        .border2 {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border-width: 0px 1px;
+          border-style: solid;
+          border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+          width: 1280px;
+
+          .title {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            align-self: stretch;
+            margin-right: -1px;
+            margin-left: -1px;
+            padding: 60px 240px 72px 40px;
+            row-gap: 40px;
+
+            .designPersonalizedWi2 {
+              display: inline-flex;
+              flex-direction: column;
+              flex-shrink: 0;
+              align-items: flex-start;
+              align-self: stretch;
+              min-width: 1000px;
+              max-width: 1000px;
+
+              .designPersonalizedWi {
+                flex-shrink: 0;
+                align-self: stretch;
+                line-height: 72px;
+                letter-spacing: 0;
+                color: var(--explore-customeow-io-Jade, #00b980);
+                font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                font-size: 60px;
+                font-weight: 600;
+              }
+            }
+
+            .container3 {
+              display: flex;
+              flex-direction: column;
+              flex-shrink: 0;
+              align-items: flex-start;
+              width: 680px;
+
+              .createPersonalizedIn {
+                flex-shrink: 0;
+                width: 652px;
+                line-height: 24px;
+                letter-spacing: 0;
+                color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                font-size: 16px;
+              }
+            }
+          }
+
+          .button {
+            display: flex;
+            align-items: center;
+            align-self: stretch;
+            margin-right: -1px;
+            margin-left: -1px;
+
+            .border {
+              display: flex;
+              flex-grow: 1;
+              align-items: center;
+              justify-content: space-between;
+              border-width: 1px 0px;
+              border-style: solid;
+              border-color: var(
+                --explore-customeow-io-Blue-Chalk-12,
+                #e9e4ff1f
+              );
+              width: 1280px;
+              min-width: 1280px;
+              height: 56px;
+
+              .linkGetStarted {
+                display: inline-flex;
+                align-items: center;
+                column-gap: 12px;
+                background: var(--color-spring-green-36, #00b980);
+                padding: 16px 40px;
+                min-width: 160px;
+
+                .getStarted2 {
+                  flex-shrink: 0;
+                  width: 530px;
+                  line-height: 24px;
+                  letter-spacing: 0;
+                  color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+                  font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                  font-size: 16px;
+                  font-weight: 600;
+                }
+              }
+
+              .container4 {
+                position: relative;
+                width: 372px;
+                height: 56px;
+                overflow: hidden;
+
+                .svg1822648541367 {
+                  position: absolute;
+                  top: 12px;
+                  left: -4px;
+                  width: 5px;
+                  height: 32px;
+                  overflow: hidden;
+                }
+
+                .svg18226485413672 {
+                  position: absolute;
+                  top: 12px;
+                  left: 371px;
+                  width: 5px;
+                  height: 32px;
+                  overflow: hidden;
+                }
+
+                .verticalBorder {
+                  display: flex;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  align-items: center;
+                  justify-content: space-between;
+                  border-width: 0px 1px 0px 0px;
+                  border-style: solid;
+                  border-color: var(
+                    --explore-customeow-io-Blue-Chalk-12,
+                    #e9e4ff1f
+                  );
+                  padding: 12px 20px 12px 21px;
+                  width: 372px;
+                  height: 56px;
+
+                  .svg18226485413673 {
+                    width: 5px;
+                    height: 32px;
+                    overflow: hidden;
+                  }
+                }
+              }
+
+              .linkContactSales {
+                display: inline-flex;
+                align-items: center;
+                column-gap: 12px;
+                padding: 16px 40px;
+                min-width: 136px;
+                max-width: 266px;
+
+                .contactSales {
+                  flex-shrink: 0;
+                  width: 154px;
+                  line-height: 24px;
+                  letter-spacing: 0;
+                  color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+                  font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                  font-size: 16px;
+                }
+              }
+            }
+          }
+
+          .videoSection {
+            position: relative;
+            width: 1280px;
+            height: 1040px;
+            overflow: hidden;
+
+            .u16Gyk5WgbOdgqRTf3Ne {
+              position: absolute;
+              top: 0;
+              right: 0;
+              left: 0;
+              width: 1280px;
+              height: 1040px;
+              overflow: hidden;
+            }
+
+            .container5 {
+              display: flex;
+              position: absolute;
+              top: -676px;
+              left: 69px;
+              flex-direction: column;
+              align-items: flex-start;
+              justify-content: center;
+              background: var(--color-grey-99-60, #f8faff99);
+              padding-right: 6px;
+              padding-left: 6px;
+              width: 1142px;
+              height: 775px;
+
+              .cover {
+                display: flex;
+                position: absolute;
+                top: 6px;
+                right: 6px;
+                bottom: 6px;
+                left: 6px;
+                flex-direction: column;
+                flex-shrink: 0;
+                align-items: flex-start;
+                width: 1130px;
+                height: 763px;
+                overflow: hidden;
+
+                .ie39IfOx9PtCcQqWwNIv {
+                  flex-shrink: 0;
+                  align-self: stretch;
+                  width: 1130px;
+                  height: 763px;
+                  overflow: hidden;
+                }
+              }
+
+              .qi55XmIzdNn7WjKl4Che {
+                flex-shrink: 0;
+                z-index: 1;
+                width: 1130px;
+                height: 763px;
+                overflow: hidden;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .add2 {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+
+    .container14 {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      border-width: 0px 0px 1px;
+      border-style: solid;
+      border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+      padding-right: 320px;
+      padding-left: 320px;
+      height: 1064px;
+
+      .container13 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border-width: 0px 1px;
+        border-style: solid;
+        border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+        width: 1280px;
+
+        .title2 {
+          display: inline-flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          align-items: center;
+          align-self: stretch;
+          margin-right: -2px;
+          padding: 159px 40px 40px;
+          row-gap: 1px;
+
+          .add {
+            flex-shrink: 0;
+            padding: 0px 0px 0px 1040px;
+            line-height: 86px;
+            letter-spacing: 0;
+            color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+            font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+            font-size: 72px;
+            font-weight: 600;
+          }
+
+          .designsWithPowerfulF3 {
+            flex-shrink: 0;
+            padding: 0px 0px 0px 480px;
+            line-height: 58px;
+            letter-spacing: 0;
+            color: #000000;
+            font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+            font-size: 48px;
+            font-weight: 600;
+          }
+        }
+
+        .a1Photo {
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          align-self: stretch;
+          justify-content: space-between;
+          margin-right: -2px;
+          min-width: 1280px;
+          height: 720px;
+          overflow: hidden;
+
+          .container8 {
+            display: flex;
+            align-items: center;
+            border-width: 1px 0px 0px;
+            border-style: solid;
+            border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+            background: var(--color-grey-94, #eceef1);
+            padding-right: 60px;
+            padding-left: 60px;
+            height: 720px;
+
+            .a1Mp4 {
+              width: 720px;
+              height: 720px;
+              overflow: hidden;
+            }
+          }
+
+          .container12 {
+            display: flex;
+            align-items: center;
+            height: 720px;
+
+            .featuresCardG {
+              display: flex;
+              flex-direction: column;
+              flex-grow: 1;
+              align-items: flex-start;
+              padding-right: 147px;
+              padding-bottom: 1px;
+              overflow: hidden;
+
+              .starMap {
+                margin: 62px 0px 0px;
+                padding: 0px 55px 0px 0px;
+                line-height: 22px;
+                letter-spacing: 0;
+                color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                font-size: 14px;
+              }
+
+              .customPathText {
+                margin: 62px 0px 0px;
+                line-height: 22px;
+                letter-spacing: 0;
+                color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                font-size: 14px;
+              }
+
+              .imageFill8 {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                align-self: stretch;
+                margin-right: 87px;
+                padding: 3px 2px 2px 3px;
+                overflow: hidden;
+
+                .component18 {
+                  flex-shrink: 0;
+                  width: 23px;
+                  height: 23px;
+                  overflow: hidden;
+                }
+              }
+
+              .imageFill5 {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                align-self: stretch;
+                margin-right: 87px;
+                padding: 1px;
+                overflow: hidden;
+
+                .component15 {
+                  flex-shrink: 0;
+                  width: 26px;
+                  height: 26px;
+                  overflow: hidden;
+                }
+              }
+
+              .autoWrapper2 {
+                display: flex;
+                align-items: center;
+                align-self: stretch;
+                justify-content: space-between;
+                padding-right: 0;
+                padding-left: 0;
+
+                .border3 {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  border-width: 1px 0px 0px 1px;
+                  border-style: solid;
+                  border-color: var(
+                    --explore-customeow-io-Blue-Chalk-12,
+                    #e9e4ff1f
+                  );
+                  background: var(--color-spring-green-36-56, #00b9808f);
+                  padding: 15px 16px 16px 15px;
+                  overflow: hidden;
+
+                  .svg12210331302 {
+                    width: 28px;
+                    height: 28px;
+                    overflow: hidden;
+                  }
+
+                  .container9 {
+                    display: inline-flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    margin-top: 40px;
+
+                    .importPhotoFromDevic {
+                      flex-shrink: 0;
+                      width: 90px;
+                      line-height: 22px;
+                      letter-spacing: 0;
+                      color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+                      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                      font-size: 14px;
+                    }
+                  }
+                }
+
+                .autoWrapper {
+                  position: relative;
+                  width: 147px;
+                  height: 144px;
+
+                  .border4 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 16px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .imageFill2 {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      align-self: stretch;
+                      margin-right: 87px;
+                      padding: 2px 1px 1px 2px;
+                      overflow: hidden;
+
+                      .component12 {
+                        flex-shrink: 0;
+                        width: 25px;
+                        height: 25px;
+                        overflow: hidden;
+                      }
+                    }
+
+                    .faceCutout {
+                      margin: 62px 0px 0px;
+                      padding: 0px 36px 0px 0px;
+                      line-height: 22px;
+                      letter-spacing: 0;
+                      color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                      font-size: 14px;
+                    }
+                  }
+
+                  .border5 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    right: -147px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 16px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .imageFill3 {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      align-self: stretch;
+                      margin-right: 87px;
+                      padding: 2px 3px 1px;
+                      overflow: hidden;
+
+                      .component13 {
+                        flex-shrink: 0;
+                        width: 22px;
+                        height: 25px;
+                        overflow: hidden;
+                      }
+                    }
+
+                    .container10 {
+                      display: inline-flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      margin-top: 40px;
+
+                      .removeImageBackgroun {
+                        flex-shrink: 0;
+                        width: 101px;
+                        line-height: 22px;
+                        letter-spacing: 0;
+                        color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                        font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                        font-size: 14px;
+                      }
+                    }
+                  }
+                }
+              }
+
+              .autoWrapper4 {
+                display: flex;
+                align-items: center;
+                align-self: stretch;
+                justify-content: space-between;
+                padding-right: 0;
+                padding-left: 0;
+
+                .border6 {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  border-width: 1px 0px 0px 1px;
+                  border-style: solid;
+                  border-color: var(
+                    --explore-customeow-io-Blue-Chalk-12,
+                    #e9e4ff1f
+                  );
+                  padding: 15px 16px 16px 15px;
+                  overflow: hidden;
+
+                  .imageFill4 {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    align-self: stretch;
+                    margin-right: 87px;
+                    padding: 5px 3px 4px 4px;
+                    overflow: hidden;
+
+                    .component14 {
+                      flex-shrink: 0;
+                      width: 21px;
+                      height: 19px;
+                      overflow: hidden;
+                    }
+                  }
+
+                  .text {
+                    margin: 62px 0px 0px;
+                    padding: 0px 86px 0px 0px;
+                    line-height: 22px;
+                    letter-spacing: 0;
+                    color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                    font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                    font-size: 14px;
+                  }
+                }
+
+                .autoWrapper3 {
+                  position: relative;
+                  width: 147px;
+                  height: 144px;
+
+                  .border7 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 16px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .curveText {
+                      margin: 62px 0px 0px;
+                      padding: 0px 46px 0px 0px;
+                      line-height: 22px;
+                      letter-spacing: 0;
+                      color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                      font-size: 14px;
+                    }
+                  }
+
+                  .border8 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    right: -147px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 16px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .imageFill6 {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      padding: 3px 1px 3px 2px;
+                      width: 28px;
+                      overflow: hidden;
+
+                      .component16 {
+                        flex-shrink: 0;
+                        width: 23px;
+                        height: 22px;
+                        overflow: hidden;
+                      }
+                    }
+                  }
+                }
+              }
+
+              .autoWrapper6 {
+                display: flex;
+                align-items: center;
+                align-self: stretch;
+                justify-content: space-between;
+                padding-right: 0;
+                padding-left: 0;
+
+                .border9 {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  border-width: 1px 0px 0px 1px;
+                  border-style: solid;
+                  border-color: var(
+                    --explore-customeow-io-Blue-Chalk-12,
+                    #e9e4ff1f
+                  );
+                  padding: 15px 16px 16px 15px;
+                  overflow: hidden;
+
+                  .imageFill7 {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    align-self: stretch;
+                    margin-right: 87px;
+                    padding: 3px 3px 3px 4px;
+                    overflow: hidden;
+
+                    .component17 {
+                      flex-shrink: 0;
+                      width: 21px;
+                      height: 22px;
+                      overflow: hidden;
+                    }
+                  }
+
+                  .container11 {
+                    display: inline-flex;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    margin-top: 40px;
+
+                    .photoFromPexels {
+                      flex-shrink: 0;
+                      width: 78px;
+                      line-height: 22px;
+                      letter-spacing: 0;
+                      color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                      font-size: 14px;
+                    }
+                  }
+                }
+
+                .autoWrapper5 {
+                  position: relative;
+                  width: 147px;
+                  height: 144px;
+
+                  .border10 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 16px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .shape {
+                      margin: 62px 0px 0px;
+                      padding: 0px 73px 0px 0px;
+                      line-height: 22px;
+                      letter-spacing: 0;
+                      color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                      font-size: 14px;
+                    }
+                  }
+
+                  .border11 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    right: -147px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 16px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .library {
+                      margin: 62px 0px 0px;
+                      padding: 0px 68px 0px 0px;
+                      line-height: 22px;
+                      letter-spacing: 0;
+                      color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                      font-size: 14px;
+                    }
+                  }
+                }
+              }
+
+              .autoWrapper8 {
+                display: flex;
+                align-items: center;
+                align-self: stretch;
+                justify-content: space-between;
+                padding-right: 0;
+                padding-left: 0;
+
+                .border12 {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  border-width: 1px 0px 0px 1px;
+                  border-style: solid;
+                  border-color: var(
+                    --explore-customeow-io-Blue-Chalk-12,
+                    #e9e4ff1f
+                  );
+                  padding: 15px 16px 16px 15px;
+                  overflow: hidden;
+
+                  .crossword {
+                    margin: 62px 0px 0px;
+                    padding: 0px 43px 0px 0px;
+                    line-height: 22px;
+                    letter-spacing: 0;
+                    color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                    font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                    font-size: 14px;
+                  }
+                }
+
+                .autoWrapper7 {
+                  position: relative;
+                  width: 147px;
+                  height: 144px;
+
+                  .border13 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 16px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .imageFill9 {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      align-self: stretch;
+                      margin-right: 87px;
+                      padding: 5px 0px 4px 1px;
+                      overflow: hidden;
+
+                      .component19 {
+                        flex-shrink: 0;
+                        width: 27px;
+                        height: 19px;
+                        overflow: hidden;
+                      }
+                    }
+                  }
+
+                  .border14 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    right: -147px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 16px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .imageFill10 {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      align-self: stretch;
+                      margin-right: 87px;
+                      padding: 3px 1px 1px 3px;
+                      overflow: hidden;
+
+                      .component110 {
+                        flex-shrink: 0;
+                        width: 24px;
+                        height: 24px;
+                        overflow: hidden;
+                      }
+                    }
+
+                    .qrCode {
+                      margin: 62px 0px 0px;
+                      padding: 0px 62px 0px 0px;
+                      line-height: 22px;
+                      letter-spacing: 0;
+                      color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                      font-size: 14px;
+                    }
+                  }
+                }
+              }
+
+              .autoWrapper10 {
+                display: flex;
+                align-items: center;
+                align-self: stretch;
+                justify-content: space-between;
+                padding-right: 0;
+                padding-left: 0;
+
+                .border15 {
+                  display: flex;
+                  flex-direction: column;
+                  align-items: flex-start;
+                  border-width: 1px 0px 0px 1px;
+                  border-style: solid;
+                  border-color: var(
+                    --explore-customeow-io-Blue-Chalk-12,
+                    #e9e4ff1f
+                  );
+                  padding: 15px 16px 16px 15px;
+                  overflow: hidden;
+                }
+
+                .autoWrapper9 {
+                  position: relative;
+                  width: 147px;
+                  height: 144px;
+
+                  .border16 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 16px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .imageFill11 {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      align-self: stretch;
+                      margin-right: 87px;
+                      padding: 2px 3px 1px 4px;
+                      overflow: hidden;
+
+                      .component111 {
+                        flex-shrink: 0;
+                        width: 21px;
+                        height: 25px;
+                        overflow: hidden;
+                      }
+                    }
+
+                    .faceImage {
+                      margin: 62px 0px 0px;
+                      padding: 0px 38px 0px 0px;
+                      line-height: 22px;
+                      letter-spacing: 0;
+                      color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                      font-size: 14px;
+                    }
+                  }
+
+                  .border17 {
+                    display: flex;
+                    position: absolute;
+                    top: 0;
+                    right: -147px;
+                    flex-direction: column;
+                    align-items: flex-start;
+                    border-width: 1px 0px 0px 1px;
+                    border-style: solid;
+                    border-color: var(
+                      --explore-customeow-io-Blue-Chalk-12,
+                      #e9e4ff1f
+                    );
+                    padding: 15px 21px 16px 15px;
+                    width: 147px;
+                    height: 144px;
+                    overflow: hidden;
+
+                    .imageFill12 {
+                      display: flex;
+                      flex-direction: column;
+                      align-items: flex-start;
+                      align-self: stretch;
+                      margin-right: 82px;
+                      padding: 3px 3px 2px;
+                      overflow: hidden;
+
+                      .component112 {
+                        flex-shrink: 0;
+                        width: 22px;
+                        height: 23px;
+                        overflow: hidden;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .make2 {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+
+    .container19 {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      border-width: 0px 0px 1px;
+      border-style: solid;
+      border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+      padding-right: 320px;
+      padding-left: 320px;
+      height: 1008px;
+
+      .border19 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-width: 0px 1px;
+        border-style: solid;
+        border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+        padding-bottom: 1px;
+        width: 1280px;
+
+        .container15 {
+          display: inline-flex;
+          flex-direction: column;
+          align-items: center;
+          align-self: stretch;
+          margin-right: -1px;
+          margin-left: -1px;
+          padding: 159px 40px 40px;
+          row-gap: 1px;
+
+          .make {
+            flex-shrink: 0;
+            padding: 0px 1011px 0px 0px;
+            line-height: 86px;
+            letter-spacing: 0;
+            color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+            font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+            font-size: 72px;
+            font-weight: 600;
+          }
+
+          .onlinePreviewsMoreLi {
+            flex-shrink: 0;
+            padding: 0px 543px 0px 0px;
+            line-height: 58px;
+            letter-spacing: 0;
+            color: #000000;
+            font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+            font-size: 48px;
+            font-weight: 600;
+          }
+        }
+
+        .desktopDesignTemplat {
+          display: flex;
+          align-items: center;
+          align-self: stretch;
+          margin: 1px -1px 0px;
+
+          .border18 {
+            display: flex;
+            flex-grow: 1;
+            align-items: flex-start;
+            justify-content: space-between;
+            border-width: 1px 1px 0px 0px;
+            border-style: solid;
+            border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+            width: 1280px;
+            min-width: 1280px;
+
+            .container16 {
+              display: inline-flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              margin-top: -1px;
+              max-width: 440px;
+
+              .frame5124 {
+                display: inline-flex;
+                flex-direction: column;
+                flex-shrink: 0;
+                align-items: flex-start;
+                align-self: stretch;
+                min-width: 360px;
+                row-gap: 4px;
+
+                .a2DPreview {
+                  flex-shrink: 0;
+                  align-self: stretch;
+                  line-height: 34px;
+                  letter-spacing: -0.96px;
+                  color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+                  font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                  font-size: 24px;
+                  font-weight: 600;
+                }
+
+                .skewPerspectiveWarp {
+                  flex-shrink: 0;
+                  align-self: stretch;
+                  line-height: 22px;
+                  letter-spacing: 0;
+                  color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+                  font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                  font-size: 14px;
+                }
+              }
+
+              .focus {
+                display: flex;
+                flex-direction: column;
+                flex-shrink: 0;
+                align-items: flex-start;
+                align-self: stretch;
+                background: var(--color-spring-green-26, #077f5a);
+                padding: 28px 40px;
+                row-gap: 24px;
+
+                .a01 {
+                  flex-shrink: 0;
+                  padding: 0px 333px 0px 0px;
+                  line-height: 34px;
+                  letter-spacing: 0;
+                  color: var(--explore-customeow-io-Zircon-40, #f8faff66);
+                  font-family: "Allerta Stencil", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                  font-size: 24px;
+                }
+              }
+
+              .line {
+                flex-shrink: 0;
+                align-self: stretch;
+                background: var(--color-grey-95-12, #e9e4ff1f);
+                height: 1px;
+              }
+
+              .default {
+                display: flex;
+                flex-direction: column;
+                flex-shrink: 0;
+                align-items: flex-start;
+                align-self: stretch;
+                padding: 28px 40px;
+                row-gap: 24px;
+
+                .a02 {
+                  flex-shrink: 0;
+                  padding: 0px 328px 0px 0px;
+                  line-height: 34px;
+                  letter-spacing: 0;
+                  color: var(--explore-customeow-io-Zircon-40, #f8faff66);
+                  font-family: "Allerta Stencil", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                  font-size: 24px;
+                }
+              }
+
+              .default2 {
+                display: flex;
+                flex-direction: column;
+                flex-shrink: 0;
+                align-items: flex-start;
+                align-self: stretch;
+                padding: 28px 40px;
+                row-gap: 24px;
+
+                .a03 {
+                  flex-shrink: 0;
+                  padding: 0px 329px 0px 0px;
+                  line-height: 34px;
+                  letter-spacing: 0;
+                  color: var(--explore-customeow-io-Zircon-40, #f8faff66);
+                  font-family: "Allerta Stencil", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                  font-size: 24px;
+                }
+              }
+            }
+
+            .container18 {
+              display: flex;
+              align-items: flex-start;
+              margin-top: -1px;
+              height: 664px;
+              overflow: hidden;
+
+              .tbl5M6ZPuhjmxfi453Za {
+                position: relative;
+                margin-top: -1px;
+                width: 840px;
+                height: 720px;
+                overflow: hidden;
+                background-image: url(../image/mes6y950-v0678jc.png);
+                background-position: 0px 0px;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+
+                .button2 {
+                  display: flex;
+                  position: absolute;
+                  top: 24px;
+                  right: 23px;
+                  align-items: center;
+                  box-shadow: 0px 1px 2px 0px #0000000d;
+                  background: var(--color-grey-99-94, #f8fafff0);
+                  padding-right: 1px;
+                  width: 222px;
+                  height: 48px;
+                  overflow: hidden;
+
+                  .container17 {
+                    display: flex;
+                    flex-direction: column;
+                    flex-grow: 1;
+                    align-items: center;
+                    justify-content: center;
+                    border: 1px solid
+                      var(--explore-customeow-io-Cinder-12, #1210181f);
+                    padding-right: 14px;
+                    padding-left: 15px;
+                    height: 48px;
+
+                    .viewProductionDesign {
+                      flex-shrink: 0;
+                      line-height: 24px;
+                      letter-spacing: 0;
+                      color: var(--explore-customeow-io-Cinder-75, #121018bf);
+                      font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                      font-size: 16px;
+                      font-weight: 600;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .autoWrapper11 {
+    position: relative;
+    margin-top: 300px;
+    width: 1920px;
+    height: 770px;
+
+    .line2 {
+      display: flex;
+      position: absolute;
+      top: -300px;
+      left: 0;
+      align-items: center;
+      width: 1920px;
+      height: 300px;
+
+      .container20 {
+        position: relative;
+        border-width: 0px 0px 1px;
+        border-style: solid;
+        border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+        width: 1920px;
+        height: 300px;
+
+        .border20 {
+          display: flex;
+          position: absolute;
+          top: 0;
+          left: 320px;
+          align-items: center;
+          justify-content: space-between;
+          border-width: 0px 1px;
+          border-style: solid;
+          border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+          padding-right: 159px;
+          width: 1280px;
+          height: 300px;
+
+          .subContainer {
+            display: flex;
+            align-items: center;
+
+            .verticalBorder2 {
+              border-width: 0px 1px 0px 0px;
+              border-style: solid;
+              border-color: var(
+                --explore-customeow-io-Blue-Chalk-12,
+                #e9e4ff1f
+              );
+              width: 160px;
+              height: 300px;
+            }
+          }
+        }
+      }
+    }
+
+    .why2 {
+      display: flex;
+      position: absolute;
+      top: 0;
+      left: 0;
+      align-items: center;
+      width: 1920px;
+      height: 770px;
+
+      .container22 {
+        position: relative;
+        border-width: 0px 0px 1px;
+        border-style: solid;
+        border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+        width: 1920px;
+        height: 770px;
+
+        .subContainer5 {
+          display: flex;
+          position: absolute;
+          top: 344px;
+          left: 320px;
+          align-items: center;
+          width: 1280px;
+          height: 426px;
+
+          .horizontalBorder2 {
+            display: flex;
+            flex-grow: 1;
+            align-items: center;
+            justify-content: space-between;
+            border-width: 1px 0px 0px;
+            border-style: solid;
+            border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+            padding-right: 1px;
+            width: 1280px;
+            min-width: 1280px;
+            height: 426px;
+
+            .qvgs9OGn16VgC38Mj0Du {
+              flex-shrink: 0;
+              width: 220px;
+              height: 220px;
+              overflow: hidden;
+            }
+
+            .a012 {
+              flex-shrink: 0;
+              align-self: stretch;
+              line-height: 34px;
+              letter-spacing: 0;
+              color: var(--explore-customeow-io-Zircon-40, #f8faff66);
+              font-family: "Allerta Stencil", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+              font-size: 24px;
+            }
+
+            .cards1 {
+              display: inline-flex;
+              flex-direction: column;
+              align-items: flex-start;
+              padding: 28px 40px;
+              row-gap: 24px;
+
+              .subContainer2 {
+                display: flex;
+                flex-direction: column;
+                flex-shrink: 0;
+                align-items: flex-start;
+                align-self: stretch;
+                row-gap: 24px;
+
+                .notEveryoneIsAProfes {
+                  flex-shrink: 0;
+                  width: 347px;
+                  height: 68px;
+                  line-height: 34px;
+                  letter-spacing: 0;
+                  color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                  font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                  font-size: 24px;
+                  font-weight: 500;
+                }
+              }
+            }
+
+            .cards2 {
+              display: inline-flex;
+              flex-direction: column;
+              align-items: flex-start;
+              padding: 28px 40px;
+              row-gap: 24px;
+
+              .subContainer3 {
+                display: flex;
+                flex-direction: column;
+                flex-shrink: 0;
+                align-items: flex-start;
+                align-self: stretch;
+                padding-bottom: 34px;
+                row-gap: 24px;
+
+                .complexOperationInte {
+                  flex-shrink: 0;
+                  padding: 0px 13px 0px 0px;
+                  line-height: 34px;
+                  letter-spacing: 0;
+                  color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                  font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                  font-size: 24px;
+                  font-weight: 500;
+                }
+              }
+            }
+
+            .cards3 {
+              display: inline-flex;
+              flex-direction: column;
+              align-items: flex-start;
+              padding: 28px 40px;
+              row-gap: 24px;
+
+              .subContainer4 {
+                display: flex;
+                flex-direction: column;
+                flex-shrink: 0;
+                align-items: flex-start;
+                align-self: stretch;
+                row-gap: 24px;
+
+                .imgWhy3 {
+                  display: flex;
+                  flex-shrink: 0;
+                  align-items: center;
+                  align-self: stretch;
+                  opacity: 0.8;
+                  margin-right: 127px;
+                  overflow: hidden;
+
+                  .jaUj86Jrmp6V9NwUmRd3 {
+                    width: 220px;
+                    height: 220px;
+                    overflow: hidden;
+                  }
+                }
+
+                .container21 {
+                  display: inline-flex;
+                  flex-direction: column;
+                  flex-shrink: 0;
+                  align-items: flex-start;
+
+                  .itIsNoLongerAnEssent {
+                    flex-shrink: 0;
+                    width: 305px;
+                    line-height: 34px;
+                    letter-spacing: 0;
+                    color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+                    font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                    font-size: 24px;
+                    font-weight: 500;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        .title3 {
+          display: flex;
+          position: absolute;
+          top: 0;
+          left: 320px;
+          align-items: flex-start;
+          border: 6px solid var(--explore-customeow-io-Governor-Bay, #3453b7);
+          padding-bottom: 420px;
+          width: 1280px;
+          height: 770px;
+
+          .verticalBorder3 {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            align-items: center;
+            margin-top: -6px;
+            margin-right: -12px;
+            border-width: 0px 1px 0px 0px;
+            border-style: solid;
+            border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+            padding: 159px 39px 40px 40px;
+
+            .why {
+              padding: 0px 0px 0px 1043px;
+              line-height: 86px;
+              letter-spacing: 0;
+              color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+              font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+              font-size: 72px;
+              font-weight: 600;
+            }
+
+            .donTWeMakeAPhotoshop {
+              padding: 0px 0px 0px 332px;
+              line-height: 58px;
+              letter-spacing: 0;
+              color: var(--explore-customeow-io-Zircon-60, #f8faff99);
+              font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+              font-size: 48px;
+              font-weight: 600;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .container24 {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    margin-top: -1px;
+    padding-right: 320px;
+    padding-left: 320px;
+
+    .border21 {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-width: 0px 1px;
+      border-style: solid;
+      border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+      padding-bottom: 1px;
+      width: 1280px;
+
+      .container23 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
+        padding: 0px 40px 41px;
+        width: 1280px;
+        height: 434px;
+        background-image: url(../image/mes6y950-gnakvmy.png);
+        background-position: -1280px -473px;
+        background-size: 300% 318.27%;
+        background-repeat: no-repeat;
+
+        .poweringTheWorldSBes {
+          flex-shrink: 0;
+          width: 1113px;
+          line-height: 77px;
+          letter-spacing: 0;
+          color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+          font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 64px;
+          font-weight: 600;
+          text-transform: UPPERCASE;
+        }
+      }
+
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        align-self: stretch;
+        justify-content: center;
+        margin: 1px -1px 0px;
+        overflow: hidden;
+
+        .imageFill13 {
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          align-items: flex-start;
+          border-width: 1px 0px;
+          border-style: solid;
+          border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+          padding: 134px 70px;
+          overflow: hidden;
+
+          .component113 {
+            flex-shrink: 0;
+            width: 180px;
+            height: 50px;
+            overflow: hidden;
+          }
+        }
+
+        .imageFill14 {
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          align-items: flex-start;
+          border-width: 1px 0px 1px 1px;
+          border-style: solid;
+          border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+          padding: 134px 78px 134px 77px;
+          overflow: hidden;
+
+          .component114 {
+            flex-shrink: 0;
+            width: 165px;
+            height: 50px;
+            overflow: hidden;
+          }
+        }
+
+        .imageFill15 {
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          align-items: flex-start;
+          border-width: 1px 0px 1px 1px;
+          border-style: solid;
+          border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+          padding: 134px 74px 134px 73px;
+          overflow: hidden;
+
+          .component115 {
+            flex-shrink: 0;
+            width: 173px;
+            height: 50px;
+            overflow: hidden;
+          }
+        }
+
+        .imageFill16 {
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          align-items: flex-start;
+          border-width: 1px 0px 1px 1px;
+          border-style: solid;
+          border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+          padding: 134px 45px 134px 44px;
+          overflow: hidden;
+
+          .component116 {
+            flex-shrink: 0;
+            width: 230px;
+            height: 50px;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+
+  .container25 {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    margin-top: 1px;
+    padding-right: 320px;
+    padding-left: 320px;
+
+    .border22 {
+      border-width: 0px 1px;
+      border-style: solid;
+      border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+      width: 1280px;
+      height: 60px;
+      overflow: hidden;
+      background-image: url(../image/mes6y950-tisrn4q.png);
+      background-position: 0px 0px;
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+    }
+  }
+
+  .explore2 {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+
+    .horizontalBorder3 {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      border-width: 0px 0px 1px;
+      border-style: solid;
+      border-color: var(--explore-customeow-io-Blue-Chalk-12, #e9e4ff1f);
+      padding-right: 320px;
+      padding-left: 320px;
+      height: 517px;
+
+      .container28 {
+        position: relative;
+        background: var(--color-violet-71-24, #9e6afe3d);
+        width: 1280px;
+        height: 517px;
+        overflow: hidden;
+
+        .container26 {
+          display: flex;
+          position: absolute;
+          top: 0;
+          right: 116px;
+          bottom: 117px;
+          left: 116px;
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 104px 436px 0px;
+          width: 1048px;
+          height: 400px;
+          background-image: url(../image/mes6y950-l9cyvoa.png);
+          background-position: 0px 0px;
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+
+          .n8RbxUfs4DbkeT8LIqLc {
+            flex-shrink: 0;
+            align-self: stretch;
+            width: 176px;
+            height: 177px;
+            overflow: hidden;
+          }
+        }
+
+        .container27 {
+          display: flex;
+          position: absolute;
+          top: 0;
+          left: 0;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-end;
+          border-width: 1px 1px 0px;
+          border-style: solid;
+          border-color: var(--explore-customeow-io-Blue-Chalk-8, #e9e4ff14);
+          padding-bottom: 104px;
+          width: 1280px;
+          height: 517px;
+          row-gap: 40px;
+
+          .exploreOurDesignTemp {
+            flex-shrink: 0;
+            padding: 0px 218px;
+            line-height: 56px;
+            letter-spacing: 0;
+            color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+            font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+            font-size: 48px;
+            font-weight: 600;
+          }
+
+          .a362 {
+            display: flex;
+            flex-shrink: 0;
+            align-items: flex-start;
+            align-self: stretch;
+            margin-right: 575px;
+            margin-left: 575px;
+            border-radius: 6px;
+            height: 36px;
+            overflow: hidden;
+            background-image: linear-gradient(
+              107.87deg,
+              var(--color-blue-70, #7c67ff) 0.01%,
+              var(--color-cyan-52, #31c0d6) 51.54%,
+              var(--color-spring-green-45, #17d08c) 99.99%
+            );
+          }
+        }
+      }
+    }
+  }
+
+  .footers {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
+
+    .container31 {
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: flex-start;
+      align-self: stretch;
+      justify-content: center;
+      column-gap: 102px;
+      padding: 100px 432px 64px;
+
+      .subContainer6 {
+        display: inline-flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: flex-start;
+        height: 224px;
+        row-gap: 16px;
+
+        .imageFill17 {
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          align-items: flex-start;
+          align-self: stretch;
+          margin-right: 45px;
+          padding: 8px 7px;
+          overflow: hidden;
+        }
+
+        .a2025CustoMeowIncAll {
+          flex-shrink: 0;
+          width: 242px;
+          line-height: 18px;
+          letter-spacing: 0;
+          color: var(--explore-customeow-io-Zircon-40, #f8faff66);
+          font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 12px;
+        }
+
+        .container29 {
+          display: flex;
+          flex-shrink: 0;
+          align-items: flex-start;
+          align-self: stretch;
+
+          .linkButton {
+            display: inline-flex;
+            flex-grow: 1;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            margin-right: 214px;
+            border-radius: 6px;
+            background: var(--color-grey-95-8, #e9e4ff14);
+            padding: 2px;
+
+            .maskGroup2 {
+              flex-shrink: 0;
+              width: 24px;
+              height: 24px;
+            }
+          }
+        }
+      }
+
+      .subContainer9 {
+        display: inline-flex;
+        flex-shrink: 0;
+        flex-wrap: wrap;
+        align-content: flex-start;
+        align-items: flex-start;
+        justify-content: center;
+        column-gap: 40px;
+        padding-top: 4px;
+        padding-bottom: 4px;
+        max-width: 712px;
+
+        .home2 {
+          flex-shrink: 0;
+          width: 148px;
+          line-height: 24px;
+          letter-spacing: 0;
+          color: var(--explore-customeow-io-Zircon-94, #f8fafff0);
+          font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 16px;
+        }
+
+        .text2 {
+          flex-shrink: 0;
+          width: 148px;
+          line-height: 24px;
+          letter-spacing: 0;
+          color: var(--explore-customeow-io-Zircon-40, #f8faff66);
+          font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 16px;
+        }
+
+        .frame2342 {
+          display: inline-flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          align-items: flex-start;
+          align-self: stretch;
+          row-gap: 16px;
+        }
+
+        .subContainer8 {
+          display: flex;
+          flex-shrink: 0;
+          align-items: flex-start;
+          justify-content: space-between;
+          width: 336px;
+          min-width: 336px;
+          overflow: hidden;
+
+          .subContainer7 {
+            display: inline-flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            align-items: flex-start;
+            row-gap: 24px;
+          }
+        }
+
+        .container30 {
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          justify-content: space-between;
+          width: 336px;
+          min-width: 336px;
+          height: 232px;
+          overflow: hidden;
+
+          .frame2317 {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 24px;
+          }
+
+          .frame2319 {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            row-gap: 24px;
+
+            .frame23422 {
+              display: inline-flex;
+              flex-direction: column;
+              flex-shrink: 0;
+              align-items: flex-start;
+              align-self: stretch;
+              row-gap: 16px;
+            }
+          }
+        }
+      }
+    }
+
+    .container32 {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      align-self: stretch;
+      margin-right: 1px;
+      margin-left: 1px;
+
+      .frame2386 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 40px;
+        border-width: 1px 0px 0px;
+        border-style: solid;
+        border-color: var(--explore-customeow-io-Blue-Chalk-8, #e9e4ff14);
+        padding-left: 812px;
+        width: 1918px;
+        height: 86px;
+
+        .text3 {
+          flex-shrink: 0;
+          line-height: 22px;
+          letter-spacing: 0;
+          color: var(--explore-customeow-io-Zircon-40, #f8faff66);
+          font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}

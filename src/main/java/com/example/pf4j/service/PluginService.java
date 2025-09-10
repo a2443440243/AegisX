@@ -118,6 +118,29 @@ public class PluginService {
     }
     
     /**
+     * 卸载插件
+     * @param pluginId 插件ID
+     * @return 是否成功
+     */
+    public boolean uninstallPlugin(String pluginId) {
+        try {
+            // 先停止插件
+            pluginManager.stopPlugin(pluginId);
+            // 然后卸载插件
+            boolean result = pluginManager.unloadPlugin(pluginId);
+            if (result) {
+                logger.info("插件卸载成功: {}", pluginId);
+            } else {
+                logger.warn("插件卸载失败: {}", pluginId);
+            }
+            return result;
+        } catch (Exception e) {
+            logger.error("插件卸载失败: {}", pluginId, e);
+            return false;
+        }
+    }
+    
+    /**
      * 重新加载所有插件
      */
     public void reloadPlugins() {

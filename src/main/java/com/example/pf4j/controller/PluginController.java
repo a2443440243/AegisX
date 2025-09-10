@@ -111,6 +111,22 @@ public class PluginController {
     }
     
     /**
+     * 卸载插件
+     * @param pluginId 插件ID
+     * @return 操作结果
+     */
+    @DeleteMapping("/uninstall/{pluginId}")
+    public ResponseEntity<ApiResponse<Map<String, Object>>> uninstallPlugin(@PathVariable String pluginId) {
+        boolean success = pluginService.uninstallPlugin(pluginId);
+        Map<String, Object> data = new HashMap<>();
+        data.put("pluginId", pluginId);
+        data.put("uninstalled", success);
+        
+        String message = success ? "插件卸载成功" : "插件卸载失败";
+        return ResponseEntity.ok(ApiResponse.success(message, data));
+    }
+    
+    /**
      * 重新加载所有插件
      * @return 操作结果
      */

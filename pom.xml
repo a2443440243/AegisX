@@ -16,7 +16,7 @@
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.version>2.7.14</spring-boot.version>
+        <spring-boot.version>2.7.18</spring-boot.version>
         <pf4j.version>3.9.0</pf4j.version>
     </properties>
 

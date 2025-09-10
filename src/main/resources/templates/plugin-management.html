@@ -575,6 +575,28 @@
             loadPluginStats();
         }
         
+        // 显示通知消息
+        function showNotification(message, type = 'info') {
+            // 创建通知元素
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            // 添加到页面
+            document.body.appendChild(notification);
+            
+            // 3秒后自动移除
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+        
         function showUploadModal() {
             document.getElementById('uploadModal').style.display = 'flex';
         }
@@ -600,27 +622,56 @@
         }
         
         function startPlugin(pluginName) {
-            alert(`启动插件: ${pluginName}`);
-            // 这里可以添加实际的启动插件API调用
-            setTimeout(() => {
-                refreshPlugins();
-                // 广播插件状态变化
-                broadcastPluginStatusChange(pluginName, 'start', 'running');
-            }, 500);
+            // 调用后端API启动插件
+            fetch(`/api/plugins/${pluginName}/start`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 200) {
+                    showNotification(`插件 "${pluginName}" 启动成功`, 'success');
+                    refreshPlugins();
+                    broadcastPluginStatusChange(pluginName, 'start', 'running');
+                } else {
+                    showNotification(`启动插件失败: ${data.message}`, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('启动插件失败:', error);
+                showNotification(`启动插件失败: ${error.message}`, 'error');
+            });
         }
         
         function stopPlugin(pluginName) {
-            alert(`停止插件: ${pluginName}`);
-            // 这里可以添加实际的停止插件API调用
-            setTimeout(() => {
-                refreshPlugins();
-                // 广播插件状态变化
-                broadcastPluginStatusChange(pluginName, 'stop', 'stopped');
-            }, 500);
+            // 调用后端API停止插件
+            fetch(`/api/plugins/${pluginName}/stop`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code === 200) {
+                    showNotification(`插件 "${pluginName}" 停止成功`, 'success');
+                    refreshPlugins();
+                    broadcastPluginStatusChange(pluginName, 'stop', 'stopped');
+                } else {
+                    showNotification(`停止插件失败: ${data.message}`, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('停止插件失败:', error);
+                showNotification(`停止插件失败: ${error.message}`, 'error');
+            });
         }
         
         function configPlugin(pluginName) {
-            alert(`配置插件: ${pluginName}`);
+            // 显示插件配置对话框
+            showNotification(`插件 "${pluginName}" 配置功能开发中`, 'info');
             // 这里可以添加实际的配置插件功能
             // 广播插件配置变化
             broadcastPluginStatusChange(pluginName, 'config', 'configured');
@@ -628,13 +679,27 @@
         
         function uninstallPlugin(pluginName) {
             if (confirm(`确定要卸载插件 "${pluginName}" 吗？`)) {
-                alert(`卸载插件: ${pluginName}`);
-                // 这里可以添加实际的卸载插件API调用
-                setTimeout(() => {
-                    refreshPlugins();
-                    // 广播插件状态变化
-                    broadcastPluginStatusChange(pluginName, 'uninstall', 'uninstalled');
-                }, 500);
+                // 调用后端API卸载插件
+                fetch(`/api/plugins/${pluginName}/uninstall`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code === 200) {
+                        showNotification(`插件 "${pluginName}" 卸载成功`, 'success');
+                        refreshPlugins();
+                        broadcastPluginStatusChange(pluginName, 'uninstall', 'uninstalled');
+                    } else {
+                        showNotification(`卸载插件失败: ${data.message}`, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('卸载插件失败:', error);
+                    showNotification(`卸载插件失败: ${error.message}`, 'error');
+                });
             }
         }
         
